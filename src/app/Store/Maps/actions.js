@@ -8,7 +8,7 @@ export function fetchCountyMap(){
             kenyaCountyMap => {
                 dispatch({
                     type: types.KENYA_COUNTY_MAP_FETCHED,
-                    kenyaCountyMap : feature(kenyaCountyMap, kenyaCountyMap.objects.kenya2).features
+                    kenyaCountyMap
                 })
             }
         ).catch(error => {

@@ -3,7 +3,7 @@ import Immutable from "seamless-immutable"
 
 
 const InitialState = Immutable({
-    kenyaCountyMap: {},
+    kenyaCountyMap: undefined
 });
 
 export default function mapReducer(state = InitialState, action={}) {

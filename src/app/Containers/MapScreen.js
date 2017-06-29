@@ -18,8 +18,8 @@ class MapScreen extends Component{
 
     projection(){
         return geoMercator()
-            .scale(1000)
-            .translate([800/4,450/4 ])
+            .scale(900)
+            .translate([800/10,450/2 ])
     }
 
 
@@ -28,21 +28,23 @@ class MapScreen extends Component{
     componentDidMount() {
         this.props.fetchCountyMap();
     }
+
     render(){
+        if (!this.props.kenyaCountyMap) return this.renderLoading();
         console.log(this.props.kenyaCountyMap);
-        this.props.kenyaCountyMap = feature(this.props.kenyaCountyMap, this.props.kenyaCountyMap.objects.kenya2).features
+        Map = feature(this.props.kenyaCountyMap, this.props.kenyaCountyMap.objects.kenya2).features
         return(
             <div>
                 <h1>Map</h1>
                   <svg width={ 800 } height={ 450 } viewBox="0 0 800 450">
                     <g className="countries">
                     {
-                        this.props.kenyaCountyMap.map((d,i) => (
+                        Map.map((d,i) => (
                         <path
                             key={ `path-${ i }` }
                             d={ geoPath().projection(this.projection())(d) }
                             className="country"
-                            fill={ `rgba(38,50,56,${1 / this.state.worldData.length * i})` }
+                            fill={ `rgba(38,50,56,${1 / Map.length * i})` }
                             stroke="#FFFFFF"
                             strokeWidth={ 0.5 }
                         />
@@ -62,6 +64,12 @@ class MapScreen extends Component{
             </div>
         );
     }
+
+     renderLoading() {
+    return (
+      <p>Loading...</p>
+    );
+  }
 }
 
 
