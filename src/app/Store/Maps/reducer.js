@@ -3,7 +3,7 @@ import Immutable from "seamless-immutable"
 
 
 const InitialState = Immutable({
-    kenyaCountyMap: undefined,
+    kenyaCountyMap: {},
 });
 
 export default function mapReducer(state = InitialState, action={}) {
@@ -20,6 +20,6 @@ export default function mapReducer(state = InitialState, action={}) {
 
 //selectors
 export function getKenyaCountyMap(state){
-    const kenyaCountyMap = state.kenyaCountyMap;
-    return kenyaCountyMap
+    return  state.mapReducer.kenyaCountyMap;
+    // return  {'asdfasdf': 'asdfasdf'};
 }

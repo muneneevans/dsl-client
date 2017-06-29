@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { autoBind } from "react-autobind"
 import * as mapActions from "../Store/Maps/actions"
 import * as mapSelectors from "../Store/Maps/reducer"
+import { geoMercator, geoPath } from "d3-geo";
+import { feature } from "topojson-client" ;
 
 
 class MapScreen extends Component{
@@ -14,14 +16,49 @@ class MapScreen extends Component{
         // autoBind(this);
     }
 
+    projection(){
+        return geoMercator()
+            .scale(1000)
+            .translate([800/4,450/4 ])
+    }
+
+
+
+
     componentDidMount() {
         this.props.fetchCountyMap();
     }
     render(){
+        console.log(this.props.kenyaCountyMap);
+        this.props.kenyaCountyMap = feature(this.props.kenyaCountyMap, this.props.kenyaCountyMap.objects.kenya2).features
         return(
             <div>
                 <h1>Map</h1>
-                {/*<button onClick={this.props.fetchCountyMap}>hshd</button>*/}
+                  <svg width={ 800 } height={ 450 } viewBox="0 0 800 450">
+                    <g className="countries">
+                    {
+                        this.props.kenyaCountyMap.map((d,i) => (
+                        <path
+                            key={ `path-${ i }` }
+                            d={ geoPath().projection(this.projection())(d) }
+                            className="country"
+                            fill={ `rgba(38,50,56,${1 / this.state.worldData.length * i})` }
+                            stroke="#FFFFFF"
+                            strokeWidth={ 0.5 }
+                        />
+                        ))
+                    }
+                    </g>
+                    <g className="markers">
+                    <circle
+                        cx={ this.projection()([8,48])[0] }
+                        cy={ this.projection()([8,48])[1] }
+                        r={ 10 }
+                        fill="#E91E63"
+                        className="marker"
+                    />
+                    </g>
+                </svg>
             </div>
         );
     }
@@ -31,9 +68,9 @@ class MapScreen extends Component{
 
 
 const mapStateToProps = (state, ownProps) => {
-    return {
+    return ({
         kenyaCountyMap: mapSelectors.getKenyaCountyMap(state)
-    }
+    })
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {

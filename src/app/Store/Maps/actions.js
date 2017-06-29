@@ -1,5 +1,5 @@
 import * as types from "./actionTypes"
-import { feature } from "topojson-client" ;
+
 import MapService from "../../Services/mapService"
 
 export function fetchCountyMap(){
