@@ -31,16 +31,16 @@ class MapScreen extends Component{
 
     render(){
         if (!this.props.kenyaCountyMap) return this.renderLoading();
-        console.log(this.props.kenyaCountyMap);
         Map = feature(this.props.kenyaCountyMap, this.props.kenyaCountyMap.objects.kenya2).features
         return(
             <div>
                 <h1>Map</h1>
-                  <svg width={ 800 } height={ 450 } viewBox="0 0 800 450">
-                    <g className="countries">
+                  <svg width={ 800 } height={ 450 } viewBox="0 0 800 450" >
+                    <g className="countries" >
                     {
                         Map.map((d,i) => (
                         <path
+                            onClick={()=> {alert( `${ d }`)}}
                             key={ `path-${ i }` }
                             d={ geoPath().projection(this.projection())(d) }
                             className="country"
