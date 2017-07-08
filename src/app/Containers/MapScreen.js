@@ -65,7 +65,7 @@ class MapScreen extends Component{
         );
     }
 
-     renderLoading() {
+   renderLoading() {
     return (
       <p>Loading...</p>
     );
