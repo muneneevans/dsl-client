@@ -17,8 +17,19 @@ export default class FacilityService{
         const host = 'http://localhost:8000/maps/api/counties/'
 
         const url = host.concat(countyId,'/constituencies/')
-        console.log(url)
 
+        return fetch(url)
+            .then(response =>{
+                return response.json()
+            })
+            .catch(error =>{
+                return error
+            })
+    }
+
+    static getConstituencyWardCodes(constituencyId){
+        const host = 'http://localhost:8000/maps/api/constituencies/'
+        const url = host.concat(constituencyId,'/wards/')
         return fetch(url)
             .then(response =>{
                 return response.json()
