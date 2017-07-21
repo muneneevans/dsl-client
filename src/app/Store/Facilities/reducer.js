@@ -2,18 +2,36 @@ import * as types from "./actionTypes"
 import Immutable from "seamless-immutable"
 
 const InitialState = Immutable({
-    countyIds: undefined
+    countyCodes: undefined,
+    constituencyCodes: undefined,
+    constituencyCodesIsFetched: false,
+    wardCodesIsFetched: false,
+    wardCodes: undefined
 })
 
 export default function facilityReducer(state = InitialState, action={}){
     switch (action.type) {
-        case types.COUNTY_CODES_FETCHED:                        
-            return state.merge({
-                countyIds: action.countyIds
+        case types.COUNTY_CODES_FETCHED:
+            return state.merge({                
+                countyCodes: action.countyCodes
             })
         case types.COUNTY_CONSTITUENCY_CODES_FETCHED:
             return state.merge({
-                constituencyCodes: action.constituencyCodes
+                constituencyCodes: action.constituencyCodes,
+                constituencyCodesIsFetched: true
+            })
+        case types.COUNTY_CONSTITUENCY_CODES_REQUESTED:   
+            return state.merge({
+                constituencyCodesIsFetched: false
+            })
+        case types.CONSTITUENCY_WARD_CODES_REQUESTED:
+            return state.merge({
+                wardCodesIsFetched: false
+            })
+        case types.CONSTITUENCY_WARD_CODES_FETCHED:
+            return state.merge({
+                wardCodes : action.wardCodes,
+                wardCodesIsFetched: true
             })
         default:
             return state
@@ -22,10 +40,22 @@ export default function facilityReducer(state = InitialState, action={}){
 
 
 //selectors
-export function getCountyIds(state){
-    return state.facilityReducer.countyIds
+export function getCountyCodes(state){    
+    return state.facilityReducer.countyCodes
 }
 
+
+export function getCountyConstituencyCodesFetchStatus(state){
+    return state.facilityReducer.constituencyCodesIsFetched
+}
 export function getCountyConstituencyCodes(state){
     return state.facilityReducer.constituencyCodes
+}
+
+
+export function getWardCodesFetcchedstatus(state){
+    return state.facilityReducer.wardCodesIsFetched
+}
+export function getWardCodes(state){
+    return state.facilityReducer.wardCodes
 }
