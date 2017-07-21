@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { connect } from 'react-redux'
-import { Grid, Card, Divider, Menu, Container } from 'semantic-ui-react'
+import { Grid, Header, Segment, Dimmer, Loader} from 'semantic-ui-react'
 import {bindActionCreators } from 'redux'
 
 import * as facilitySelectors from "../Store/Facilities/reducer"
@@ -20,68 +20,106 @@ class FacilityScreen extends Component{
     }
     
     render(){
-        if(!this.props.countyIds) return this.renderLoading()
+        if(!this.props.countyCodes) return this.renderLoading()
         return(
-            <div>
-                <h1> Facilities </h1>
+           <Grid columns='equal' divided padded stretched>
+               <Grid.Column stretched>
+                   <Grid.Column>
+                       <Header as='h2'  textAlign='center'>
+                           Counties
+                       </Header>
+                       <Grid.Column >
+                           {
+                               this.props.countyCodes.map((county,i) =>(                                   
+                                   <Segment key={i}
+                                        onClick={() =>{
+                                            this.props.facilityActions.fetchCountyConstituencyCodes(county.id)
+                                        }}>
+                                      {county.name}
+                                   </Segment>
+                               ))
+                           }
+                       </Grid.Column>
+                   </Grid.Column>
+               </Grid.Column>
 
-                <Grid columns={2} centered padded>
-                    <Grid.Row columns={2} padded centered textAlign='left'>
-                        <Grid.Column centered>
-                            <Card  padded textAlign='left'>
-                                <Container className='ui padded vertical segment' textAlign='left'>                                                                      
-                                    <p className='header' textAlign='left'>Counties</p>                                
-                                </Container>            
-                                {
-                                    this.props.countyIds.map((county,i)=>(
-                                        <Container 
-                                            key={county.id}
-                                            className='ui padded vertical segment' textAlign='left'
-                                            onClick={()=>{                                            
-                                                this.props.facilityActions.fetchCountyConstituencyCodes(county.id)
-                                            }}
-                                            >
+                <Grid.Column stretched>
+                   <Grid.Column stretched>
+                        <Header as='h2'  textAlign='center'>
+                            Constituencies
+                        </Header>
+                       <Grid.Column stretched>                                            
+                            {this.props.constituencyCodesIsFetched ? (
+                                this.props.constituencyCodes.map((constituency, i) => (
+                                    <Segment key={i}
+                                        onClick={()=>{
+                                            this.props.facilityActions.fetchConstituencyWardCodes(constituency.id)
+                                        }}
+                                        >
+                                        {constituency.name}
+                                    </Segment>
+                                ))
+                            ) : (
+                                <Segment  loading>
+                                    <Segment color='grey'/>
+                                    <Segment color='grey'/>
+                                    <Segment color='grey'/>
+                                    <Segment color='grey'/>
+                                </Segment>                 
+                            )}
+                       </Grid.Column>
+                   </Grid.Column>
+                </Grid.Column>
+                
+                <Grid.Column stretched>
+                   <Grid.Column stretched>
+                        <Header as='h2'  textAlign='center'>
+                           Wards
+                       </Header>
+                       <Grid.Column stretched>                                            
+                        {this.props.wardCodesIsFetched ? (
+                            this.props.wardCodes.map((ward, i) => (
+                                <Segment 
+                                    key={i}
+                                    onClick={()=>{
+                                        alert(ward.id)
+                                    }}                                   
+                                    >
+                                    {ward.name}
+                                </Segment>
+                            ))
+                        ) : (
+                            <Segment loading>
+                                <Segment color='grey'/>
+                                <Segment color='grey'/>
+                                <Segment color='grey'/>
+                                <Segment color='grey'/>                                
+                            </Segment>                 
+                        )}
+                       </Grid.Column>
+                   </Grid.Column>
+                </Grid.Column>
 
-                                            <p className='text-left' textAlign='left'>{ county.name}</p>
-                                            {/*<Divider fitted></Divider>*/}
-                                        </Container>                                                                    
-                                    ))
-                                }
-
-                                
-                            </Card>
-                        </Grid.Column>
-                        <Grid.Column>
-                            <Card   textAlign='left'>
-                                <Container className='ui padded vertical segment' textAlign='left'>                                                                      
-                                    <p className='header' textAlign='left'>Counties</p>                                
-                                </Container>
-                                {() =>{
-                                    if(!this.props.constituencyCodes) return renderLoading()
-                                
-                                    this.props.constituencyCodes.map((constituency,i)=>(
-                                        <Container 
-                                            key={constituency.id}
-                                            className='ui padded vertical segment' textAlign='left'
-                                            onClick={()=>{}}
-                                            >
-
-                                            <p className='text-left' textAlign='left'>{ constituency.name}</p>
-                                            {/*<Divider fitted></Divider>*/}
-                                        </Container>                                                                    
-                                    ))                                
-                                }}
-                            </Card>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-            </div>
+           </Grid>
         )
     }
 
     renderLoading(){
         return(
-            <h4>Loading</h4>
+            <Segment  size='large'>
+                
+            </Segment>         
+        )
+    }
+
+    renderSkeletonListItems(){
+        return(
+            <Grid stackable loading>
+                <Segment color='grey'/>
+                <Segment color='grey'/>
+                <Segment color='grey'/>
+                <Segment color='grey'/>
+            </Grid>
         )
     }
 }
@@ -89,8 +127,11 @@ class FacilityScreen extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        countyIds: facilitySelectors.getCountyIds(state),
-        constituencyCodes: facilitySelectors.getCountyConstituencyCodes(state)
+        countyCodes: facilitySelectors.getCountyCodes(state),
+        constituencyCodes: facilitySelectors.getCountyConstituencyCodes(state),
+        constituencyCodesIsFetched: facilitySelectors.getCountyConstituencyCodesFetchStatus(state),
+        wardCodesIsFetched: facilitySelectors.getWardCodesFetcchedstatus(state),
+        wardCodes: facilitySelectors.getWardCodes(state)
     }
 }
 
