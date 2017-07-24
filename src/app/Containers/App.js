@@ -1,12 +1,19 @@
 import React, { Component } from "react"  
 import ChartScreen from "./ChartScreen"
 import FacilityScreen from "./FacilityScreen"
+import MapScreen from "./MapScreen"
+import Dimensions from "react-dimensions"
 
-export default class App extends Component{
+class App extends Component{
     render(){
         return(                        
-            <FacilityScreen/>            
+            <FacilityScreen
+                containerWidth={this.props.containerWidth}
+                containerHeight={this.props.containerHeight}
+            />            
         );
     }
 }
 
+
+export default Dimensions()(App)
