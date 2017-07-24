@@ -1,8 +1,13 @@
 
 
 export default class FacilityService{
+    static get host() {
+        delete FacilityService.host;
+        return FacilityService.host = 'http://localhost:8000/';
+    }
+    
     static getCountyIds(){
-        const url = 'http://localhost:8000/maps/api/counties/list'
+        const url = this.host.concat('maps/api/counties/list')
 
         return fetch(url)
             .then(response =>{
@@ -13,10 +18,8 @@ export default class FacilityService{
             })
     }
 
-    static getCountyConstituencyCodes(countyId){
-        const host = 'http://localhost:8000/maps/api/counties/'
-
-        const url = host.concat(countyId,'/constituencies/')
+    static getCountyConstituencyCodes(countyId){        
+        const url = this.host.concat('maps/api/counties/',countyId,'/constituencies/')
 
         return fetch(url)
             .then(response =>{
@@ -28,13 +31,23 @@ export default class FacilityService{
     }
 
     static getConstituencyWardCodes(constituencyId){
-        const host = 'http://localhost:8000/maps/api/constituencies/'
-        const url = host.concat(constituencyId,'/wards/')
+        const url = this.host.concat('maps/api/constituencies/',constituencyId,'/wards/')
         return fetch(url)
             .then(response =>{
                 return response.json()
             })
             .catch(error =>{
+                return error
+            })
+    }
+
+    static getFacilityTypes(){
+        const url = this.host.concat('facilities/facilitytypes')
+        return fetch(url)
+            .then(response =>{
+                return response.json()
+            })
+            .catch(error => {
                 return error
             })
     }

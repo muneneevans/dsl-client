@@ -40,7 +40,6 @@ export function fetchCountyConstituencyCodes(countyId){
     }
 }
 
-
 export function fetchConstituencyWardCodes(constituencyId){
     return function(dispatch, getState){
         dispatch(showLoading(types.CONSTITUENCY_WARD_CODES_REQUESTED))
@@ -49,6 +48,21 @@ export function fetchConstituencyWardCodes(constituencyId){
                 return dispatch({
                     type: types.CONSTITUENCY_WARD_CODES_FETCHED,
                     wardCodes
+                })
+            })
+            .catch(error => {
+                throw(error)
+            })
+    }
+}
+
+export function fetchFacilityTypes(){
+    return function(dispatch, getState){
+        return FacilityService.getFacilityTypes()
+            .then(facilityTypes => {
+                return dispatch({
+                    type: types.FACILITY_TYPES_RECEIVED,
+                    facilityTypes
                 })
             })
             .catch(error => {

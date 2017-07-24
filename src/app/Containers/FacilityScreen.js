@@ -14,6 +14,7 @@ class FacilityScreen extends Component{
 
     componentDidMount(){
         this.props.facilityActions.fetchCountyIds()
+        this.props.facilityActions.fetchFacilityTypes()
     }
 
     handleCountyClick(event){

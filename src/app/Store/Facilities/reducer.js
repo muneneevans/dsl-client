@@ -3,10 +3,14 @@ import Immutable from "seamless-immutable"
 
 const InitialState = Immutable({
     countyCodes: undefined,
-    constituencyCodes: undefined,
+
     constituencyCodesIsFetched: false,
+    constituencyCodes: undefined,
+
     wardCodesIsFetched: false,
-    wardCodes: undefined
+    wardCodes: undefined,
+
+    facilityTypes: undefined
 })
 
 export default function facilityReducer(state = InitialState, action={}){
@@ -32,6 +36,11 @@ export default function facilityReducer(state = InitialState, action={}){
             return state.merge({
                 wardCodes : action.wardCodes,
                 wardCodesIsFetched: true
+            })
+        case types.FACILITY_TYPES_RECEIVED:
+            console.log(action.facilityTypes)
+            return state.merge({
+                facilityTypes: action.facilityTypes,
             })
         default:
             return state
