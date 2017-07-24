@@ -2,8 +2,7 @@ import * as types from "./actionTypes"
 import FacilityService from "../../Services/FacilityService"
 
 export function showLoading(actionType){
-   return function(dispatch, getState){
-       console.log(actionType)
+   return function(dispatch, getState){       
        return dispatch({
            type: actionType
        })
@@ -13,7 +12,7 @@ export function showLoading(actionType){
 export function fetchCountyIds(){
     return function(dispatch, getState){
         return FacilityService.getCountyIds()
-        .then(countyCodes=>{                   
+        .then(countyCodes=>{
             dispatch({
                 type: types.COUNTY_CODES_FETCHED,
                 countyCodes

@@ -9,6 +9,7 @@ import * as facilityActions from "../Store/Facilities/actions"
 class FacilityScreen extends Component{
     constructor(props){
         super(props)
+        
     }
 
     componentDidMount(){
@@ -29,16 +30,18 @@ class FacilityScreen extends Component{
                            Counties
                        </Header>
                        <Grid.Column >
-                           {
-                               this.props.countyCodes.map((county,i) =>(                                   
-                                   <Segment key={i}
-                                        onClick={() =>{
-                                            this.props.facilityActions.fetchCountyConstituencyCodes(county.id)
-                                        }}>
-                                      {county.name}
-                                   </Segment>
-                               ))
-                           }
+                           <Segment.Group>
+                                {
+                                    this.props.countyCodes.map((county,i) =>(                                   
+                                        <Segment key={i}
+                                                onClick={() =>{
+                                                    this.props.facilityActions.fetchCountyConstituencyCodes(county.id)
+                                                }}>
+                                            {county.name}
+                                        </Segment>
+                                    ))
+                                }
+                           </Segment.Group>
                        </Grid.Column>
                    </Grid.Column>
                </Grid.Column>
@@ -48,54 +51,58 @@ class FacilityScreen extends Component{
                         <Header as='h2'  textAlign='center'>
                             Constituencies
                         </Header>
-                       <Grid.Column stretched>                                            
-                            {this.props.constituencyCodesIsFetched ? (
-                                this.props.constituencyCodes.map((constituency, i) => (
-                                    <Segment key={i}
-                                        onClick={()=>{
-                                            this.props.facilityActions.fetchConstituencyWardCodes(constituency.id)
-                                        }}
-                                        >
-                                        {constituency.name}
-                                    </Segment>
-                                ))
-                            ) : (
-                                <Segment  loading>
-                                    <Segment color='grey'/>
-                                    <Segment color='grey'/>
-                                    <Segment color='grey'/>
-                                    <Segment color='grey'/>
-                                </Segment>                 
-                            )}
-                       </Grid.Column>
-                   </Grid.Column>
+                       <Grid.Column stretched>         
+                           <Segment.Group>                                   
+                                {this.props.constituencyCodesIsFetched ? (
+                                    this.props.constituencyCodes.map((constituency, i) => (
+                                        <Segment key={i}
+                                            onClick={()=>{
+                                                this.props.facilityActions.fetchConstituencyWardCodes(constituency.id)
+                                            }}
+                                            >
+                                            {constituency.name}
+                                        </Segment>
+                                    ))
+                                ) : (
+                                    <Segment  loading>
+                                        <Segment color='grey'/>
+                                        <Segment color='grey'/>
+                                        <Segment color='grey'/>
+                                        <Segment color='grey'/>
+                                    </Segment>                 
+                                )}
                 </Grid.Column>
                 
                 <Grid.Column stretched>
                    <Grid.Column stretched>
                         <Header as='h2'  textAlign='center'>
-                           Wards
+       
+                            </Segment.Group>
+                       </Grid.Column>
+                   </Grid.Column>                    Wards
                        </Header>
-                       <Grid.Column stretched>                                            
-                        {this.props.wardCodesIsFetched ? (
-                            this.props.wardCodes.map((ward, i) => (
-                                <Segment 
-                                    key={i}
-                                    onClick={()=>{
-                                        alert(ward.id)
-                                    }}                                   
-                                    >
-                                    {ward.name}
-                                </Segment>
-                            ))
-                        ) : (
-                            <Segment loading>
-                                <Segment color='grey'/>
-                                <Segment color='grey'/>
-                                <Segment color='grey'/>
-                                <Segment color='grey'/>                                
-                            </Segment>                 
-                        )}
+                       <Grid.Column stretched>
+                           <Segment.Group>
+                                {this.props.wardCodesIsFetched ? (
+                                    this.props.wardCodes.map((ward, i) => (
+                                        <Segment 
+                                            key={i}
+                                            onClick={()=>{
+                                                alert(ward.id)
+                                            }}                                   
+                                            >
+                                            {ward.name}
+                                        </Segment>
+                                    ))
+                                ) : (
+                                    <Segment loading>
+                                        <Segment color='grey'/>
+                                        <Segment color='grey'/>
+                                        <Segment color='grey'/>
+                                        <Segment color='grey'/>                                
+                                    </Segment>                 
+                                )}
+                            </Segment.Group>
                        </Grid.Column>
                    </Grid.Column>
                 </Grid.Column>
