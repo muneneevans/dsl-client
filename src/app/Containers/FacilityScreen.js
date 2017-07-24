@@ -9,7 +9,7 @@ import * as facilityActions from "../Store/Facilities/actions"
 class FacilityScreen extends Component{
     constructor(props){
         super(props)
-        
+        console.log(props.containerWidth)
     }
 
     componentDidMount(){
@@ -71,15 +71,15 @@ class FacilityScreen extends Component{
                                         <Segment color='grey'/>
                                     </Segment>                 
                                 )}
+                            </Segment.Group>
+                       </Grid.Column>
+                   </Grid.Column>
                 </Grid.Column>
                 
                 <Grid.Column stretched>
                    <Grid.Column stretched>
                         <Header as='h2'  textAlign='center'>
-       
-                            </Segment.Group>
-                       </Grid.Column>
-                   </Grid.Column>                    Wards
+                           Wards
                        </Header>
                        <Grid.Column stretched>
                            <Segment.Group>
