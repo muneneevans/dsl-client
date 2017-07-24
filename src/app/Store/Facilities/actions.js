@@ -70,3 +70,18 @@ export function fetchFacilityTypes(){
             })
     }
 }
+
+export function fetchFacilityKephLevels(){
+    return function(dispatch, getState){
+        return FacilityService.getFaciityKephLevels()
+            .then(kephLevels => {
+                return dispatch({
+                    type: types.FACILITY_KEPH_LEVELS_RECEIVED,
+                    kephLevels
+                })
+            })
+            .catch(error => {
+                throw(error)
+            })
+    }
+}

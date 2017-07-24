@@ -42,9 +42,20 @@ export default class FacilityService{
     }
 
     static getFacilityTypes(){
-        const url = this.host.concat('facilities/facilitytypes')
+        const url = this.host.concat('facilities/facilitytypes/')
         return fetch(url)
             .then(response =>{
+                return response.json()
+            })
+            .catch(error => {
+                return error
+            })
+    }
+
+    static getFaciityKephLevels(){
+        const url = this.host.concat('facilities/kephlevels/')
+        return fetch(url)
+            .then(response => {
                 return response.json()
             })
             .catch(error => {

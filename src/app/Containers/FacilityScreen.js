@@ -9,12 +9,12 @@ import * as facilityActions from "../Store/Facilities/actions"
 class FacilityScreen extends Component{
     constructor(props){
         super(props)
-        console.log(props.containerWidth)
     }
 
     componentDidMount(){
         this.props.facilityActions.fetchCountyIds()
-        this.props.facilityActions.fetchFacilityTypes()
+        // this.props.facilityActions.fetchFacilityTypes()
+        // this.props.facilityActions.fetchFacilityKephLevels()
     }
 
     handleCountyClick(event){
