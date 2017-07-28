@@ -11,7 +11,6 @@ import CountyForm from "../Components/CountyForm"
 class FacilityScreen extends Component {
     constructor(props) {
         super(props)
-        this.state = { activeItem: 'home' }
     }
 
     componentDidMount() {
@@ -24,26 +23,33 @@ class FacilityScreen extends Component {
 
     }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
 
     render() {
+        const panes = [
+            {
+                menuItem: 'Counties', render: () => 
+                    <Tab.Pane attached={false}>
+                        <CountyForm countyCodes={this.props.countyCodes} fetchCountyConstituencyCodes={this.props.facilityActions.fetchCountyConstituencyCodes} />
+                    </Tab.Pane>
+            },
+            { menuItem: 'Constituencies', render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
+            { menuItem: 'Wards', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
+        ]
+
         if (!this.props.countyCodes) return this.renderLoading()
 
         return (
             <div>
                 <Grid columns='equal' divided padded stretched>
-                    <Grid.Column stretched>
+                    <Grid.Column stretched computer={4}>
                         <Grid.Column>
                             <Header as='h2' textAlign='center'>
                                 Level
                             </Header>
                             <Grid.Column >
-                                <Menu pointing secondary>
-                                    <Menu.Item name='County' active={this.state.activeItem === 'County'} onClick={this.handleItemClick} />
-                                    <Menu.Item name='Constituency' active={this.state.activeItem === 'Constituency'} onClick={this.handleItemClick} />
-                                    <Menu.Item name='Wards' active={this.state.activeItem === 'Wards'} onClick={this.handleItemClick} />
-                                </Menu>
-                                <CountyForm countyCodes={this.props.countyCodes}/>
+                                <Tab menu={{ secondary: true, pointing: true}} panes={panes} />
+
                                 <Segment.Group>
                                     {
                                         this.props.countyCodes.map((county, i) => (
@@ -60,7 +66,9 @@ class FacilityScreen extends Component {
                         </Grid.Column>
                     </Grid.Column>
 
-                    <Grid.Column stretched>
+                    <Grid.Column 
+                        stretched
+                        computer={6}>
                         <Grid.Column stretched>
                             <Header as='h2' textAlign='center'>
                                 Constituencies
@@ -90,7 +98,9 @@ class FacilityScreen extends Component {
                         </Grid.Column>
                     </Grid.Column>
 
-                    <Grid.Column stretched>
+                    <Grid.Column 
+                        stretched
+                        computer={6}>
                         <Grid.Column stretched>
                             <Header as='h2' textAlign='center'>
                                 Wards

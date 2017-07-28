@@ -2,17 +2,23 @@ import React from 'react'
 import {Card , Form } from 'semantic-ui-react'
 
 export const CountyForm = (props) => {
+
+    const handleChange = (event) => {
+        // alert(event.target.value)
+        props.fetchCountyConstituencyCodes(event.target.value)
+    }
+
     return (
-        <Card fluid>
-            <Card.Content>
+       
                 <Form>
                     <Form.Field>
                         <label>County</label>
                         <select
+                            onChange={handleChange.bind(this)}
                             placeholder='select a county'>
                             {
                                 props.countyCodes.map((county, i) => (
-                                    <option key={i} value={i}
+                                    <option key={i} value={county.id}
                                     >
                                         {county.name}
                                     </option>
@@ -21,8 +27,7 @@ export const CountyForm = (props) => {
                         </select>
                     </Form.Field>
                 </Form>
-            </Card.Content>
-        </Card>
+       
     )
 }
 
