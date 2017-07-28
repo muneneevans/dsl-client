@@ -1,6 +1,7 @@
 import React, { Component } from "react"  
 import ChartScreen from "./ChartScreen"
 import FacilityScreen from "./FacilityScreen"
+import IndicatorScreen from "./IndicatorsScreen"
 import MapScreen from "./MapScreen"
 import Dimensions from "react-dimensions"
 
