@@ -7,6 +7,8 @@ import * as facilitySelectors from "../Store/Facilities/reducer"
 import * as facilityActions from "../Store/Facilities/actions"
 
 import CountyForm from "../Components/CountyForm"
+import ConstituencyForm from "../Components/ConstituencyForm"
+import WardForm from "../Components/WardForm"
 
 class FacilityScreen extends Component {
     constructor(props) {
@@ -28,13 +30,38 @@ class FacilityScreen extends Component {
     render() {
         const panes = [
             {
-                menuItem: 'Counties', render: () => 
+                menuItem: 'Counties', render: () =>
                     <Tab.Pane attached={false}>
-                        <CountyForm countyCodes={this.props.countyCodes} fetchCountyConstituencyCodes={this.props.facilityActions.fetchCountyConstituencyCodes} />
+                        <CountyForm 
+                            countyCodes={this.props.countyCodes} 
+                            fetchCountyConstituencyCodes={this.props.facilityActions.fetchCountyConstituencyCodes} />
                     </Tab.Pane>
             },
-            { menuItem: 'Constituencies', render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
-            { menuItem: 'Wards', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
+            {
+                menuItem: 'Constituencies', render: () =>
+                    <Tab.Pane attached={false}>
+                        <ConstituencyForm
+                            countyCodes={this.props.countyCodes}
+                            fetchCountyConstituencyCodes={this.props.facilityActions.fetchCountyConstituencyCodes}
+                            constituencyCodesIsFetched={this.props.constituencyCodesIsFetched}
+                            constituencyCodes={this.props.constituencyCodes}
+                            fetchConstituencyWardCodes={this.props.facilityActions.fetchConstituencyWardCodes}/>
+                   </Tab.Pane>
+            },
+            { 
+                menuItem: 'Wards', render: () => 
+                    <Tab.Pane attached={false}>
+                        <WardForm
+                            countyCodes={this.props.countyCodes}
+                            fetchCountyConstituencyCodes={this.props.facilityActions.fetchCountyConstituencyCodes}
+                            constituencyCodesIsFetched={this.props.constituencyCodesIsFetched}
+                            constituencyCodes={this.props.constituencyCodes}
+                            fetchConstituencyWardCodes={this.props.facilityActions.fetchConstituencyWardCodes}
+                            wardCodesIsFetched={this.props.wardCodesIsFetched}
+                            wardCodes={this.props.wardCodes}/>
+                   </Tab.Pane>
+                
+            },
         ]
 
         if (!this.props.countyCodes) return this.renderLoading()
@@ -48,25 +75,14 @@ class FacilityScreen extends Component {
                                 Level
                             </Header>
                             <Grid.Column >
-                                <Tab menu={{ secondary: true, pointing: true}} panes={panes} />
+                                <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
 
-                                <Segment.Group>
-                                    {
-                                        this.props.countyCodes.map((county, i) => (
-                                            <Segment key={i}
-                                                onClick={() => {
-                                                    this.props.facilityActions.fetchCountyConstituencyCodes(county.id)
-                                                }}>
-                                                {county.name}
-                                            </Segment>
-                                        ))
-                                    }
-                                </Segment.Group>
+
                             </Grid.Column>
                         </Grid.Column>
                     </Grid.Column>
 
-                    <Grid.Column 
+                    <Grid.Column
                         stretched
                         computer={6}>
                         <Grid.Column stretched>
@@ -98,7 +114,7 @@ class FacilityScreen extends Component {
                         </Grid.Column>
                     </Grid.Column>
 
-                    <Grid.Column 
+                    <Grid.Column
                         stretched
                         computer={6}>
                         <Grid.Column stretched>
