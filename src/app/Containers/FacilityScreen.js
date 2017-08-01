@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Grid, Header, Segment, Dimmer, Loader, Tab, Menu } from 'semantic-ui-react'
 import { bindActionCreators } from 'redux'
 
-import * as facilitySelectors from "../Store/Facilities/reducer"
-import * as facilityActions from "../Store/Facilities/actions"
+import * as commonSelectors from "../Store/Common/selectors"
+import * as commonActions from "../Store/Common/actions"
 
 import CountyForm from "../Components/CountyForm"
 import ConstituencyForm from "../Components/ConstituencyForm"
@@ -16,16 +16,12 @@ class FacilityScreen extends Component {
     }
 
     componentDidMount() {
-        this.props.facilityActions.fetchCountyIds()
-        // this.props.facilityActions.fetchFacilityTypes()
-        // this.props.facilityActions.fetchFacilityKephLevels()
+        this.props.commonActions.fetchCountyIds()
     }
 
     handleCountyClick(event) {
 
     }
-
-
 
     render() {
         const panes = [
@@ -34,7 +30,7 @@ class FacilityScreen extends Component {
                     <Tab.Pane attached={false}>
                         <CountyForm 
                             countyCodes={this.props.countyCodes} 
-                            fetchCountyConstituencyCodes={this.props.facilityActions.fetchCountyConstituencyCodes} />
+                            fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes} />
                     </Tab.Pane>
             },
             {
@@ -42,10 +38,10 @@ class FacilityScreen extends Component {
                     <Tab.Pane attached={false}>
                         <ConstituencyForm
                             countyCodes={this.props.countyCodes}
-                            fetchCountyConstituencyCodes={this.props.facilityActions.fetchCountyConstituencyCodes}
+                            fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
                             constituencyCodesIsFetched={this.props.constituencyCodesIsFetched}
                             constituencyCodes={this.props.constituencyCodes}
-                            fetchConstituencyWardCodes={this.props.facilityActions.fetchConstituencyWardCodes}/>
+                            fetchConstituencyWardCodes={this.props.commonActions.fetchConstituencyWardCodes}/>
                    </Tab.Pane>
             },
             { 
@@ -53,10 +49,10 @@ class FacilityScreen extends Component {
                     <Tab.Pane attached={false}>
                         <WardForm
                             countyCodes={this.props.countyCodes}
-                            fetchCountyConstituencyCodes={this.props.facilityActions.fetchCountyConstituencyCodes}
+                            fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
                             constituencyCodesIsFetched={this.props.constituencyCodesIsFetched}
                             constituencyCodes={this.props.constituencyCodes}
-                            fetchConstituencyWardCodes={this.props.facilityActions.fetchConstituencyWardCodes}
+                            fetchConstituencyWardCodes={this.props.commonActions.fetchConstituencyWardCodes}
                             wardCodesIsFetched={this.props.wardCodesIsFetched}
                             wardCodes={this.props.wardCodes}/>
                    </Tab.Pane>
@@ -68,23 +64,26 @@ class FacilityScreen extends Component {
 
         return (
             <div>
-                <Grid columns='equal' divided padded stretched>
-                    <Grid.Column stretched computer={4}>
+                <Grid columns='equal'  padded stretched>
+                    <Grid.Column 
+                        stretched 
+                        computer={4} 
+                        mobile={16}>
                         <Grid.Column>
                             <Header as='h2' textAlign='center'>
                                 Level
                             </Header>
                             <Grid.Column >
                                 <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
-
-
                             </Grid.Column>
                         </Grid.Column>
                     </Grid.Column>
 
                     <Grid.Column
                         stretched
-                        computer={6}>
+                        computer={6}
+                        tablet={8}
+                        mobile={8}>
                         <Grid.Column stretched>
                             <Header as='h2' textAlign='center'>
                                 Constituencies
@@ -95,7 +94,7 @@ class FacilityScreen extends Component {
                                         this.props.constituencyCodes.map((constituency, i) => (
                                             <Segment key={i}
                                                 onClick={() => {
-                                                    this.props.facilityActions.fetchConstituencyWardCodes(constituency.id)
+                                                    this.props.commonActions.fetchConstituencyWardCodes(constituency.id)
                                                 }}
                                             >
                                                 {constituency.name}
@@ -116,7 +115,9 @@ class FacilityScreen extends Component {
 
                     <Grid.Column
                         stretched
-                        computer={6}>
+                        computer={6}
+                        tablet={8}
+                        mobile={8}>
                         <Grid.Column stretched>
                             <Header as='h2' textAlign='center'>
                                 Wards
@@ -175,18 +176,18 @@ class FacilityScreen extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        countyCodes: facilitySelectors.getCountyCodes(state),
-        constituencyCodes: facilitySelectors.getCountyConstituencyCodes(state),
-        constituencyCodesIsFetched: facilitySelectors.getCountyConstituencyCodesFetchStatus(state),
-        wardCodesIsFetched: facilitySelectors.getWardCodesFetcchedstatus(state),
-        wardCodes: facilitySelectors.getWardCodes(state)
+        countyCodes: commonSelectors.getCountyCodes(state),
+        constituencyCodes: commonSelectors.getCountyConstituencyCodes(state),
+        constituencyCodesIsFetched: commonSelectors.getCountyConstituencyCodesFetchStatus(state),
+        wardCodesIsFetched: commonSelectors.getWardCodesFetcchedstatus(state),
+        wardCodes: commonSelectors.getWardCodes(state)
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        facilityActions: bindActionCreators(facilityActions, dispatch)
-        // getCountyIds: () => dispatch(facilityActions.fetchCountyIds())
+        commonActions: bindActionCreators(commonActions, dispatch)
+        // getCountyIds: () => dispatch(commonActions.fetchCountyIds())
     }
 }
 
