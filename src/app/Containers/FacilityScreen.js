@@ -93,8 +93,8 @@ class FacilityScreen extends Component {
                             </Header>
                             <Grid.Column stretched>
                                 <Segment.Group>
-                                    {this.props.countyFacilitiesIsFetched ? (
-                                        this.props.countyFacilities.map((facility, i) => (
+                                    {this.props.facilitiesIsFetched ? (
+                                        this.props.facilities.map((facility, i) => (
                                             <Segment key={i}
                                                 onClick={() => {
                                                     {/* this.props.commonActions.fetchConstituencyWardCodes(constituency.id) */}
@@ -152,8 +152,8 @@ const mapStateToProps = (state, ownProps) => {
         wardCodesIsFetched: commonSelectors.getWardCodesFetcchedstatus(state),
         wardCodes: commonSelectors.getWardCodes(state),
 
-        countyFacilities: facilitySelectors.getCountyFacilities(state),
-        countyFacilitiesIsFetched: facilitySelectors.getCountyFacilitiesFecthStatus(state)
+        facilities: facilitySelectors.getFacilties(state),
+        facilitiesIsFetched: facilitySelectors.getFaciltiesFecthStatus(state)
     }
 }
 

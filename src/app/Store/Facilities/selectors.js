@@ -1,8 +1,8 @@
 //selectors
-export function getCountyFacilities(state){
-    return state.facilityReducer.countyFacilities
+export function getFacilties(state){
+    return state.facilityReducer.facilities
 }
 
-export function getCountyFacilitiesFecthStatus(state){
-    return state.facilityReducer.countyFacilitiesIsFetched
+export function getFaciltiesFecthStatus(state){
+    return state.facilityReducer.facilitiesIsFetched
 }
