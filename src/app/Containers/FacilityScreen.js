@@ -12,6 +12,7 @@ import * as facilityActions from "../Store/Facilities/actions"
 import CountyForm from "../Components/CountyForm"
 import ConstituencyForm from "../Components/ConstituencyForm"
 import WardForm from "../Components/WardForm"
+import FacilityList  from "../Components/FacilityList"
 
 class FacilityScreen extends Component {
     constructor(props) {
@@ -93,26 +94,9 @@ class FacilityScreen extends Component {
                                 Facilities
                             </Header>
                             <Grid.Column stretched>
-                                <Segment.Group>
-                                    {this.props.facilitiesIsFetched ? (
-                                        this.props.facilities.map((facility, i) => (
-                                            <Segment key={i}
-                                                onClick={() => {
-                                                    {/* this.props.commonActions.fetchConstituencyWardCodes(constituency.id) */}
-                                                }}
-                                            >
-                                                {facility.name}
-                                            </Segment>
-                                        ))
-                                    ) : (
-                                            <Segment loading>
-                                                <Segment color='grey' />
-                                                <Segment color='grey' />
-                                                <Segment color='grey' />
-                                                <Segment color='grey' />
-                                            </Segment>
-                                        )}
-                                </Segment.Group>
+                                <FacilityList
+                                    facilitiesIsFetched={this.props.facilitiesIsFetched}
+                                    facilities={this.props.facilities}/>
                             </Grid.Column>
                         </Grid.Column>
                     </Grid.Column>
