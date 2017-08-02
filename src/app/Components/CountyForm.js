@@ -5,7 +5,8 @@ export const CountyForm = (props) => {
 
     const handleChange = (event) => {
         // alert(event.target.value)
-        props.fetchCountyConstituencyCodes(event.target.value)
+        // props.fetchCountyConstituencyCodes(event.target.value)
+        props.fetchCountyFacilities(event.target.value)
     }
 
     return (

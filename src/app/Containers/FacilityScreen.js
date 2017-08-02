@@ -6,6 +6,9 @@ import { bindActionCreators } from 'redux'
 import * as commonSelectors from "../Store/Common/selectors"
 import * as commonActions from "../Store/Common/actions"
 
+import * as facilitySelectors from "../Store/Facilities/selectors"
+import * as facilityActions from "../Store/Facilities/actions"
+
 import CountyForm from "../Components/CountyForm"
 import ConstituencyForm from "../Components/ConstituencyForm"
 import WardForm from "../Components/WardForm"
@@ -30,7 +33,8 @@ class FacilityScreen extends Component {
                     <Tab.Pane attached={false}>
                         <CountyForm 
                             countyCodes={this.props.countyCodes} 
-                            fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes} />
+                            fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes} 
+                            fetchCountyFacilities={this.props.facilityActions.fetchCountyFacilities}/>
                     </Tab.Pane>
             },
             {
@@ -81,23 +85,21 @@ class FacilityScreen extends Component {
 
                     <Grid.Column
                         stretched
-                        computer={6}
-                        tablet={8}
-                        mobile={8}>
+                        >
                         <Grid.Column stretched>
                             <Header as='h2' textAlign='center'>
-                                Constituencies
+                                Facilities
                             </Header>
                             <Grid.Column stretched>
                                 <Segment.Group>
-                                    {this.props.constituencyCodesIsFetched ? (
-                                        this.props.constituencyCodes.map((constituency, i) => (
+                                    {this.props.countyFacilitiesIsFetched ? (
+                                        this.props.countyFacilities.map((facility, i) => (
                                             <Segment key={i}
                                                 onClick={() => {
-                                                    this.props.commonActions.fetchConstituencyWardCodes(constituency.id)
+                                                    {/* this.props.commonActions.fetchConstituencyWardCodes(constituency.id) */}
                                                 }}
                                             >
-                                                {constituency.name}
+                                                {facility.name}
                                             </Segment>
                                         ))
                                     ) : (
@@ -113,40 +115,7 @@ class FacilityScreen extends Component {
                         </Grid.Column>
                     </Grid.Column>
 
-                    <Grid.Column
-                        stretched
-                        computer={6}
-                        tablet={8}
-                        mobile={8}>
-                        <Grid.Column stretched>
-                            <Header as='h2' textAlign='center'>
-                                Wards
-                        </Header>
-                            <Grid.Column stretched>
-                                <Segment.Group>
-                                    {this.props.wardCodesIsFetched ? (
-                                        this.props.wardCodes.map((ward, i) => (
-                                            <Segment
-                                                key={i}
-                                                onClick={() => {
-                                                    alert(ward.id)
-                                                }}
-                                            >
-                                                {ward.name}
-                                            </Segment>
-                                        ))
-                                    ) : (
-                                            <Segment loading>
-                                                <Segment color='grey' />
-                                                <Segment color='grey' />
-                                                <Segment color='grey' />
-                                                <Segment color='grey' />
-                                            </Segment>
-                                        )}
-                                </Segment.Group>
-                            </Grid.Column>
-                        </Grid.Column>
-                    </Grid.Column>
+                   
 
                 </Grid>
             </div>
@@ -180,14 +149,17 @@ const mapStateToProps = (state, ownProps) => {
         constituencyCodes: commonSelectors.getCountyConstituencyCodes(state),
         constituencyCodesIsFetched: commonSelectors.getCountyConstituencyCodesFetchStatus(state),
         wardCodesIsFetched: commonSelectors.getWardCodesFetcchedstatus(state),
-        wardCodes: commonSelectors.getWardCodes(state)
+        wardCodes: commonSelectors.getWardCodes(state),
+
+        countyFacilities: facilitySelectors.getCountyFacilities(state),
+        countyFacilitiesIsFetched: facilitySelectors.getCountyFacilitiesFecthStatus(state)
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        commonActions: bindActionCreators(commonActions, dispatch)
-        // getCountyIds: () => dispatch(commonActions.fetchCountyIds())
+        commonActions: bindActionCreators(commonActions, dispatch),
+        facilityActions: bindActionCreators(facilityActions, dispatch)
     }
 }
 
