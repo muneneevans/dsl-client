@@ -9,6 +9,23 @@ export function showLoading(actionType){
    }
 }
 
+export function fetchConstituencyFacilities(constituencyId){
+    return function(dispatch, getState){
+        dispatch(showLoading(types.CONSTITUENCY_FACILITIES_REQUESTED))
+        return FacilityService.getConstituencyFacilities(constituencyId)
+            .then(constituencyFacilities =>{                
+                return dispatch({
+                    type: types.CONSTITUENCY_FACILITIES_RECEIVED,
+                    constituencyFacilities
+                })
+            })
+            .catch(error =>{
+                throw(error)
+            })
+    }
+}
+
+
 export function fetchFacilityTypes(){
     return function(dispatch, getState){
         return FacilityService.getFacilityTypes()

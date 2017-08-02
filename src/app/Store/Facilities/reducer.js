@@ -10,7 +10,19 @@ const InitialState = Immutable({
 })
 
 export default function facilityReducer(state = InitialState, action={}){
-    switch (action.type) {                
+    switch (action.type) {
+        
+        case types.CONSTITUENCY_FACILITIES_REQUESTED:
+            return state.merge({
+                countyFacilitiesIsFetched: false
+            })
+        
+        case types.CONSTITUENCY_FACILITIES_RECEIVED:
+            return state.merge({
+                countyFacilities: action.constituencyFacilities,
+                countyFacilitiesIsFetched: true
+            })
+        
         case types.FACILITY_TYPES_RECEIVED:
             return state.merge({
                 facilityTypes: action.facilityTypes,

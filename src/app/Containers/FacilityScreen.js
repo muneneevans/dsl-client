@@ -45,7 +45,8 @@ class FacilityScreen extends Component {
                             fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
                             constituencyCodesIsFetched={this.props.constituencyCodesIsFetched}
                             constituencyCodes={this.props.constituencyCodes}
-                            fetchConstituencyWardCodes={this.props.commonActions.fetchConstituencyWardCodes}/>
+                            fetchConstituencyWardCodes={this.props.commonActions.fetchConstituencyWardCodes}
+                            fetchConstituencyFacilities={this.props.facilityActions.fetchConstituencyFacilities}/>
                    </Tab.Pane>
             },
             { 
