@@ -9,6 +9,22 @@ export function showLoading(actionType){
    }
 }
 
+export function fetchCountyFacilities(countyId){
+    return function(dispatch, getState){
+        dispatch(showLoading(types.COUNTY_FACILITIES_REQUESTED))
+        return FacilityService.getCountyFacilities(countyId)
+            .then(countyFacilities =>{
+                return dispatch({
+                    type: types.COUNTY_FACILITIES_RECEIVED,
+                    countyFacilities
+                })
+            })
+            .catch(error =>{
+                throw(error)
+            })
+    }
+}
+
 export function fetchConstituencyFacilities(constituencyId){
     return function(dispatch, getState){
         dispatch(showLoading(types.CONSTITUENCY_FACILITIES_REQUESTED))
@@ -51,22 +67,6 @@ export function fetchFacilityKephLevels(){
                 })
             })
             .catch(error => {
-                throw(error)
-            })
-    }
-}
-
-export function fetchCountyFacilities(countyId){
-    return function(dispatch, getState){
-        dispatch(showLoading(types.COUNTY_FACILITIES_REQUESTED))
-        return FacilityService.getCountyFacilities(countyId)
-            .then(countyFacilities =>{
-                return dispatch({
-                    type: types.COUNTY_FACILITIES_RECEIVED,
-                    countyFacilities
-                })
-            })
-            .catch(error =>{
                 throw(error)
             })
     }

@@ -147,13 +147,15 @@ class FacilityScreen extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         countyCodes: commonSelectors.getCountyCodes(state),
-        constituencyCodes: commonSelectors.getCountyConstituencyCodes(state),
+
         constituencyCodesIsFetched: commonSelectors.getCountyConstituencyCodesFetchStatus(state),
+        constituencyCodes: commonSelectors.getCountyConstituencyCodes(state),
+
         wardCodesIsFetched: commonSelectors.getWardCodesFetcchedstatus(state),
         wardCodes: commonSelectors.getWardCodes(state),
 
-        facilities: facilitySelectors.getFacilties(state),
-        facilitiesIsFetched: facilitySelectors.getFaciltiesFecthStatus(state)
+        facilitiesIsFetched: facilitySelectors.getFaciltiesFecthStatus(state),
+        facilities: facilitySelectors.getFacilties(state)
     }
 }
 
