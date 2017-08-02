@@ -41,6 +41,22 @@ export function fetchConstituencyFacilities(constituencyId){
     }
 }
 
+export function fetchWardFacilities(wardId){
+    return function(dispatch, getState){
+        dispatch(showLoading(types.WARD_FACILITIES_REQUESTED))
+        return FacilityService.getWardFacilities(wardId)
+            .then(wardFacilities => {
+                return dispatch({
+                    type: types.WARD_FACILITIES_RECEIVED,
+                    wardFacilities
+                })
+            })
+            .catch(error =>{
+                throw(error)
+            })
+    }
+}
+
 
 export function fetchFacilityTypes(){
     return function(dispatch, getState){
