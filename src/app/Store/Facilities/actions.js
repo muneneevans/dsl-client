@@ -25,6 +25,22 @@ export function fetchCountyFacilities(countyId){
     }
 }
 
+export function fetchCountySummary(countyId){
+    return function(dispatch, getState){
+        dispatch(showLoading(types.COUNTY_SUMMARY_REQUESTED))
+        return FacilityService.getCountySummary(countyId)
+            .then(countySummary =>{
+                return dispatch({
+                    type: types.COUNTY_SUMMARY_RECEIVED,
+                    countySummary
+                })
+            })
+            .catch(error =>{
+                throw(error)
+            })
+    }
+}
+
 export function fetchConstituencyFacilities(constituencyId){
     return function(dispatch, getState){
         dispatch(showLoading(types.CONSTITUENCY_FACILITIES_REQUESTED))

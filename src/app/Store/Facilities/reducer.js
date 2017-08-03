@@ -6,7 +6,10 @@ const InitialState = Immutable({
     kephLevels: undefined,
 
     facilitiesIsFetched: false,
-    facilities: undefined
+    facilities: undefined,
+
+    countySummaryIsFetched: false,
+    countySummary: undefined
 })
 
 export default function facilityReducer(state = InitialState, action={}){
@@ -23,6 +26,18 @@ export default function facilityReducer(state = InitialState, action={}){
                 facilitiesIsFetched: true
             })
         
+        case types.COUNTY_SUMMARY_REQUESTED:
+            return state.merge({
+                countySummaryIsFetched: false
+            })
+        
+        case types.COUNTY_SUMMARY_RECEIVED:
+            console.log(action.countySummary)
+            return state.merge({
+                countySummary: action.countySummary,
+                countySummaryIsFetched: true
+            })
+
         case types.CONSTITUENCY_FACILITIES_REQUESTED:
             return state.merge({
                 facilitiesIsFetched: false

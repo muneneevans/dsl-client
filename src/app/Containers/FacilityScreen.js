@@ -12,7 +12,8 @@ import * as facilityActions from "../Store/Facilities/actions"
 import CountyForm from "../Components/CountyForm"
 import ConstituencyForm from "../Components/ConstituencyForm"
 import WardForm from "../Components/WardForm"
-import FacilityList  from "../Components/FacilityList"
+import FacilityList from "../Components/FacilityList"
+import BarChart from "../Components/BarChart"
 
 class FacilityScreen extends Component {
     constructor(props) {
@@ -32,10 +33,11 @@ class FacilityScreen extends Component {
             {
                 menuItem: 'Counties', render: () =>
                     <Tab.Pane attached={false}>
-                        <CountyForm 
-                            countyCodes={this.props.countyCodes} 
-                            fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes} 
-                            fetchCountyFacilities={this.props.facilityActions.fetchCountyFacilities}/>
+                        <CountyForm
+                            countyCodes={this.props.countyCodes}
+                            fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
+                            fetchCountyFacilities={this.props.facilityActions.fetchCountyFacilities} 
+                            fetchCountySummary={this.props.facilityActions.fetchCountySummary}/>
                     </Tab.Pane>
             },
             {
@@ -47,11 +49,11 @@ class FacilityScreen extends Component {
                             constituencyCodesIsFetched={this.props.constituencyCodesIsFetched}
                             constituencyCodes={this.props.constituencyCodes}
                             fetchConstituencyWardCodes={this.props.commonActions.fetchConstituencyWardCodes}
-                            fetchConstituencyFacilities={this.props.facilityActions.fetchConstituencyFacilities}/>
-                   </Tab.Pane>
+                            fetchConstituencyFacilities={this.props.facilityActions.fetchConstituencyFacilities} />
+                    </Tab.Pane>
             },
-            { 
-                menuItem: 'Wards', render: () => 
+            {
+                menuItem: 'Wards', render: () =>
                     <Tab.Pane attached={false}>
                         <WardForm
                             countyCodes={this.props.countyCodes}
@@ -61,9 +63,9 @@ class FacilityScreen extends Component {
                             fetchConstituencyWardCodes={this.props.commonActions.fetchConstituencyWardCodes}
                             wardCodesIsFetched={this.props.wardCodesIsFetched}
                             wardCodes={this.props.wardCodes}
-                            fetchWardFacilities={this.props.facilityActions.fetchWardFacilities}/>
-                   </Tab.Pane>
-                
+                            fetchWardFacilities={this.props.facilityActions.fetchWardFacilities} />
+                    </Tab.Pane>
+
             },
         ]
 
@@ -71,11 +73,8 @@ class FacilityScreen extends Component {
 
         return (
             <div>
-                <Grid columns='equal'  padded stretched>
-                    <Grid.Column 
-                        stretched 
-                        computer={4} 
-                        mobile={16}>
+                <Grid columns='equal' padded stretched>
+                    <Grid.Column stretched computer={4} mobile={16}>
                         <Grid.Column>
                             <Header as='h2' textAlign='center'>
                                 Level
@@ -86,22 +85,23 @@ class FacilityScreen extends Component {
                         </Grid.Column>
                     </Grid.Column>
 
-                    <Grid.Column
-                        stretched
-                        >
+                    <Grid.Column stretched>
                         <Grid.Column stretched>
                             <Header as='h2' textAlign='center'>
                                 Facilities
                             </Header>
-                            <Grid.Column stretched>
-                                <FacilityList
+                            <Grid.Column >
+                                {/* <FacilityList
                                     facilitiesIsFetched={this.props.facilitiesIsFetched}
-                                    facilities={this.props.facilities}/>
+                                    facilities={this.props.facilities} /> */}
+                                <BarChart
+                                    countySummaryIsFetched={this.props.countySummaryIsFetched}
+                                    countySummaryChartData={this.props.countySummaryChartData}/>
                             </Grid.Column>
                         </Grid.Column>
                     </Grid.Column>
 
-                   
+
 
                 </Grid>
             </div>
@@ -110,22 +110,11 @@ class FacilityScreen extends Component {
 
     renderLoading() {
         return (
-            <Segment size='large'>
-
+            <Segment loading size='large'>
             </Segment>
         )
     }
 
-    renderSkeletonListItems() {
-        return (
-            <Grid stackable loading>
-                <Segment color='grey' />
-                <Segment color='grey' />
-                <Segment color='grey' />
-                <Segment color='grey' />
-            </Grid>
-        )
-    }
 }
 
 
@@ -140,7 +129,10 @@ const mapStateToProps = (state, ownProps) => {
         wardCodes: commonSelectors.getWardCodes(state),
 
         facilitiesIsFetched: facilitySelectors.getFaciltiesFecthStatus(state),
-        facilities: facilitySelectors.getFacilties(state)
+        facilities: facilitySelectors.getFacilties(state),
+
+        countySummaryIsFetched: facilitySelectors.getCountySummaryFetchStatus(state),
+        countySummaryChartData: facilitySelectors.getCountySummaryChartData(state)
     }
 }
 
