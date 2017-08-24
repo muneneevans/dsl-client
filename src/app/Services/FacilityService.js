@@ -1,7 +1,7 @@
 export default class FacilityService{
     static get host() {
         delete FacilityService.host
-        return FacilityService.host = 'http://localhost:8000/facilities/'
+        return FacilityService.host = 'http://localhost:8000/facilities/api/'
     }
     
 
