@@ -61,6 +61,9 @@ class FacilityScreen extends Component {
         }
     }
 
+    handleCountyChange(id){
+        this.props.commonActions.changeCurrentId(id)
+    }
 
 
     render() {
@@ -72,7 +75,8 @@ class FacilityScreen extends Component {
                             countyCodes={this.props.countyCodes}
                             fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
                             fetchCountyFacilities={this.props.facilityActions.fetchCountyFacilities}
-                            fetchCountySummary={this.props.facilityActions.fetchCountySummary} />
+                            fetchCountySummary={this.props.facilityActions.fetchCountySummary} 
+                            submitAction = {this.handleCountyChange.bind(this)}/>
                     </Tab.Pane>)
             },
             {
@@ -183,6 +187,7 @@ const mapStateToProps = (state, ownProps) => {
         constituencyCodesIsFetched: commonSelectors.getCountyConstituencyCodesFetchStatus(state),
         constituencyCodes: commonSelectors.getCountyConstituencyCodes(state),
         currentLevel: commonSelectors.getCurrentLevel(state),
+        currentId: commonSelectors.getCurrentId(state),
         wardCodesIsFetched: commonSelectors.getWardCodesFetcchedstatus(state),
         wardCodes: commonSelectors.getWardCodes(state),
 

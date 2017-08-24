@@ -28,6 +28,10 @@ export function fetchCountyIds(){
 export function fetchCountyConstituencyCodes(countyId){
     return function(dispatch, getState){
         dispatch(showLoading(types.COUNTY_CONSTITUENCY_CODES_REQUESTED))
+        dispatch({
+            type: types.CHANGE_CURRENT_ID,
+            currentId: countyId
+        })
         return CommonService.getCountyConstituencyCodes(countyId)
             .then(constituencyCodes => {                
                 dispatch({
@@ -57,12 +61,20 @@ export function fetchConstituencyWardCodes(constituencyId){
     }
 }
 
-
 export function changeLevel(level){
     return function(dispatch, getState){
         return dispatch({
             type: types.CHANGE_LEVEL,
             level
+        })
+    }
+}
+
+export function changeCurrentId(currentId){
+    return function (dispatch, getState){        
+        return dispatch({
+            type: types.CHANGE_CURRENT_ID,
+            currentId
         })
     }
 }

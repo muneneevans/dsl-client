@@ -7,7 +7,8 @@ export const CountyForm = (props) => {
         // alert(event.target.value)
         // props.fetchCountyConstituencyCodes(event.target.value)
         // props.fetchCountyFacilities(event.target.value)
-        props.fetchCountySummary(event.target.value)
+        // props.fetchCountySummary(event.target.value)
+        props.submitAction(event.target.value)
     }
 
     return (

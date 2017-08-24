@@ -11,6 +11,7 @@ const InitialState = Immutable({
     wardCodes: undefined,
 
     currentLevel: undefined,
+    currentId: undefined
 })
 
 export default function facilityReducer(state = InitialState, action = {}) {
@@ -41,6 +42,10 @@ export default function facilityReducer(state = InitialState, action = {}) {
         case types.CHANGE_LEVEL:            
             return state.merge({
                 currentLevel: action.level
+            })
+        case types.CHANGE_CURRENT_ID:
+            return state.merge({
+                currentId: action.currentId
             })
         default:
             return state

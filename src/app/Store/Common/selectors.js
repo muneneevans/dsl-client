@@ -21,3 +21,7 @@ export function getWardCodes(state){
 export function getCurrentLevel(state){    
     return state.commonReducer.currentLevel
 }
+
+export function getCurrentId(state){
+    return state.commonReducer.currentId
+}
