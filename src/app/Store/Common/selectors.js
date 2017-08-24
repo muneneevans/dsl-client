@@ -17,3 +17,7 @@ export function getWardCodesFetcchedstatus(state){
 export function getWardCodes(state){
     return state.commonReducer.wardCodes
 }
+
+export function getCurrentLevel(state){    
+    return state.commonReducer.currentLevel
+}

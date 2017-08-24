@@ -9,12 +9,14 @@ const InitialState = Immutable({
 
     wardCodesIsFetched: false,
     wardCodes: undefined,
+
+    currentLevel: undefined,
 })
 
-export default function facilityReducer(state = InitialState, action={}){
+export default function facilityReducer(state = InitialState, action = {}) {
     switch (action.type) {
         case types.COUNTY_CODES_FETCHED:
-            return state.merge({                
+            return state.merge({
                 countyCodes: action.countyCodes
             })
         case types.COUNTY_CONSTITUENCY_CODES_FETCHED:
@@ -22,7 +24,7 @@ export default function facilityReducer(state = InitialState, action={}){
                 constituencyCodes: action.constituencyCodes,
                 constituencyCodesIsFetched: true
             })
-        case types.COUNTY_CONSTITUENCY_CODES_REQUESTED:   
+        case types.COUNTY_CONSTITUENCY_CODES_REQUESTED:
             return state.merge({
                 constituencyCodesIsFetched: false
             })
@@ -32,9 +34,14 @@ export default function facilityReducer(state = InitialState, action={}){
             })
         case types.CONSTITUENCY_WARD_CODES_FETCHED:
             return state.merge({
-                wardCodes : action.wardCodes,
+                wardCodes: action.wardCodes,
                 wardCodesIsFetched: true
-            })        
+            })
+
+        case types.CHANGE_LEVEL:            
+            return state.merge({
+                currentLevel: action.level
+            })
         default:
             return state
     }

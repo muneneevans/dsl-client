@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 
 import * as commonSelectors from "../Store/Common/selectors"
 import * as commonActions from "../Store/Common/actions"
+import { levels, informationType } from "../Store/Common/dataTypes"
 
 import * as facilitySelectors from "../Store/Facilities/selectors"
 import * as facilityActions from "../Store/Facilities/actions"
@@ -17,32 +18,48 @@ import BarChart from "../Components/BarChart"
 
 class FacilityScreen extends Component {
     constructor(props) {
-        super(props)
+        super(props)        
     }
 
     componentDidMount() {
         this.props.commonActions.fetchCountyIds()
+        this.props.commonActions.changeLevel(levels.COUNTY)
     }
 
-    handleCountyClick(event) {
 
+    handleLevelTabChange(e, data) {
+        switch (data.activeIndex) {
+            case 0:
+                this.props.commonActions.changeLevel(levels.COUNTY)
+                break;
+            case 1:
+                this.props.commonActions.changeLevel(levels.CONSTITUENCY)
+                break;
+            case 2:
+                this.props.commonActions.changeLevel(levels.WARD)
+                break;
+            default:
+                break
+        }
     }
+
+
 
     render() {
-        const panes = [
+        const countyPanes = [
             {
-                menuItem: 'Counties', render: () =>
-                    <Tab.Pane attached={false}>
+                menuItem: 'Counties', render: () => (
+                    <Tab.Pane attached={true}>
                         <CountyForm
                             countyCodes={this.props.countyCodes}
                             fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
-                            fetchCountyFacilities={this.props.facilityActions.fetchCountyFacilities} 
+                            fetchCountyFacilities={this.props.facilityActions.fetchCountyFacilities}
                             fetchCountySummary={this.props.facilityActions.fetchCountySummary}/>
-                    </Tab.Pane>
+                    </Tab.Pane>)
             },
             {
-                menuItem: 'Constituencies', render: () =>
-                    <Tab.Pane attached={false}>
+                menuItem: 'Constituencies', render: () => (
+                    <Tab.Pane attached={true}>
                         <ConstituencyForm
                             countyCodes={this.props.countyCodes}
                             fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
@@ -50,11 +67,11 @@ class FacilityScreen extends Component {
                             constituencyCodes={this.props.constituencyCodes}
                             fetchConstituencyWardCodes={this.props.commonActions.fetchConstituencyWardCodes}
                             fetchConstituencyFacilities={this.props.facilityActions.fetchConstituencyFacilities} />
-                    </Tab.Pane>
+                    </Tab.Pane>)
             },
             {
-                menuItem: 'Wards', render: () =>
-                    <Tab.Pane attached={false}>
+                menuItem: 'Wards', render: () => (
+                    <Tab.Pane attached={true}>
                         <WardForm
                             countyCodes={this.props.countyCodes}
                             fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
@@ -64,9 +81,37 @@ class FacilityScreen extends Component {
                             wardCodesIsFetched={this.props.wardCodesIsFetched}
                             wardCodes={this.props.wardCodes}
                             fetchWardFacilities={this.props.facilityActions.fetchWardFacilities} />
-                    </Tab.Pane>
+                    </Tab.Pane>)
 
             },
+        ]
+
+        const dataPanes = [
+            {
+                menuItem: 'Summary', render: () => (
+                    <Tab.Pane attached={false}>
+                        <BarChart
+                            countySummaryIsFetched={this.props.countySummaryIsFetched}
+                            countySummaryChartData={this.props.countySummaryChartData} />
+                    </Tab.Pane>
+                )
+            },
+            {
+                menuItem: "Facilities List",
+                render: () => (
+                    <FacilityList
+                        facilitiesIsFetched={this.props.facilitiesIsFetched}
+                        facilities={this.props.facilities} />
+                )
+            },
+            {
+                menuItem: 'Map View',
+                render: () => (
+                    <FacilityList
+                        facilitiesIsFetched={this.props.facilitiesIsFetched}
+                        facilities={this.props.facilities} />
+                )
+            }
         ]
 
         if (!this.props.countyCodes) return this.renderLoading()
@@ -80,7 +125,7 @@ class FacilityScreen extends Component {
                                 Level
                             </Header>
                             <Grid.Column >
-                                <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+                                <Tab menu={{ secondary: true, pointing: true }} panes={countyPanes} onTabChange={this.handleLevelTabChange.bind(this)} />
                             </Grid.Column>
                         </Grid.Column>
                     </Grid.Column>
@@ -91,12 +136,7 @@ class FacilityScreen extends Component {
                                 Facilities
                             </Header>
                             <Grid.Column >
-                                {/* <FacilityList
-                                    facilitiesIsFetched={this.props.facilitiesIsFetched}
-                                    facilities={this.props.facilities} /> */}
-                                <BarChart
-                                    countySummaryIsFetched={this.props.countySummaryIsFetched}
-                                    countySummaryChartData={this.props.countySummaryChartData}/>
+                                <Tab menu={{ secondary: true, color: 'green' }} panes={dataPanes} onTabChange={this.handleDataTabChange} />
                             </Grid.Column>
                         </Grid.Column>
                     </Grid.Column>
@@ -124,7 +164,7 @@ const mapStateToProps = (state, ownProps) => {
 
         constituencyCodesIsFetched: commonSelectors.getCountyConstituencyCodesFetchStatus(state),
         constituencyCodes: commonSelectors.getCountyConstituencyCodes(state),
-
+        currentLevel: commonSelectors.getCurrentLevel(state),
         wardCodesIsFetched: commonSelectors.getWardCodesFetcchedstatus(state),
         wardCodes: commonSelectors.getWardCodes(state),
 

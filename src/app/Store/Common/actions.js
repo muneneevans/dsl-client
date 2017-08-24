@@ -57,3 +57,12 @@ export function fetchConstituencyWardCodes(constituencyId){
     }
 }
 
+
+export function changeLevel(level){
+    return function(dispatch, getState){
+        return dispatch({
+            type: types.CHANGE_LEVEL,
+            level
+        })
+    }
+}
