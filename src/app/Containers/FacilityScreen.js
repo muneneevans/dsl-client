@@ -5,10 +5,11 @@ import { bindActionCreators } from 'redux'
 
 import * as commonSelectors from "../Store/Common/selectors"
 import * as commonActions from "../Store/Common/actions"
-import { levels, informationType } from "../Store/Common/dataTypes"
+import { levels } from "../Store/Common/dataTypes"
 
 import * as facilitySelectors from "../Store/Facilities/selectors"
 import * as facilityActions from "../Store/Facilities/actions"
+import { facilityInformationType } from "../Store/Facilities/dataTypes"
 
 import CountyForm from "../Components/CountyForm"
 import ConstituencyForm from "../Components/ConstituencyForm"
@@ -18,12 +19,13 @@ import BarChart from "../Components/BarChart"
 
 class FacilityScreen extends Component {
     constructor(props) {
-        super(props)        
+        super(props)
     }
 
     componentDidMount() {
         this.props.commonActions.fetchCountyIds()
         this.props.commonActions.changeLevel(levels.COUNTY)
+        this.props.facilityActions.changeFacilityInformationType(facilityInformationType.SUMMARY)
     }
 
 
@@ -31,13 +33,29 @@ class FacilityScreen extends Component {
         switch (data.activeIndex) {
             case 0:
                 this.props.commonActions.changeLevel(levels.COUNTY)
-                break;
+                break
             case 1:
                 this.props.commonActions.changeLevel(levels.CONSTITUENCY)
-                break;
+                break
             case 2:
                 this.props.commonActions.changeLevel(levels.WARD)
-                break;
+                break
+            default:
+                break
+        }
+    }
+
+    handleDataTabChange(e, data) {
+        switch (data.activeIndex) {
+            case 0:
+                this.props.facilityActions.changeFacilityInformationType(facilityInformationType.SUMMARY)
+                break
+            case 1:
+                this.props.facilityActions.changeFacilityInformationType(facilityInformationType.LIST)
+                break
+            case 2:
+                this.props.facilityActions.changeFacilityInformationType(facilityInformationType.MAP)
+                break
             default:
                 break
         }
@@ -54,7 +72,7 @@ class FacilityScreen extends Component {
                             countyCodes={this.props.countyCodes}
                             fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
                             fetchCountyFacilities={this.props.facilityActions.fetchCountyFacilities}
-                            fetchCountySummary={this.props.facilityActions.fetchCountySummary}/>
+                            fetchCountySummary={this.props.facilityActions.fetchCountySummary} />
                     </Tab.Pane>)
             },
             {
@@ -136,7 +154,7 @@ class FacilityScreen extends Component {
                                 Facilities
                             </Header>
                             <Grid.Column >
-                                <Tab menu={{ secondary: true, color: 'green' }} panes={dataPanes} onTabChange={this.handleDataTabChange} />
+                                <Tab menu={{ secondary: true, color: 'green' }} panes={dataPanes} onTabChange={this.handleDataTabChange.bind(this)} />
                             </Grid.Column>
                         </Grid.Column>
                     </Grid.Column>
@@ -172,7 +190,8 @@ const mapStateToProps = (state, ownProps) => {
         facilities: facilitySelectors.getFacilties(state),
 
         countySummaryIsFetched: facilitySelectors.getCountySummaryFetchStatus(state),
-        countySummaryChartData: facilitySelectors.getCountySummaryChartData(state)
+        countySummaryChartData: facilitySelectors.getCountySummaryChartData(state),
+        currentFacilityInformationType: facilitySelectors.getCurrentFacilityInformationType(state)
     }
 }
 

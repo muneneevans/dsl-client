@@ -9,7 +9,9 @@ const InitialState = Immutable({
     facilities: undefined,
 
     countySummaryIsFetched: false,
-    countySummary: undefined
+    countySummary: undefined,
+
+    currentFacilityInformationType: undefined
 })
 
 export default function facilityReducer(state = InitialState, action={}){
@@ -69,7 +71,11 @@ export default function facilityReducer(state = InitialState, action={}){
             return state.merge({
                 kephLevels: action.kephLevels
             })
-            
+        
+        case types.CHANGE_FACILITY_INFORMATION_TYPE:
+            return state.merge({
+                currentFacilityInformationType: action.informationType
+            })
 
         default:
             return state
