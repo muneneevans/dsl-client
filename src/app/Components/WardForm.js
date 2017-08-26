@@ -13,7 +13,8 @@ export const WardForm = (props) => {
     }
 
     const handleWardSelect = (event) =>{
-        props.fetchWardFacilities(event.target.value)
+        // props.fetchWardFacilities(event.target.value)
+        props.submitAction(event.target.value)
     }
 
     return (

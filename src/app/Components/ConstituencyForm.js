@@ -10,7 +10,8 @@ export const ConstituencyForm = (props) => {
 
     const handleConstituencySelect = (event) =>{
         // props.fetchConstituencyWardCodes(event.target.value)
-        props.fetchConstituencyFacilities(event.target.value)
+        // props.fetchConstituencyFacilities(event.target.value)
+        props.submitAction(event.target.value)
     }
 
     return (

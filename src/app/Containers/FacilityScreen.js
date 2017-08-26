@@ -28,23 +28,6 @@ class FacilityScreen extends Component {
         this.props.facilityActions.changeFacilityInformationType(facilityInformationType.SUMMARY)
     }
 
-
-    handleLevelTabChange(e, data) {
-        switch (data.activeIndex) {
-            case 0:
-                this.props.commonActions.changeLevel(levels.COUNTY)
-                break
-            case 1:
-                this.props.commonActions.changeLevel(levels.CONSTITUENCY)
-                break
-            case 2:
-                this.props.commonActions.changeLevel(levels.WARD)
-                break
-            default:
-                break
-        }
-    }
-
     handleDataTabChange(e, data) {
         switch (data.activeIndex) {
             case 0:
@@ -59,24 +42,102 @@ class FacilityScreen extends Component {
             default:
                 break
         }
+        setTimeout(() => { this.getData() }, 1500)
     }
 
-    handleCountyChange(id){
+    handleCountyChange(id) {
+        this.props.commonActions.changeLevel(levels.COUNTY)
         this.props.commonActions.changeCurrentId(id)
+        setTimeout(() => { this.getData() }, 1500)
+    }
+
+    handleConstituencyChange(id) {
+        this.props.commonActions.changeLevel(levels.CONSTITUENCY)
+        this.props.commonActions.changeCurrentId(id)
+        setTimeout(() => { this.getData() }, 1500)
+    }
+
+    handleWardChange(id) {
+        this.props.commonActions.changeLevel(levels.WARD)
+        this.props.commonActions.changeCurrentId(id)
+        setTimeout(() => { this.getData() }, 1500)
+    }
+
+    getData() {
+        //check level and 
+        switch (this.props.currentLevel) {
+            case levels.COUNTY:
+                switch (this.props.currentFacilityInformationType) {
+                    case facilityInformationType.SUMMARY:
+                        alert('county summary')
+                        this.props.facilityActions.fetchCountySummary(this.props.currentId)
+                        break
+
+                    case facilityInformationType.LIST:
+                        this.props.facilityActions.fetchCountyFacilities(this.props.currentId)
+                        break
+
+                    case facilityInformationType.MAP:
+                        alert('fetch county map')
+                        break
+
+                    default:
+                        break
+                }
+                break
+
+            case levels.CONSTITUENCY:
+                switch (this.props.currentFacilityInformationType) {
+                    case facilityInformationType.SUMMARY:
+                        alert('fetch constituency summary')
+                        break
+
+                    case facilityInformationType.LIST:
+                        this.props.facilityActions.fetchConstituencyFacilities(this.props.currentId)
+                        break
+
+                    case facilityInformationType.MAP:
+                        alert('fetch constituency map')
+                        break
+
+                    default:
+                        break
+                }
+                break
+
+            case levels.WARD:
+                switch (this.props.currentFacilityInformationType) {
+                    case facilityInformationType.SUMMARY:
+                        alert('fetch ward summary')
+                        break
+
+                    case facilityInformationType.LIST:
+                        this.props.facilityActions.fetchWardFacilities(this.props.currentId)
+                        break
+
+                    case facilityInformationType.MAP:
+                        alert('fetch ward map')
+                        break
+                    default:
+                        break
+                }
+                break
+
+            default:
+                break
+        }
     }
 
 
     render() {
-        const countyPanes = [
+        const levelPanes = [
             {
                 menuItem: 'Counties', render: () => (
                     <Tab.Pane attached={true}>
                         <CountyForm
                             countyCodes={this.props.countyCodes}
-                            fetchCountyConstituencyCodes={this.props.commonActions.fetchCountyConstituencyCodes}
-                            fetchCountyFacilities={this.props.facilityActions.fetchCountyFacilities}
-                            fetchCountySummary={this.props.facilityActions.fetchCountySummary} 
-                            submitAction = {this.handleCountyChange.bind(this)}/>
+                            submitAction={this.handleCountyChange.bind(this)}
+                        />
                     </Tab.Pane>)
             },
             {
@@ -88,7 +149,8 @@ class FacilityScreen extends Component {
                             constituencyCodesIsFetched={this.props.constituencyCodesIsFetched}
                             constituencyCodes={this.props.constituencyCodes}
                             fetchConstituencyWardCodes={this.props.commonActions.fetchConstituencyWardCodes}
-                            fetchConstituencyFacilities={this.props.facilityActions.fetchConstituencyFacilities} />
+                            fetchConstituencyFacilities={this.props.facilityActions.fetchConstituencyFacilities}
+                            submitAction={this.handleConstituencyChange.bind(this)} />
                     </Tab.Pane>)
             },
             {
@@ -102,7 +164,8 @@ class FacilityScreen extends Component {
                             fetchConstituencyWardCodes={this.props.commonActions.fetchConstituencyWardCodes}
                             wardCodesIsFetched={this.props.wardCodesIsFetched}
                             wardCodes={this.props.wardCodes}
-                            fetchWardFacilities={this.props.facilityActions.fetchWardFacilities} />
+                            fetchWardFacilities={this.props.facilityActions.fetchWardFacilities}
+                            submitAction={this.handleWardChange.bind(this)} />
                     </Tab.Pane>)
 
             },
@@ -147,7 +210,7 @@ class FacilityScreen extends Component {
                                 Level
                             </Header>
                             <Grid.Column >
-                                <Tab menu={{ secondary: true, pointing: true }} panes={countyPanes} onTabChange={this.handleLevelTabChange.bind(this)} />
+                                <Tab menu={{ secondary: true, pointing: true }} panes={levelPanes} />
                             </Grid.Column>
                         </Grid.Column>
                     </Grid.Column>
