@@ -1,27 +1,11 @@
 import * as types from "./actionTypes"
 import FacilityService from "../../Services/FacilityService"
 
-export function showLoading(actionType) {
+export function showLoading(actionType=undefined) {
     return function (dispatch, getState) {
         return dispatch({
             type: actionType
         })
-    }
-}
-
-export function fetchCountyFacilities(countyId) {
-    return function (dispatch, getState) {
-        dispatch(showLoading(types.COUNTY_FACILITIES_REQUESTED))
-        return FacilityService.getCountyFacilities(countyId)
-            .then(countyFacilities => {
-                return dispatch({
-                    type: types.COUNTY_FACILITIES_RECEIVED,
-                    countyFacilities
-                })
-            })
-            .catch(error => {
-                throw (error)
-            })
     }
 }
 
@@ -41,38 +25,19 @@ export function fetchCountySummary(countyId) {
     }
 }
 
-export function fetchConstituencyFacilities(constituencyId) {
-    return function (dispatch, getState) {
-        dispatch(showLoading(types.CONSTITUENCY_FACILITIES_REQUESTED))
-        return FacilityService.getConstituencyFacilities(constituencyId)
-            .then(constituencyFacilities => {
-                return dispatch({
-                    type: types.CONSTITUENCY_FACILITIES_RECEIVED,
-                    constituencyFacilities
+export function fetchFacilities(level, id){
+    return function (dispatch, getState){
+        dispatch(showLoading(types.FACILITY_LIST_REQUESTED))
+        return FacilityService.getFacilities(level, id)
+            .then(facilities => {
+                dispatch({
+                    type: types.FACILITY_LIST_RECEIVED,
+                    facilities
                 })
             })
-            .catch(error => {
-                throw (error)
-            })
+            .catch(error => {})
     }
 }
-
-export function fetchWardFacilities(wardId) {
-    return function (dispatch, getState) {
-        dispatch(showLoading(types.WARD_FACILITIES_REQUESTED))
-        return FacilityService.getWardFacilities(wardId)
-            .then(wardFacilities => {
-                return dispatch({
-                    type: types.WARD_FACILITIES_RECEIVED,
-                    wardFacilities
-                })
-            })
-            .catch(error => {
-                throw (error)
-            })
-    }
-}
-
 
 export function fetchFacilityTypes() {
     return function (dispatch, getState) {

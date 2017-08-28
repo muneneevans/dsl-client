@@ -1,58 +1,35 @@
-export default class FacilityService{
+export default class FacilityService {
     static get host() {
         delete FacilityService.host
         return FacilityService.host = 'http://localhost:8000/facilities/api/'
     }
-    
 
-    static getCountyFacilities(countyId){
-        const url = this.host.concat('county/',countyId,'/facilities')
-        return fetch(url)
-            .then(response =>{
-                return response.json()
-            })
-            .catch(error =>{
-                return error
-            })
-    }
-
-    static getCountySummary(countyId){
+    static getCountySummary(countyId) {
         const url = this.host.concat('county/', countyId, '/summary/')
         return fetch(url)
-            .then(response =>{
+            .then(response => {
                 return response.json()
             })
-            .catch(error =>{
-                throw(error)
+            .catch(error => {
+                throw (error)
             })
     }
 
-    static getConstituencyFacilities(constituencyId){
-        const url = this.host.concat('constituency/', constituencyId,'/facilities')
+    static getFacilities(level, id) {
+        const url = this.host.concat(level, '/', id, '/facilities')
         return fetch(url)
             .then(response => {
                 return response.json()
             })
             .catch(error => {
-                return error
+                throw (error)
             })
     }
 
-    static getWardFacilities(wardId){
-        const url = this.host.concat('ward/', wardId,'/facilities')
-        return fetch(url)
-            .then(response => {
-                return response.json()
-            })
-            .catch(error =>{
-                throw(error)
-            })
-    }
-
-    static getFacilityTypes(){
+    static getFacilityTypes() {
         const url = this.host.concat('facilities/facilitytypes/')
         return fetch(url)
-            .then(response =>{
+            .then(response => {
                 return response.json()
             })
             .catch(error => {
@@ -60,7 +37,7 @@ export default class FacilityService{
             })
     }
 
-    static getFaciityKephLevels(){
+    static getFaciityKephLevels() {
         const url = this.host.concat('facilities/kephlevels/')
         return fetch(url)
             .then(response => {

@@ -16,17 +16,16 @@ const InitialState = Immutable({
 
 export default function facilityReducer(state = InitialState, action={}){
     switch (action.type) {
-
-        case types.COUNTY_FACILITIES_REQUESTED:
+        case types.FACILITY_LIST_REQUESTED:
             return state.merge({
                 facilitiesIsFetched: false
             })
-
-        case types.COUNTY_FACILITIES_RECEIVED:
+        
+        case types.FACILITY_LIST_RECEIVED:
             return state.merge({
-                facilities: action.countyFacilities,
+                facilities: action.facilities,
                 facilitiesIsFetched: true
-            })
+            })        
         
         case types.COUNTY_SUMMARY_REQUESTED:
             return state.merge({
@@ -38,28 +37,6 @@ export default function facilityReducer(state = InitialState, action={}){
             return state.merge({
                 countySummary: action.countySummary,
                 countySummaryIsFetched: true
-            })
-
-        case types.CONSTITUENCY_FACILITIES_REQUESTED:
-            return state.merge({
-                facilitiesIsFetched: false
-            })
-        
-        case types.CONSTITUENCY_FACILITIES_RECEIVED:
-            return state.merge({
-                facilities: action.constituencyFacilities,
-                facilitiesIsFetched: true
-            })
-        
-        case types.WARD_FACILITIES_REQUESTED:
-            return state.merge({
-                facilitiesIsFetched: false
-            })
-        
-        case types.WARD_FACILITIES_RECEIVED:
-            return state.merge({
-                facilities: action.wardFacilities,
-                facilitiesIsFetched: true
             })
         
         case types.FACILITY_TYPES_RECEIVED:
