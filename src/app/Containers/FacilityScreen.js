@@ -11,9 +11,10 @@ import * as facilitySelectors from "../Store/Facilities/selectors"
 import * as facilityActions from "../Store/Facilities/actions"
 import { facilityInformationType } from "../Store/Facilities/dataTypes"
 
-import CountyForm from "../Components/CountyForm"
-import ConstituencyForm from "../Components/ConstituencyForm"
-import WardForm from "../Components/WardForm"
+import CountyForm from "../Components/Forms/CountyForm"
+import ConstituencyForm from "../Components/Forms/ConstituencyForm"
+import WardForm from "../Components/Forms/WardForm"
+import FacilityTypeForm from "../Components/Forms/FacilityTypeForm"
 import FacilityList from "../Components/FacilityList"
 import BarChart from "../Components/BarChart"
 
@@ -74,7 +75,7 @@ class FacilityScreen extends Component {
                         break
 
                     case facilityInformationType.LIST:
-                        this.props.facilityActions.fetchCountyFacilities(this.props.currentId)
+                        this.props.facilityActions.fetchFacilities(levels.COUNTY, this.props.currentId)
                         break
 
                     case facilityInformationType.MAP:
@@ -93,7 +94,7 @@ class FacilityScreen extends Component {
                         break
 
                     case facilityInformationType.LIST:
-                        this.props.facilityActions.fetchConstituencyFacilities(this.props.currentId)
+                        this.props.facilityActions.fetchFacilities(levels.CONSTITUENCY, this.props.currentId)
                         break
 
                     case facilityInformationType.MAP:
@@ -112,7 +113,7 @@ class FacilityScreen extends Component {
                         break
 
                     case facilityInformationType.LIST:
-                        this.props.facilityActions.fetchWardFacilities(this.props.currentId)
+                        this.props.facilityActions.fetchFacilities(levels.WARD, this.props.currentId)
                         break
 
                     case facilityInformationType.MAP:
@@ -206,12 +207,21 @@ class FacilityScreen extends Component {
                 <Grid columns='equal' padded stretched>
                     <Grid.Column stretched computer={4} mobile={16}>
                         <Grid.Column>
-                            <Header as='h2' textAlign='center'>
-                                Level
-                            </Header>
-                            <Grid.Column >
-                                <Tab menu={{ secondary: true, pointing: true }} panes={levelPanes} />
-                            </Grid.Column>
+                            <Grid.Row>
+                                <Header as='h2' textAlign='center'>
+                                    Level
+                                </Header>
+                                <Grid.Column >
+                                    <Tab menu={{ secondary: true, pointing: true }} panes={levelPanes} />
+                                </Grid.Column>
+                            </Grid.Row>
+
+                            <Grid.Row >
+                                <Header as='h2' textAlign='center'>
+                                    Facility Types
+                                </Header>
+                                <FacilityTypeForm/>
+                            </Grid.Row>
                         </Grid.Column>
                     </Grid.Column>
 
