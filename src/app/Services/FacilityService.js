@@ -27,7 +27,7 @@ export default class FacilityService {
     }
 
     static getFacilityTypes() {
-        const url = this.host.concat('facilities/facilitytypes/')
+        const url = this.host.concat('facilitytypes/')
         return fetch(url)
             .then(response => {
                 return response.json()
@@ -38,7 +38,7 @@ export default class FacilityService {
     }
 
     static getFaciityKephLevels() {
-        const url = this.host.concat('facilities/kephlevels/')
+        const url = this.host.concat('kephlevels/')
         return fetch(url)
             .then(response => {
                 return response.json()

@@ -1,6 +1,7 @@
 //register all the possible facility actions
 export const FACILITY_LIST_REQUESTED = 'facility.FACILITY_LIST_REQUESTED'
 export const FACILITY_LIST_RECEIVED = 'facility.FACILITY_LIST_RECEIVED'
+
 export const COUNTY_SUMMARY_REQUESTED = 'facility.COUNTY_SUMMARY_REQUESTED'
 export const COUNTY_SUMMARY_RECEIVED = 'facility.COUNTY_SUMMARY_RECEIVED'
 

@@ -27,6 +27,7 @@ class FacilityScreen extends Component {
         this.props.commonActions.fetchCountyIds()
         this.props.commonActions.changeLevel(levels.COUNTY)
         this.props.facilityActions.changeFacilityInformationType(facilityInformationType.SUMMARY)
+        this.props.facilityActions.fetchFacilityTypes()
     }
 
     handleDataTabChange(e, data) {
@@ -220,7 +221,8 @@ class FacilityScreen extends Component {
                                 <Header as='h2' textAlign='center'>
                                     Facility Types
                                 </Header>
-                                <FacilityTypeForm/>
+                                <FacilityTypeForm
+                                    facilityTypes={this.props.facilityTypes}/>
                             </Grid.Row>
                         </Grid.Column>
                     </Grid.Column>
@@ -266,6 +268,8 @@ const mapStateToProps = (state, ownProps) => {
 
         facilitiesIsFetched: facilitySelectors.getFaciltiesFecthStatus(state),
         facilities: facilitySelectors.getFacilties(state),
+
+        facilityTypes: facilitySelectors.getFacilityTypes(state),
 
         countySummaryIsFetched: facilitySelectors.getCountySummaryFetchStatus(state),
         countySummaryChartData: facilitySelectors.getCountySummaryChartData(state),

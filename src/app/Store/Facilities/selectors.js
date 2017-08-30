@@ -38,3 +38,8 @@ export function getCountySummaryChartData(state){
 export function getCurrentFacilityInformationType(state){
     return state.facilityReducer.currentFacilityInformationType
 }
+
+export function getFacilityTypes(state){
+    // console.log(state.facilityReducer.facilityTypes)
+    return state.facilityReducer.facilityTypes
+}
