@@ -11,7 +11,7 @@ export const FacilityTypeForm = (props) => {
                         <select>
                             {
                                 props.facilityTypes.map((facilityType, i) => (
-                                    <option>{facilityType.name}</option>
+                                    <option key={i}>{facilityType.name}</option>
                                 ))
                             }
                         </select>
