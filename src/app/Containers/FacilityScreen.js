@@ -18,6 +18,7 @@ import FacilityTypeForm from "../Components/Forms/FacilityTypeForm"
 import FacilityList from "../Components/FacilityList"
 import BarChart from "../Components/BarChart"
 import PieChart from "../Components/PieChart"
+import LineChart from "../Components/Charts/LineChart"
 import StackedBarChart from "../Components/Charts/StackedBarChart"
 
 class FacilityScreen extends Component {
@@ -185,6 +186,10 @@ class FacilityScreen extends Component {
                         {
                             this.props.countySummaryIsFetched ? (
                                 <Segment>
+                                    <LineChart 
+                                        width={400}
+                                        height={400} 
+                                        data={this.props.countySummaryChartData.facilitiesSummary}/>
                                     <PieChart
                                         data={this.props.countySummaryChartData.facilitiesSummary}
                                         width={400}

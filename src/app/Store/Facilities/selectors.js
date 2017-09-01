@@ -46,18 +46,21 @@ export function getCountySummaryXYData(state) {
                 label: county.constituency_name,
                 constituency_id: county.constituency_id,
                 x: county.number_of_beds,
+                value: county.number_of_beds,
                 y: summary.bedsSummary.length
             })
             summary.cotsSummary.push({
                 label: county.constituency_name,
                 constituency_id: county.constituency_id,
                 x: county.number_of_cots,
+                value: county.number_of_cots,
                 y: summary.cotsSummary.length
             })
             summary.facilitiesSummary.push({
                 label: county.constituency_name,
                 constituency_id: county.constituency_id,
                 x: county.number_of_facilities,
+                value: county.number_of_facilities,
                 y: summary.facilitiesSummary.length
             })
         })    
