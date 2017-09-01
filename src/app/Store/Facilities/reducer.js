@@ -32,8 +32,7 @@ export default function facilityReducer(state = InitialState, action={}){
                 countySummaryIsFetched: false
             })
         
-        case types.COUNTY_SUMMARY_RECEIVED:
-            console.log(action.countySummary)
+        case types.COUNTY_SUMMARY_RECEIVED:            
             return state.merge({
                 countySummary: action.countySummary,
                 countySummaryIsFetched: true

@@ -17,6 +17,8 @@ import WardForm from "../Components/Forms/WardForm"
 import FacilityTypeForm from "../Components/Forms/FacilityTypeForm"
 import FacilityList from "../Components/FacilityList"
 import BarChart from "../Components/BarChart"
+import PieChart from "../Components/PieChart"
+import StackedBarChart from "../Components/Charts/StackedBarChart"
 
 class FacilityScreen extends Component {
     constructor(props) {
@@ -71,7 +73,7 @@ class FacilityScreen extends Component {
             case levels.COUNTY:
                 switch (this.props.currentFacilityInformationType) {
                     case facilityInformationType.SUMMARY:
-                        alert('county summary')
+
                         this.props.facilityActions.fetchCountySummary(this.props.currentId)
                         break
 
@@ -177,9 +179,26 @@ class FacilityScreen extends Component {
             {
                 menuItem: 'Summary', render: () => (
                     <Tab.Pane attached={false}>
-                        <BarChart
+                        {/* <BarChart                            
                             countySummaryIsFetched={this.props.countySummaryIsFetched}
-                            countySummaryChartData={this.props.countySummaryChartData} />
+                            countySummaryChartData={this.props.countySummaryChartData} /> */}
+                        {
+                            this.props.countySummaryIsFetched ? (
+                                <Segment>
+                                    <PieChart
+                                        data={this.props.countySummaryChartData.facilitiesSummary}
+                                        width={400}
+                                        height={400} />
+                                    <StackedBarChart
+                                        dataExists={this.props.countySummaryIsFetched}
+                                        data={this.props.countySummaryChartData}
+                                    />
+                                </Segment>
+                            ) : (
+                                    <Segment loading size='large'>
+                                    </Segment>
+                                )
+                        }
                     </Tab.Pane>
                 )
             },
@@ -222,7 +241,7 @@ class FacilityScreen extends Component {
                                     Facility Types
                                 </Header>
                                 <FacilityTypeForm
-                                    facilityTypes={this.props.facilityTypes}/>
+                                    facilityTypes={this.props.facilityTypes} />
                             </Grid.Row>
                         </Grid.Column>
                     </Grid.Column>
@@ -272,7 +291,7 @@ const mapStateToProps = (state, ownProps) => {
         facilityTypes: facilitySelectors.getFacilityTypes(state),
 
         countySummaryIsFetched: facilitySelectors.getCountySummaryFetchStatus(state),
-        countySummaryChartData: facilitySelectors.getCountySummaryChartData(state),
+        countySummaryChartData: facilitySelectors.getCountySummaryXYData(state),
         currentFacilityInformationType: facilitySelectors.getCurrentFacilityInformationType(state)
     }
 }
