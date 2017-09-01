@@ -1,4 +1,5 @@
 import { combineReducers } from "redux"
+import { routerReducer } from "react-router-redux"
 
 // import * as facilityReducer from './Facilities/reducer'
 import mapReducer from './Maps/reducer'
@@ -10,7 +11,8 @@ const rootReducer = combineReducers({
      mapReducer,
      commonReducer,
      facilityReducer,
-     indicatorReducer
+     indicatorReducer,
+     router: routerReducer
 })
 
 export default rootReducer
