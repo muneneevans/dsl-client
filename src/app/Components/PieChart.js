@@ -19,7 +19,7 @@ export const PieChart = ({ data, width, height }) => {
 
     const pieChart = pie()
         .sort(null)
-        .value(function (d) { return d.x });
+        .value(function (d) { return d.value });
     
     return (
         <svg width={width} height={height} viewBox={` 0 0 ${width} ${height}`}>
@@ -30,7 +30,7 @@ export const PieChart = ({ data, width, height }) => {
                         <path d={path(d)} fill={color(i)}></path>
                         <text dy='.35em'
                             transform={`translate(${label.centroid(d)})`}>                            
-                            {d.data.label + d.data.x}
+                            {d.data.label + d.data.value}                            
                             {console.log(d)}
                         </text>
                     </g>
