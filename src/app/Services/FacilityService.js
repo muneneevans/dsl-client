@@ -15,6 +15,16 @@ export default class FacilityService {
             })
     }
 
+    static getConstituencySummary(constituencyId) {
+        const url = this.host.concat('constituency/', constituencyId, '/summary/')
+        return fetch(url)
+            .then(response => {
+                return response.json()
+            })
+            .catch(error => {
+                throw (error)
+            })
+    }
     static getFacilities(level, id) {
         const url = this.host.concat(level, '/', id, '/facilities')
         return fetch(url)

@@ -75,10 +75,47 @@ export function getCountySummaryXYData(state) {
         }
     }
 }
-
-export function getCountySummaryIndividualXYData(state, summaryType){
-
+export function getConstituencySummaryXYData(state) {
+    if (state.facilityReducer.constituencySummaryIsFetched) {
+        const summary = {
+            bedsSummary: [],
+            cotsSummary: [],
+            facilitiesSummary: []
+        }
+        state.facilityReducer.constituencySummary.map((ward, i) => {
+            summary.bedsSummary.push({
+                label: county.constituency_name,                
+                x: county.number_of_beds,
+                value: county.number_of_beds,
+                y: summary.bedsSummary.length
+            })
+            summary.cotsSummary.push({
+                label: county.constituency_name,
+                constituency_id: county.constituency_id,
+                x: county.number_of_cots,
+                value: county.number_of_cots,
+                y: summary.cotsSummary.length
+            })
+            summary.facilitiesSummary.push({
+                label: county.constituency_name,
+                constituency_id: county.constituency_id,
+                x: county.number_of_facilities,
+                value: county.number_of_facilities,
+                y: summary.facilitiesSummary.length
+            })
+        })    
+          
+        return summary
+    }
+    else {
+        return {
+            bedsSummary: [],
+            cotsSummary: [],
+            facilitiesSummary: []
+        }
+    }
 }
+
 
 export function getCurrentFacilityInformationType(state) {
     return state.facilityReducer.currentFacilityInformationType
