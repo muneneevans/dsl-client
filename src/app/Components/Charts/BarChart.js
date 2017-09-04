@@ -2,22 +2,7 @@ import React from 'react'
 import { scaleLinear, scaleOrdinal, scaleBand } from "d3-scale"
 import { max } from "d3"
 import { range} from "d3-array"
-export const BarChart = ({ data, width, height }) => {
-
-    var data = [
-        { label: 'Jan', value: 40 },
-        { label: 'Feb', value: 50 },
-        { label: 'Mar', value: 65 },
-        { label: 'Apr', value: 60 },
-        { label: 'May', value: 70 },
-        { label: 'Jun', value: 55 },
-        { label: 'Jul', value: 80 },
-        { label: 'Aug', value: 55 },
-        { label: 'Sep', value: 75 },
-        { label: 'Oct', value: 50 },
-        { label: 'Nov', value: 60 },
-        { label: 'Dec', value: 75 }
-    ]
+export const BarChart = ({ data, width, height }) => {    
 
     var margins = { top: 5, right: 5, bottom: 5, left: 5 }
     var figureWidth = width - (margins.left - margins.right)
@@ -73,9 +58,6 @@ export const BarChart = ({ data, width, height }) => {
     return (
         <svg width={figureWidth} height={figureHeight}>
             <g transform={transform}>
-                {/* {say()} */}
-                {/* {rectBackground(data)} */}
-                {/* {rectForeground(data)} */}
                 {
                     data.map((d, i) => (
                         <rect
