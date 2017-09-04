@@ -20,6 +20,8 @@ import BarChart from "../Components/BarChart"
 import PieChart from "../Components/PieChart"
 import LineChart from "../Components/Charts/LineChart"
 import StackedBarChart from "../Components/Charts/StackedBarChart"
+import kenya from "../Components/Charts/kenya"
+import MapChart from "../Components/Charts/MapChart"
 
 class FacilityScreen extends Component {
     constructor(props) {
@@ -185,23 +187,34 @@ class FacilityScreen extends Component {
                             countySummaryChartData={this.props.countySummaryChartData} /> */}
                         {
                             this.props.countySummaryIsFetched ? (
-                                <Segment>
-                                    <LineChart 
-                                        width={400}
-                                        height={400} 
-                                        data={this.props.countySummaryChartData.facilitiesSummary}/>
-                                    <PieChart
-                                        data={this.props.countySummaryChartData.facilitiesSummary}
-                                        width={400}
-                                        height={400} />
-                                    <StackedBarChart
-                                        dataExists={this.props.countySummaryIsFetched}
-                                        data={this.props.countySummaryChartData}
-                                    />
-                                </Segment>
+                                <Grid>
+                                    <Grid.Row stretched>
+                                        <Segment>
+                                            <StackedBarChart
+                                                dataExists={this.props.countySummaryIsFetched}
+                                                data={this.props.countySummaryChartData}
+                                            />
+                                        </Segment>
+                                    </Grid.Row>
+                                    <Grid.Row columns={2}>
+                                        <Grid.Column width={8}>
+                                            <LineChart
+                                                width={400}
+                                                height={400}
+                                                data={this.props.countySummaryChartData.facilitiesSummary} />
+
+                                        </Grid.Column>
+                                        <Grid.Column width={8}>
+                                            <PieChart
+                                                data={this.props.countySummaryChartData.facilitiesSummary}
+                                                width={400}
+                                                height={400} />
+
+                                        </Grid.Column>
+                                    </Grid.Row>                                    
+                                </Grid>
                             ) : (
-                                    <Segment loading size='large'>
-                                    </Segment>
+                                   <Segment loading size="large"></Segment>
                                 )
                         }
                     </Tab.Pane>
