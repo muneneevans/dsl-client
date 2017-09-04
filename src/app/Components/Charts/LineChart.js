@@ -41,8 +41,7 @@ export const LineChart = ({ data, width, height }) => {
 
     return (
         <svg width={figureWidth} height={figureHeight} viewBox={` 0 0 ${figureWidth} ${figureHeight}`}>
-            <g transform={`translate( ${margin.left} , ${margin.top} )`}>
-                {console.log(data)}
+            <g transform={`translate( ${margin.left} , ${margin.top} )`}>                
                 <path d={figureLine(data)} fill="none" stroke='#98abc5'>
                 </path>
             </g>

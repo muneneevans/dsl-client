@@ -5,6 +5,7 @@ import FacilityScreen from "./FacilityScreen"
 import IndicatorScreen from "./IndicatorsScreen"
 import MapScreen from "./MapScreen"
 import Dimensions from "react-dimensions"
+// import ChartScreen from "./ChartScreen"
 
 class App extends Component {
     render() {
@@ -16,6 +17,7 @@ class App extends Component {
                         containerHeight={this.props.containerHeight} />
                 </Route>
                 <Route path='/Maps' component={MapScreen}/>
+                <Route path='/charts' component={ChartScreen}/>
             </Switch>
 
         );
