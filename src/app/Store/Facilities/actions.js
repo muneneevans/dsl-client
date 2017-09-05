@@ -27,6 +27,7 @@ export function fetchCountySummary(countyId) {
 
 export function fetchConstituencySummary(constituencyId){
     return function(dispatch, getState){
+        dispatch(showLoading(types.CONSTITUENCY_SUMMARY_REQUESTED))
         FacilityService.getConstituencySummary(constituencyId)
             .then(constituencySummary => {
                 return dispatch({

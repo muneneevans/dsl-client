@@ -75,7 +75,11 @@ export function getCountySummaryXYData(state) {
         }
     }
 }
-export function getConstituencySummaryXYData(state) {
+
+export function getConstituencySummaryFetchStatus(state){
+    return state.facilityReducer.constituencySummaryIsFetched
+}
+export function getConstituencySummaryChartData(state) {
     if (state.facilityReducer.constituencySummaryIsFetched) {
         const summary = {
             bedsSummary: [],
@@ -84,23 +88,23 @@ export function getConstituencySummaryXYData(state) {
         }
         state.facilityReducer.constituencySummary.map((ward, i) => {
             summary.bedsSummary.push({
-                label: county.constituency_name,                
-                x: county.number_of_beds,
-                value: county.number_of_beds,
+                label: ward.ward_name,                
+                value: ward.number_of_beds,
+                x: ward.number_of_beds,
                 y: summary.bedsSummary.length
             })
             summary.cotsSummary.push({
-                label: county.constituency_name,
-                constituency_id: county.constituency_id,
-                x: county.number_of_cots,
-                value: county.number_of_cots,
+                label: ward.ward_name,
+                ward_id: ward.ward_id,
+                value: ward.number_of_cots,
+                x: ward.number_of_cots,
                 y: summary.cotsSummary.length
             })
             summary.facilitiesSummary.push({
-                label: county.constituency_name,
-                constituency_id: county.constituency_id,
-                x: county.number_of_facilities,
-                value: county.number_of_facilities,
+                label: ward.ward_name,
+                ward_id: ward.ward_id,
+                x: ward.number_of_facilities,
+                value: ward.number_of_facilities,
                 y: summary.facilitiesSummary.length
             })
         })    
