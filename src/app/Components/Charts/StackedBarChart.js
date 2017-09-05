@@ -3,16 +3,16 @@ import { Segment } from "semantic-ui-react"
 // import 'react-vis/dist/style.css';
 import { XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, YAxis, XAxis, VerticalBarSeries, HorizontalBarSeries } from 'react-vis';
 
-export const StackedBarChart = (props) => {
+export const StackedBarChart = ({dataExists, data, title, height, width}) => {
     const margins = { left: 70, right: 10, top: 10, bottom: 40 }
-    // console.log(props.data)
+    // console.log(data)
     return (
 
-        props.dataExists ? (
-            <XYPlot height={300} width={300} margin={margins}>
-                <XAxis title={props.title} />
+        dataExists ? (
+            <XYPlot height={height} width={width} margin={margins}>
+                <XAxis title={title} />
                 <YAxis />
-                <HorizontalBarSeries data={props.data.facilitiesSummary} />
+                <HorizontalBarSeries data={data} />
             </XYPlot>
 
         ) : (
