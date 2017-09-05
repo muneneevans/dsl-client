@@ -20,8 +20,6 @@ import BarChart from "../Components/BarChart"
 import PieChart from "../Components/PieChart"
 import LineChart from "../Components/Charts/LineChart"
 import StackedBarChart from "../Components/Charts/StackedBarChart"
-import kenya from "../Components/Charts/kenya"
-import MapChart from "../Components/Charts/MapChart"
 
 class FacilityScreen extends Component {
     constructor(props) {
@@ -96,7 +94,7 @@ class FacilityScreen extends Component {
             case levels.CONSTITUENCY:
                 switch (this.props.currentFacilityInformationType) {
                     case facilityInformationType.SUMMARY:
-                        alert('fetch constituency summary')
+                        this.props.facilityActions.fetchConstituencySummary(this.props.currentId)
                         break
 
                     case facilityInformationType.LIST:
@@ -135,6 +133,22 @@ class FacilityScreen extends Component {
         }
     }
 
+    getSummary(){
+        switch (this.props.currentLevel) {
+            case levels.COUNTY:
+                return{
+                    fetchStatus: this.props.countySummaryIsFetched,
+                    summaryChartData: this.props.countySummaryChartData
+                }                
+                case levels.CONSTITUENCY:
+                return{                
+                    fetchStatus: this.props.constituencySummaryIsFetched,
+                    summaryChartData: this.props.constituencySummaryChartData
+                }
+            default:
+                break;
+        }
+    }
 
     render() {
         const levelPanes = [
@@ -186,35 +200,41 @@ class FacilityScreen extends Component {
                             countySummaryIsFetched={this.props.countySummaryIsFetched}
                             countySummaryChartData={this.props.countySummaryChartData} /> */}
                         {
-                            this.props.countySummaryIsFetched ? (
+                            this.getSummary().fetchStatus ? (
                                 <Grid>
-                                    <Grid.Row stretched>
+                                    <Grid.Row stretched centered>
                                         <Segment>
                                             <StackedBarChart
+                                                title="facilities Summary"
                                                 dataExists={this.props.countySummaryIsFetched}
-                                                data={this.props.countySummaryChartData}
+                                                data={this.getSummary().summaryChartData.facilitiesSummary}
+                                                width={800}
+                                                height={400}
                                             />
                                         </Segment>
                                     </Grid.Row>
                                     <Grid.Row columns={2}>
-                                        <Grid.Column width={8}>
-                                            <LineChart
+                                        <Grid.Column width={8}>/>
+                                            <StackedBarChart
+                                                title='Number of beds'
+                                                dataExists={this.props.countySummaryIsFetched}
+                                                data={this.getSummary().summaryChartData.bedsSummary}
                                                 width={400}
                                                 height={400}
-                                                data={this.props.countySummaryChartData.facilitiesSummary} />
-
+                                            />
                                         </Grid.Column>
                                         <Grid.Column width={8}>
                                             <PieChart
-                                                data={this.props.countySummaryChartData.facilitiesSummary}
+                                                title="Number of cots"
+                                                data={this.getSummary().summaryChartData.cotsSummary}
                                                 width={400}
                                                 height={400} />
 
                                         </Grid.Column>
-                                    </Grid.Row>                                    
+                                    </Grid.Row>
                                 </Grid>
                             ) : (
-                                   <Segment loading size="large"></Segment>
+                                    <Segment loading size="large"></Segment>
                                 )
                         }
                     </Tab.Pane>
@@ -310,6 +330,10 @@ const mapStateToProps = (state, ownProps) => {
 
         countySummaryIsFetched: facilitySelectors.getCountySummaryFetchStatus(state),
         countySummaryChartData: facilitySelectors.getCountySummaryXYData(state),
+
+        constituencySummaryIsFetched: facilitySelectors.getConstituencySummaryFetchStatus(state),
+        constituencySummaryChartData: facilitySelectors.getConstituencySummaryChartData(state),
+
         currentFacilityInformationType: facilitySelectors.getCurrentFacilityInformationType(state)
     }
 }
