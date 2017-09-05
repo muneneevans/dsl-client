@@ -16,7 +16,8 @@ import ConstituencyForm from "../Components/Forms/ConstituencyForm"
 import WardForm from "../Components/Forms/WardForm"
 import FacilityTypeForm from "../Components/Forms/FacilityTypeForm"
 import FacilityList from "../Components/FacilityList"
-import BarChart from "../Components/BarChart"
+// import BarChart from "../Components/BarChart"
+import BarChart from "../Components/Charts/BarChart"
 import PieChart from "../Components/PieChart"
 import LineChart from "../Components/Charts/LineChart"
 import StackedBarChart from "../Components/Charts/StackedBarChart"
@@ -133,15 +134,15 @@ class FacilityScreen extends Component {
         }
     }
 
-    getSummary(){
+    getSummary() {
         switch (this.props.currentLevel) {
             case levels.COUNTY:
-                return{
+                return {
                     fetchStatus: this.props.countySummaryIsFetched,
                     summaryChartData: this.props.countySummaryChartData
-                }                
-                case levels.CONSTITUENCY:
-                return{                
+                }
+            case levels.CONSTITUENCY:
+                return {
                     fetchStatus: this.props.constituencySummaryIsFetched,
                     summaryChartData: this.props.constituencySummaryChartData
                 }
@@ -204,32 +205,43 @@ class FacilityScreen extends Component {
                                 <Grid>
                                     <Grid.Row stretched centered>
                                         <Segment>
-                                            <StackedBarChart
+                                            {/* <StackedBarChart
                                                 title="facilities Summary"
                                                 dataExists={this.props.countySummaryIsFetched}
                                                 data={this.getSummary().summaryChartData.facilitiesSummary}
                                                 width={800}
                                                 height={400}
+                                            /> */}
+                                            <BarChart
+                                                data={this.getSummary().summaryChartData.facilitiesSummary}
+                                                width={800} height={400}
+                                                title="Number of facilities"
+                                                xLabel='Constituencies' yLabel='Number of facilities'
+
                                             />
+
                                         </Segment>
                                     </Grid.Row>
                                     <Grid.Row columns={2}>
-                                        <Grid.Column width={8}>/>
-                                            <StackedBarChart
-                                                title='Number of beds'
-                                                dataExists={this.props.countySummaryIsFetched}
-                                                data={this.getSummary().summaryChartData.bedsSummary}
-                                                width={400}
-                                                height={400}
-                                            />
+                                        <Grid.Column width={8}>
+                                            <Segment>
+                                                <StackedBarChart
+                                                    title='Number of beds'
+                                                    dataExists={this.props.countySummaryIsFetched}
+                                                    data={this.getSummary().summaryChartData.bedsSummary}
+                                                    width={400}
+                                                    height={400}
+                                                />
+                                            </Segment>
                                         </Grid.Column>
                                         <Grid.Column width={8}>
-                                            <PieChart
-                                                title="Number of cots"
-                                                data={this.getSummary().summaryChartData.cotsSummary}
-                                                width={400}
-                                                height={400} />
-
+                                            <Segment>
+                                                <PieChart
+                                                    title="Number of cots"
+                                                    data={this.getSummary().summaryChartData.cotsSummary}
+                                                    width={400}
+                                                    height={400} />
+                                            </Segment>
                                         </Grid.Column>
                                     </Grid.Row>
                                 </Grid>
