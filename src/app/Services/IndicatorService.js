@@ -1,7 +1,7 @@
 export default class IndicatorService{
     static get host(){
         delete IndicatorService.host;
-        return IndicatorService.host = 'http://localhost:8000/indicators/api/';
+        return IndicatorService.host = 'http://41.89.94.68:8000/indicators/api/';
     }
 
     static getDataElementGroups(){
