@@ -87,8 +87,8 @@ export function getConstituencySummaryChartData(state) {
             facilitiesSummary: []
         }
         state.facilityReducer.constituencySummary.map((ward, i) => {
-            summary.bedsSummary.push({
-                label: ward.ward_name,                
+            summary.bedsSummary.push({                
+                label: ward.ward_name,
                 value: ward.number_of_beds,
                 x: ward.number_of_beds,
                 y: summary.bedsSummary.length

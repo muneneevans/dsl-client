@@ -42,14 +42,15 @@ export default function facilityReducer(state = InitialState, action={}){
             })
         
         case types.CONSTITUENCY_SUMMARY_REQUESTED:
-            return sate.merge({
+            return state.merge({
                 constituencySummaryIsFetched: false
             })
         
         case types.CONSTITUENCY_SUMMARY_RECEIVED:
+            // console.log(action.constituencySummary)
             return state.merge({
                 constituencySummary: action.constituencySummary,
-                constituencySummaryIsFetched: false
+                constituencySummaryIsFetched: true
             })
 
         case types.FACILITY_TYPES_RECEIVED:
