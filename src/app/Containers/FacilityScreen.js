@@ -114,7 +114,7 @@ class FacilityScreen extends Component {
             case levels.WARD:
                 switch (this.props.currentFacilityInformationType) {
                     case facilityInformationType.SUMMARY:
-                        alert('fetch ward summary')
+                        this.props.facilityActions.fetchWardSummary(this.props.currentId)
                         break
 
                     case facilityInformationType.LIST:
@@ -145,6 +145,11 @@ class FacilityScreen extends Component {
                 return {
                     fetchStatus: this.props.constituencySummaryIsFetched,
                     summaryChartData: this.props.constituencySummaryChartData
+                }
+            case levels.WARD:
+                return {
+                    fetchStatus: this.props.wardSummaryIsFetched,
+                    summaryChartData: this.props.wardSummaryChartData
                 }
             default:
                 break;
@@ -345,6 +350,9 @@ const mapStateToProps = (state, ownProps) => {
 
         constituencySummaryIsFetched: facilitySelectors.getConstituencySummaryFetchStatus(state),
         constituencySummaryChartData: facilitySelectors.getConstituencySummaryChartData(state),
+
+        wardSummaryIsFetched: facilitySelectors.getWardSummaryFetchStatus(state),
+        wardSummaryChartData: facilitySelectors.getWardSummaryChartData(state),
 
         currentFacilityInformationType: facilitySelectors.getCurrentFacilityInformationType(state)
     }

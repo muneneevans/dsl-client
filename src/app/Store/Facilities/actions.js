@@ -41,6 +41,22 @@ export function fetchConstituencySummary(constituencyId){
     }
 }
 
+export function fetchWardSummary(wardId){
+    return function(dispatch, getState){
+        dispatch(showLoading(types.WARD_SUMMARY_REQUESTED))
+        FacilityService.getWardSummary(wardId)
+            .then(wardSummary=>{
+                return dispatch({
+                    type: types.WARD_SUMMARY_RECEIVED,
+                    wardSummary
+                })
+            })
+            .catch(error=>{
+                throw(error)
+            })
+    }
+}
+
 export function fetchFacilities(level, id){
     return function (dispatch, getState){
         dispatch(showLoading(types.FACILITY_LIST_REQUESTED))

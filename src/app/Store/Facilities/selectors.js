@@ -120,6 +120,48 @@ export function getConstituencySummaryChartData(state) {
     }
 }
 
+export function getWardSummaryFetchStatus(state){
+    return state.facilityReducer.wardSummaryIsFetched
+}
+export function getWardSummaryChartData(state) {
+    if (state.facilityReducer.wardSummaryIsFetched) {
+        const summary = {
+            bedsSummary: [],
+            cotsSummary: [],
+            facilitiesSummary: []
+        }
+        state.facilityReducer.wardSummary.map((facility, i) => {
+            summary.bedsSummary.push({                
+                label: facility.name,
+                value: facility.number_of_beds,
+                x: facility.number_of_beds,
+                y: summary.bedsSummary.length
+            })
+            summary.cotsSummary.push({
+                label: facility.name,                
+                value: facility.number_of_cots,
+                x: facility.number_of_cots,
+                y: summary.cotsSummary.length
+            })
+            summary.facilitiesSummary.push({
+                label: facility.name,                
+                x: facility.number_of_facilities,
+                value: facility.number_of_facilities,
+                y: summary.facilitiesSummary.length
+            })
+        })    
+          
+        return summary
+    }
+    else {
+        return {
+            bedsSummary: [],
+            cotsSummary: [],
+            facilitiesSummary: []
+        }
+    }
+}
+
 
 export function getCurrentFacilityInformationType(state) {
     return state.facilityReducer.currentFacilityInformationType

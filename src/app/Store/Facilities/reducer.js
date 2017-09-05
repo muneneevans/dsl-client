@@ -14,6 +14,9 @@ const InitialState = Immutable({
     constituencySummaryIsFetched: false,
     constituencySummary: undefined,
 
+    wardSummaryIsFetched: false,
+    wardSummary: undefined,
+
     currentFacilityInformationType: undefined
 })
 
@@ -46,11 +49,21 @@ export default function facilityReducer(state = InitialState, action={}){
                 constituencySummaryIsFetched: false
             })
         
-        case types.CONSTITUENCY_SUMMARY_RECEIVED:
-            // console.log(action.constituencySummary)
+        case types.CONSTITUENCY_SUMMARY_RECEIVED:            
             return state.merge({
                 constituencySummary: action.constituencySummary,
                 constituencySummaryIsFetched: true
+            })
+        
+        case types.WARD_SUMMARY_REQUESTED:
+            return state.merge({
+                wardSummaryIsFetched: false
+            })
+        
+        case types.WARD_SUMMARY_RECEIVED:            
+            return state.merge({
+                wardSummary: action.wardSummary,
+                wardSummaryIsFetched: true
             })
 
         case types.FACILITY_TYPES_RECEIVED:

@@ -25,6 +25,18 @@ export default class FacilityService {
                 throw (error)
             })
     }
+
+    static getWardSummary(wardId){
+        const url = this.host.concat('ward/', wardId, '/summary/')
+        return fetch(url)
+            .then(response=>{
+                return response.json()
+            })
+            .catch(error=>{
+                throw(error)
+            })
+    }
+    
     static getFacilities(level, id) {
         const url = this.host.concat(level, '/', id, '/facilities')
         return fetch(url)
