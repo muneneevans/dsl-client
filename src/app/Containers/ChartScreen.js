@@ -11,14 +11,14 @@ import HorizontalBarChart from "../Components/Charts/HorizontalBarChart"
 export const ChartScreen = (props) => {
     
     var data = [
-        { day: '02-11-2016', value: 180 },
-        { day: '02-12-2016', value: 250 },
-        { day: '02-13-2016', value: 150 },
-        { day: '02-14-2016', value: 496 },
-        { day: '02-15-2016', value: 140 },
-        { day: '02-16-2016', value: 380 },
-        { day: '02-17-2016', value: 100 },
-        { day: '02-18-2016', value: 150 }
+        { label: '02-11-2016', value: 180 },
+        { label: '02-12-2016', value: 250 },
+        { label: '02-13-2016', value: 150 },
+        { label: '02-14-2016', value: 496 },
+        { label: '02-15-2016', value: 140 },
+        { label: '02-16-2016', value: 380 },
+        { label: '02-17-2016', value: 100 },
+        { label: '02-18-2016', value: 150 }
     ]
 
 
@@ -40,17 +40,23 @@ export const ChartScreen = (props) => {
 
     return (
         <div>
-            <LineChart 
+            {/* <LineChart 
                 data={data}
-                height              width={700}
+                width={700}
+                height={400}
+                /> */}
+            <BarChart 
+                data={data2}
+                height              
+                width={700}
                 height={500}
                 />
 
-            <HorizontalBarChart
+            {/* <HorizontalBarChart
                 data={data2}
                 width={500}
                 height={500}
-            />
+            /> */}
             {/* <MapChart
                 data={kenya}
                 height={800}

@@ -1,8 +1,9 @@
 import React from 'react'
 import { scaleLinear, scaleOrdinal, scaleBand } from "d3-scale"
-import { max } from "d3"
-import { range} from "d3-array"
-export const BarChart = ({ data, width, height }) => {    
+import { max, select } from "d3"
+import { range } from "d3-array"
+import { axisBottom, axisLeft } from "d3-axis"
+export const BarChart = ({ data, width, height }) => {
 
     var margins = { top: 5, right: 5, bottom: 5, left: 5 }
     var figureWidth = width - (margins.left - margins.right)
@@ -21,34 +22,30 @@ export const BarChart = ({ data, width, height }) => {
             return d.value
         })])
         .range([height, 0])
-
-
-
+    
+    var xAxis = axisBottom(x)
     var rectBackground = (data) => {
-        data.map((d, i) => {
-            return (
-                <rect
-                    fill="#58657f"
-                    key={i}
-                    x={x(d.label)}
-                    y={margins.top - margins.bottom}
-                    height={figureHeight}
-                    width={x.range()} />
-            )
-        })
+        return data.map((d, i) => (
+            <rect
+                fill="#58657f"
+                key={i}
+                x={x(d.label)}
+                y={margins.top - margins.bottom}
+                height={figureHeight}
+                width={20} />
+        ))
     }
 
     const rectForeground = (data) => {
-        data.map((d, i) => (            
-                <rect
-                    fill="#74d3eb"
-                    key={i}
-                    x={x(d.label)}
-                    y={y(d.value)}
-                    height={figureHeight - y(d.value)}
-                    width={figureHeight} />
-            ))
-
+        return data.map((d, i) => (
+            <rect
+                fill="#74d3eb"
+                key={i}
+                x={x(d.label)}
+                y={y(d.value)}
+                height={figureHeight - y(d.value)}
+                width={20} />
+        ))
     }
     const say = () => {
         return (
@@ -58,22 +55,12 @@ export const BarChart = ({ data, width, height }) => {
     return (
         <svg width={figureWidth} height={figureHeight}>
             <g transform={transform}>
-                {
-                    data.map((d, i) => (
-                        <rect
-                            fill="blue"
-                            key={i}
-                            x={x(d.label)}
-                            y={y(d.value)}
-                            height={figureHeight - y(d.value)}
-                            width={ 20} />
-                    ))
-                }
+                {rectForeground(data)}
+            </g>
+            <g transform={`translate(0, ${figureHeight})`}>
+                {xAxis(x)}
             </g>
         </svg>
-        // <div>
-        //     {say()}
-        // </div>
     )
 }
 
