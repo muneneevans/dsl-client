@@ -8,14 +8,15 @@ const InitialState = Immutable({
 
 export default function indicatorReducer(state= InitialState, action={}){
     switch (action.type) {
+        case types.DATAELEMENTS_REQUESTED:
+            return state.merge({
+                dataElementsIsFetched: false
+            })
+            
         case types.DATAELEMENTS_RECEIVED:            
             return state.merge({
                 dataElements: action.dataElements,
                 dataElementsIsFetched: true
-            })
-        case types.DATAELEMENTS_REQUESTED:
-            return state.merge({
-                dataElementsIsFetched: false
             })
         default:
             return state
