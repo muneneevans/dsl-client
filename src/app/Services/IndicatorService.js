@@ -4,6 +4,7 @@ export default class IndicatorService{
         return IndicatorService.host = 'http://41.89.94.68:8000/indicators/api/';
     }
 
+
     static getDataElementGroups(){
         const url = this.host.concat('dataelementgroups/')
 
@@ -17,7 +18,7 @@ export default class IndicatorService{
     }
     
     static getDatalements(dataElementGroupId=undefined){
-        var url = this.host.concat('datalements/')
+        var url = this.host.concat('dataelements/')
         if(dataElementGroupId){
             url = this.host.concat('dataelementgroups/' + dataElementGroupId + '/dataelements/' )
         }
