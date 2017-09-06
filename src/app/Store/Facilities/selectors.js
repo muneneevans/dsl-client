@@ -7,6 +7,14 @@ export function getFacilties(state) {
     return state.facilityReducer.facilities
 }
 
+export function getFacilityDetailFetchStatus(state){
+    return state.facilityReducer.facilityDetailsIsFetched
+}
+
+export function getFaciliyDetails(state){
+    return state.facilityReducer.facilityDetails
+}
+
 export function getCountySummaryFetchStatus(state) {
     return state.facilityReducer.countySummaryIsFetched
 }

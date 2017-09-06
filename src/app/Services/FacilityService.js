@@ -4,6 +4,16 @@ export default class FacilityService {
         return FacilityService.host = 'http://41.89.94.68:8000/facilities/api/'
     }
 
+    static getFacilityDetails(facilityId){
+        const url = this.host.concat(facilityId,'/')
+        return fetch(url)
+            .then(response=>{
+                return response.json()
+            })
+            .catch(error=>{
+                throw(error)
+            })
+    }
     static getCountySummary(countyId) {
         const url = this.host.concat('county/', countyId, '/summary/')
         return fetch(url)

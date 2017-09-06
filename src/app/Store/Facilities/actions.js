@@ -9,6 +9,22 @@ export function showLoading(actionType=undefined) {
     }
 }
 
+export function fetchfacilityDetails(facilityId){
+    return function (dispatch, getState){
+        showLoading(types.FACILITY_DETAILS_REQUESTED)
+        FacilityService.getFacilityDetails(facilityId)
+            .then(facilityDetails=>{
+                return dispatch({
+                    type: types.FACILITY_DETAILS_RECEIVED,
+                    facilityDetails: facilityDetails[0]
+                })
+            })
+            .catch(error=>{
+                throw error
+            })
+    }
+}
+
 export function fetchCountySummary(countyId) {
     return function (dispatch, getState) {
         dispatch(showLoading(types.COUNTY_SUMMARY_REQUESTED))
