@@ -5,6 +5,7 @@ import FacilityScreen from "./FacilityScreen"
 import IndicatorScreen from "./IndicatorsScreen"
 import MapScreen from "./MapScreen"
 import Dimensions from "react-dimensions"
+import FacilityDetailScreen from "./FacilityDetailScreen"
 // import ChartScreen from "./ChartScreen"
 
 class App extends Component {
@@ -18,6 +19,8 @@ class App extends Component {
                 </Route>
                 <Route path='/Maps' component={MapScreen}/>
                 <Route path='/charts' component={ChartScreen}/>
+                <Route path="/facilities/:id" component={FacilityDetailScreen}/>
+                <Route path='/facilities' component={FacilityScreen}/>
             </Switch>
 
         );
