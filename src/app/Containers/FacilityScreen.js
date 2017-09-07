@@ -222,7 +222,6 @@ class FacilityScreen extends Component {
                                                 width={800} height={400}
                                                 title="Number of facilities"
                                                 xLabel='Constituencies' yLabel='Number of facilities'
-
                                             />
 
                                         </Segment>

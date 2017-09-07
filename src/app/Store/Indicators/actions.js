@@ -24,3 +24,18 @@ export function fetchDataElements(){
             })
     }
 }
+
+export function fetchFacilityDataElementDataValues(facilityId, dataElementId){
+    return function(dispatch, getState){
+        dispatch(showLoading(types.FACILITY_DATAELEMENT_DATAVALUES_REQUESTED))
+        return IndicatorService.getFacilityDataElementDatavalues(facilityId, dataElementId)
+            .then(dataValues =>{                
+                dataValues.sort((a,b)=> a.periodid = b.periodid)                
+                dispatch({
+                    type: types.FACILITY_DATAELEMENT_DATAVALUES_RECEIVED,
+                    dataValues: dataValues
+                })
+            })
+            .catch(error=>{})
+    }
+}
