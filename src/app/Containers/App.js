@@ -17,7 +17,7 @@ class App extends Component {
                         containerWidth={this.props.containerWidth}
                         containerHeight={this.props.containerHeight} />
                 </Route>
-                <Route path='/Maps' component={MapScreen}/>
+                <Route path='/maps' component={MapScreen}/>
                 <Route path='/charts' component={ChartScreen}/>
                 <Route path="/facilities/:id" component={FacilityDetailScreen}/>
                 <Route path='/facilities' component={FacilityScreen}/>

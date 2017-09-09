@@ -21,6 +21,7 @@ import BarChart from "../Components/Charts/BarChart"
 import PieChart from "../Components/PieChart"
 import LineChart from "../Components/Charts/LineChart"
 import StackedBarChart from "../Components/Charts/StackedBarChart"
+import MapChart from "../Components/Charts/MapChart"
 
 class FacilityScreen extends Component {
     constructor(props) {
@@ -267,9 +268,9 @@ class FacilityScreen extends Component {
             {
                 menuItem: 'Map View',
                 render: () => (
-                    <FacilityList
-                        facilitiesIsFetched={this.props.facilitiesIsFetched}
-                        facilities={this.props.facilities} />
+                    <MapChart
+                        height={500}
+                        width={500}/>
                 )
             }
         ]
