@@ -131,6 +131,7 @@ export function getConstituencySummaryChartData(state) {
 export function getWardSummaryFetchStatus(state){
     return state.facilityReducer.wardSummaryIsFetched
 }
+
 export function getWardSummaryChartData(state) {
     if (state.facilityReducer.wardSummaryIsFetched) {
         const summary = {
@@ -170,11 +171,51 @@ export function getWardSummaryChartData(state) {
     }
 }
 
-
 export function getCurrentFacilityInformationType(state) {
     return state.facilityReducer.currentFacilityInformationType
 }
 
 export function getFacilityTypes(state) {    
     return state.facilityReducer.facilityTypes
+}
+
+export function getKephLevels(state){    
+    return state.facilityReducer.kephLevels
+}
+
+export function getKephLevelsOptions(state){
+    if(! state.facilityReducer.kephLevels){
+        return undefined
+    }
+    let kephLevels = []
+
+    state.facilityReducer.kephLevels.map((kephLevel, i ) =>{
+        // Object.defineProperty(kephLevel, 'key',
+        //     Object.getOwnPropertyDescriptor(kephLevel, 'id' )
+        // )
+        // Object.defineProperty(kephLevel, 'value',
+        //     Object.getOwnPropertyDescriptor(kephLevel, 'id' )
+        // )
+        // Object.defineProperty(kephLevel, 'text',
+        //     Object.getOwnPropertyDescriptor(kephLevel, 'name' )
+        // )
+        // delete kephLevel['key'];
+        // delete kephLevel['id'];
+        kephLevels.push({
+            key: kephLevel.id,
+            value: kephLevel.id,
+            text: kephLevel.name
+        })
+    })
+
+    return kephLevels
+    
+}
+
+function renameKeys(dict, keyMap){
+    if (old_key !== new_key) {
+        Object.defineProperty(o, new_key,
+            Object.getOwnPropertyDescriptor(o, old_key));
+        delete o[old_key];
+    }
 }

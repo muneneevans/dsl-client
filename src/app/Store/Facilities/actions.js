@@ -104,6 +104,7 @@ export function fetchFacilityTypes() {
 
 export function fetchFacilityKephLevels() {
     return function (dispatch, getState) {
+        showLoading(types.FACILITY_KEPH_LEVELS_REQUESTED)
         return FacilityService.getFaciityKephLevels()
             .then(kephLevels => {
                 return dispatch({

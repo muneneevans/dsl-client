@@ -15,6 +15,7 @@ import CountyForm from "../Components/Forms/CountyForm"
 import ConstituencyForm from "../Components/Forms/ConstituencyForm"
 import WardForm from "../Components/Forms/WardForm"
 import FacilityTypeForm from "../Components/Forms/FacilityTypeForm"
+import KephLevelForm from "../Components/Forms/KephLevelForm"
 import FacilityList from "../Components/FacilityList"
 // import BarChart from "../Components/BarChart"
 import BarChart from "../Components/Charts/BarChart"
@@ -33,6 +34,7 @@ class FacilityScreen extends Component {
         this.props.commonActions.changeLevel(levels.COUNTY)
         this.props.facilityActions.changeFacilityInformationType(facilityInformationType.SUMMARY)
         this.props.facilityActions.fetchFacilityTypes()
+        this.props.facilityActions.fetchFacilityKephLevels()
     }
 
     handleDataTabChange(e, data) {
@@ -298,6 +300,14 @@ class FacilityScreen extends Component {
                                 <FacilityTypeForm
                                     facilityTypes={this.props.facilityTypes} />
                             </Grid.Row>
+
+                            <Grid.Row >
+                                <Header as='h2' textAlign='center'>
+                                    Keph Levels
+                                </Header>
+                                <KephLevelForm
+                                    kephLevels={this.props.kephLevels} />
+                            </Grid.Row>
                         </Grid.Column>
                     </Grid.Column>
 
@@ -311,9 +321,6 @@ class FacilityScreen extends Component {
                             </Grid.Column>
                         </Grid.Column>
                     </Grid.Column>
-
-
-
                 </Grid>
             </div>
         )
@@ -344,6 +351,7 @@ const mapStateToProps = (state, ownProps) => {
         facilities: facilitySelectors.getFacilties(state),
 
         facilityTypes: facilitySelectors.getFacilityTypes(state),
+        kephLevels: facilitySelectors.getKephLevelsOptions(state),
 
         countySummaryIsFetched: facilitySelectors.getCountySummaryFetchStatus(state),
         countySummaryChartData: facilitySelectors.getCountySummaryXYData(state),
