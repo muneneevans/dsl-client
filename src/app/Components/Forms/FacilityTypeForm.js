@@ -2,16 +2,20 @@ import React from 'react'
 import { Form } from 'semantic-ui-react'
 
 export const FacilityTypeForm = (props) => {
+    const handleChange = (event) =>{
+        props.submitAction(event.target.value)
+    }
     return (
         <Form>
             <Form.Field>
                 <label>Facility type</label>
                 {
                     props.facilityTypes ? (
-                        <select>
+                        <select
+                            onChange={handleChange}>
                             {
                                 props.facilityTypes.map((facilityType, i) => (
-                                    <option key={i}>{facilityType.name}</option>
+                                    <option key={i} value={facilityType.id}>{facilityType.name}</option>
                                 ))
                             }
                         </select>

@@ -30,8 +30,7 @@ export const PieChart = ({ data, width, height }) => {
                         <path d={path(d)} fill={color(i)}></path>
                         <text dy='.35em'
                             transform={`translate(${label.centroid(d)})`}>                            
-                            {d.data.label + d.data.value}                            
-                            {console.log(d)}
+                            {d.data.label + d.data.value}                                                        
                         </text>
                     </g>
                 ))}

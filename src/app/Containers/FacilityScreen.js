@@ -59,17 +59,24 @@ class FacilityScreen extends Component {
         this.props.commonActions.changeCurrentId(id)
         setTimeout(() => { this.getData() }, 1500)
     }
-
     handleConstituencyChange(id) {
         this.props.commonActions.changeLevel(levels.CONSTITUENCY)
         this.props.commonActions.changeCurrentId(id)
         setTimeout(() => { this.getData() }, 1500)
     }
-
     handleWardChange(id) {
         this.props.commonActions.changeLevel(levels.WARD)
         this.props.commonActions.changeCurrentId(id)
         setTimeout(() => { this.getData() }, 1500)
+    }
+
+    handleFacilityTypeChange(id){
+        alert(id)
+    }
+    handleKephLevelChange(id){
+        this.props.facilityActions.changeFacilityFilter({
+            keph_level_id: id
+        })
     }
 
     getData() {
@@ -298,7 +305,8 @@ class FacilityScreen extends Component {
                                     Facility Types
                                 </Header>
                                 <FacilityTypeForm
-                                    facilityTypes={this.props.facilityTypes} />
+                                    facilityTypes={this.props.facilityTypes} 
+                                    submitAction={this.handleFacilityTypeChange}/>
                             </Grid.Row>
 
                             <Grid.Row >
@@ -306,7 +314,8 @@ class FacilityScreen extends Component {
                                     Keph Levels
                                 </Header>
                                 <KephLevelForm
-                                    kephLevels={this.props.kephLevels} />
+                                    kephLevels={this.props.kephLevels} 
+                                    submitAction={this.handleKephLevelChange.bind(this)}/>
                             </Grid.Row>
                         </Grid.Column>
                     </Grid.Column>

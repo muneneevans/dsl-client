@@ -100,6 +100,29 @@ export default function facilityReducer(state = InitialState, action={}){
             return state.merge({
                 currentFacilityInformationType: action.informationType
             })
+        
+        case types.CHANGE_FACILITY_FILTER:
+            let newFilters = []
+            if(state.filters){
+                newFilters = Immutable.asMutable(state.filters, { deep: true })
+                let keyList = Object.keys(action.filterItem)
+                if(keyList[0] in newFilters){
+                    console.log(' updating')
+                    newFilters[keyList[0]] = action.filterItem[keyList[0]]
+                }
+                // let item = action.filterItem
+                // newFilters.merge({
+                //     item
+                // })
+                console.log(newFilters)
+            }        
+            else{                
+                newFilters.push(action.filterItem)
+            }
+            // console.log(newFilters)
+            return state.merge({
+                filters: newFilters
+            })
 
         default:
             return state

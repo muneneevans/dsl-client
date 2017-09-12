@@ -21,6 +21,7 @@ export function getFacilityDataElementDataValues(state) {
         newDataValues.push( {
             label: d.categoryoptioncomboid,
             value: d.value,
+            periodid: d.periodid,
             categoryoptioncomboid: d.categoryoptioncomboid
         })
     })

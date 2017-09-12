@@ -126,3 +126,12 @@ export function changeFacilityInformationType(informationType) {
         })
     }
 }
+
+export function changeFacilityFilter(filterItem){
+    return function (dispatch, getState){        
+        dispatch({
+            type: types.CHANGE_FACILITY_FILTER,
+            filterItem: filterItem
+        })
+    }
+}
