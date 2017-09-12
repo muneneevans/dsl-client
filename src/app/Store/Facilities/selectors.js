@@ -44,35 +44,38 @@ export function getCountySummaryChartData(state) {
 
 export function getCountySummaryXYData(state) {
     if (state.facilityReducer.countySummaryIsFetched) {
-        const summary = {
+        let summary = {
             bedsSummary: [],
             cotsSummary: [],
-            facilitiesSummary: []
+            facilitiesSummary: [],
+            labels: []
         }
         state.facilityReducer.countySummary.map((county, i) => {
+            summary.labels.push(county.constituency_name)
             summary.bedsSummary.push({
                 label: county.constituency_name,
                 constituency_id: county.constituency_id,
                 x: county.number_of_beds,
                 value: county.number_of_beds,
-                y: summary.bedsSummary.length
+                y: i,
             })
             summary.cotsSummary.push({
                 label: county.constituency_name,
                 constituency_id: county.constituency_id,
                 x: county.number_of_cots,
                 value: county.number_of_cots,
-                y: summary.cotsSummary.length
+                y: i,
             })
             summary.facilitiesSummary.push({
                 label: county.constituency_name,
                 constituency_id: county.constituency_id,
                 x: county.number_of_facilities,
                 value: county.number_of_facilities,
-                y: summary.facilitiesSummary.length
+                y: i,
             })
         })    
           
+        console.log(summary)
         return summary
     }
     else {

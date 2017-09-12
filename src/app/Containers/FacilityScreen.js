@@ -243,6 +243,7 @@ class FacilityScreen extends Component {
                                                     title='Number of beds'
                                                     dataExists={this.props.countySummaryIsFetched}
                                                     data={this.getSummary().summaryChartData.bedsSummary}
+                                                    labels={this.getSummary().summaryChartData.labels}                                                    
                                                     width={400}
                                                     height={400}
                                                 />
