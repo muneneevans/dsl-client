@@ -227,11 +227,19 @@ class FacilityScreen extends Component {
                                                 width={800}
                                                 height={400}
                                             /> */}
-                                            <BarChart
+                                            {/* <BarChart
                                                 data={this.getSummary().summaryChartData.facilitiesSummary}
                                                 width={800} height={400}
                                                 title="Number of facilities"
                                                 xLabel='Constituencies' yLabel='Number of facilities'
+                                            /> */}
+                                            <StackedBarChart
+                                                title='Number of Facilities'
+                                                dataExists={this.props.countySummaryIsFetched}
+                                                data={this.getSummary().summaryChartData.facilitiesSummary}
+                                                labels={this.getSummary().summaryChartData.labels}                                                    
+                                                width={800}
+                                                height={400}
                                             />
 
                                         </Segment>

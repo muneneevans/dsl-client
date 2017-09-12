@@ -7,11 +7,11 @@ export function getFacilties(state) {
     return state.facilityReducer.facilities
 }
 
-export function getFacilityDetailFetchStatus(state){
+export function getFacilityDetailFetchStatus(state) {
     return state.facilityReducer.facilityDetailsIsFetched
 }
 
-export function getFaciliyDetails(state){
+export function getFaciliyDetails(state) {
     return state.facilityReducer.facilityDetails
 }
 
@@ -34,7 +34,7 @@ export function getCountySummaryChartData(state) {
                 number_of_cots: county.number_of_facilities,
                 number_of_facilities: county.number_of_facilities
             })
-        })        
+        })
         return summary
     }
     else {
@@ -73,8 +73,8 @@ export function getCountySummaryXYData(state) {
                 value: county.number_of_facilities,
                 y: i,
             })
-        })    
-          
+        })
+
         console.log(summary)
         return summary
     }
@@ -87,7 +87,7 @@ export function getCountySummaryXYData(state) {
     }
 }
 
-export function getConstituencySummaryFetchStatus(state){
+export function getConstituencySummaryFetchStatus(state) {
     return state.facilityReducer.constituencySummaryIsFetched
 }
 export function getConstituencySummaryChartData(state) {
@@ -95,31 +95,33 @@ export function getConstituencySummaryChartData(state) {
         const summary = {
             bedsSummary: [],
             cotsSummary: [],
-            facilitiesSummary: []
+            facilitiesSummary: [],
+            labels: []
         }
         state.facilityReducer.constituencySummary.map((ward, i) => {
-            summary.bedsSummary.push({                
+            summary.labels.push(ward.ward_name)
+            summary.bedsSummary.push({
                 label: ward.ward_name,
                 value: ward.number_of_beds,
                 x: ward.number_of_beds,
-                y: summary.bedsSummary.length
+                y: i
             })
             summary.cotsSummary.push({
                 label: ward.ward_name,
                 ward_id: ward.ward_id,
                 value: ward.number_of_cots,
                 x: ward.number_of_cots,
-                y: summary.cotsSummary.length
+                y: i
             })
             summary.facilitiesSummary.push({
                 label: ward.ward_name,
                 ward_id: ward.ward_id,
                 x: ward.number_of_facilities,
                 value: ward.number_of_facilities,
-                y: summary.facilitiesSummary.length
+                y: i
             })
-        })    
-          
+        })
+
         return summary
     }
     else {
@@ -131,7 +133,7 @@ export function getConstituencySummaryChartData(state) {
     }
 }
 
-export function getWardSummaryFetchStatus(state){
+export function getWardSummaryFetchStatus(state) {
     return state.facilityReducer.wardSummaryIsFetched
 }
 
@@ -140,29 +142,31 @@ export function getWardSummaryChartData(state) {
         const summary = {
             bedsSummary: [],
             cotsSummary: [],
-            facilitiesSummary: []
+            facilitiesSummary: [],
+            labels: []
         }
         state.facilityReducer.wardSummary.map((facility, i) => {
-            summary.bedsSummary.push({                
+            summary.labels.push(facility.name)
+            summary.bedsSummary.push({
                 label: facility.name,
                 value: facility.number_of_beds,
                 x: facility.number_of_beds,
-                y: summary.bedsSummary.length
+                y: i
             })
             summary.cotsSummary.push({
-                label: facility.name,                
+                label: facility.name,
                 value: facility.number_of_cots,
                 x: facility.number_of_cots,
-                y: summary.cotsSummary.length
+                y: i
             })
             summary.facilitiesSummary.push({
-                label: facility.name,                
+                label: facility.name,
                 x: facility.number_of_facilities,
                 value: facility.number_of_facilities,
-                y: summary.facilitiesSummary.length
+                y: i
             })
-        })    
-          
+        })
+
         return summary
     }
     else {
@@ -178,21 +182,21 @@ export function getCurrentFacilityInformationType(state) {
     return state.facilityReducer.currentFacilityInformationType
 }
 
-export function getFacilityTypes(state) {    
+export function getFacilityTypes(state) {
     return state.facilityReducer.facilityTypes
 }
 
-export function getKephLevels(state){    
+export function getKephLevels(state) {
     return state.facilityReducer.kephLevels
 }
 
-export function getKephLevelsOptions(state){
-    if(! state.facilityReducer.kephLevels){
+export function getKephLevelsOptions(state) {
+    if (!state.facilityReducer.kephLevels) {
         return undefined
     }
     let kephLevels = []
 
-    state.facilityReducer.kephLevels.map((kephLevel, i ) =>{
+    state.facilityReducer.kephLevels.map((kephLevel, i) => {
         // Object.defineProperty(kephLevel, 'key',
         //     Object.getOwnPropertyDescriptor(kephLevel, 'id' )
         // )
@@ -212,10 +216,10 @@ export function getKephLevelsOptions(state){
     })
 
     return kephLevels
-    
+
 }
 
-function renameKeys(dict, keyMap){
+function renameKeys(dict, keyMap) {
     if (old_key !== new_key) {
         Object.defineProperty(o, new_key,
             Object.getOwnPropertyDescriptor(o, old_key));
