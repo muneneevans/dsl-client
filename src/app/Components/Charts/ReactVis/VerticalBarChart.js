@@ -13,10 +13,7 @@ export const VerticalBarChart = (props) => {
             <XAxis />
             <YAxis />
             <VerticalBarSeries data={myData} />
-            {/* <LabelSeries
-                animation
-                allowOffsetToBeReversed
-                data={myData} /> */}
+
         </XYPlot>
     )
 }
