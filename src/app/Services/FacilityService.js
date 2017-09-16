@@ -14,6 +14,16 @@ export default class FacilityService {
                 throw(error)
             })
     }
+    static getCountrySummary(){
+        const url = this.host.concat('country/summary/')
+        return fetch(url)
+            .then(response=>{
+                return response.json()
+            })
+            .catch(error=>{
+                throw(error)
+            })
+    }
     static getCountySummary(countyId) {
         const url = this.host.concat('county/', countyId, '/summary/')
         return fetch(url)

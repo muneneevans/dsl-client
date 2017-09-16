@@ -25,6 +25,21 @@ export function fetchfacilityDetails(facilityId){
     }
 }
 
+export function fetchCountrySummary(){
+    return function (dispatch, getState){
+        dispatch(showLoading(types.COUNTRY_SUMMARY_REQUESTED))
+        return FacilityService.getCountrySummary()
+            .then(countrySummary=>{                
+                return dispatch({
+                    type: types.COUNTRY_SUMMARY_RECEIVED,
+                    countrySummary
+                })
+            })
+            .catch(error=>{
+                throw(error)
+            })
+    }
+}
 export function fetchCountySummary(countyId) {
     return function (dispatch, getState) {
         dispatch(showLoading(types.COUNTY_SUMMARY_REQUESTED))

@@ -15,6 +15,32 @@ export function getFaciliyDetails(state) {
     return state.facilityReducer.facilityDetails
 }
 
+export function getCountrySummary(state) {
+    return state.faciltyReducer.countrySummary
+}
+
+export function getCountrySummaryMapData(state) {    
+    if (!state.facilityReducer.countrySummary) { return undefined }
+    let summary = {        
+        facilitiesSummary: [],
+        labels: [],
+        countyCodeFacilityCount: [state.facilityReducer.countrySummary.length]
+    }
+        
+    state.facilityReducer.countrySummary.map((county, i) => {
+        summary.labels.push(county.name)
+        summary.facilitiesSummary.push({
+            label: county.name,            
+            value: county.count,
+            x: county.count,
+            y: i,
+        })        
+        summary.countyCodeFacilityCount[county.code] =  county.count
+    })
+     
+    return summary
+}
+
 export function getCountySummaryFetchStatus(state) {
     return state.facilityReducer.countySummaryIsFetched
 }
@@ -74,8 +100,7 @@ export function getCountySummaryXYData(state) {
                 y: i,
             })
         })
-
-        console.log(summary)
+        
         return summary
     }
     else {

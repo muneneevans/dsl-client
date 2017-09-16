@@ -35,6 +35,7 @@ class FacilityScreen extends Component {
         this.props.facilityActions.changeFacilityInformationType(facilityInformationType.SUMMARY)
         this.props.facilityActions.fetchFacilityTypes()
         this.props.facilityActions.fetchFacilityKephLevels()
+        this.props.facilityActions.fetchCountrySummary()
     }
 
     handleDataTabChange(e, data) {
@@ -71,7 +72,7 @@ class FacilityScreen extends Component {
     }
 
     handleFacilityTypeChange(id){
-        alert(id)
+        
     }
     handleKephLevelChange(id){
         this.props.facilityActions.changeFacilityFilter({
@@ -94,7 +95,7 @@ class FacilityScreen extends Component {
                         break
 
                     case facilityInformationType.MAP:
-                        alert('fetch county map')
+                        
                         break
 
                     default:
@@ -113,7 +114,7 @@ class FacilityScreen extends Component {
                         break
 
                     case facilityInformationType.MAP:
-                        alert('fetch constituency map')
+                        
                         break
 
                     default:
@@ -132,7 +133,7 @@ class FacilityScreen extends Component {
                         break
 
                     case facilityInformationType.MAP:
-                        alert('fetch ward map')
+                        
                         break
                     default:
                         break
@@ -288,7 +289,8 @@ class FacilityScreen extends Component {
                 render: () => (
                     <MapChart
                         height={500}
-                        width={500}/>
+                        width={500}
+                        data={this.props.countrySummary}/>
                 )
             }
         ]
@@ -370,6 +372,8 @@ const mapStateToProps = (state, ownProps) => {
 
         facilityTypes: facilitySelectors.getFacilityTypes(state),
         kephLevels: facilitySelectors.getKephLevelsOptions(state),
+
+        countrySummary: facilitySelectors.getCountrySummaryMapData(state),
 
         countySummaryIsFetched: facilitySelectors.getCountySummaryFetchStatus(state),
         countySummaryChartData: facilitySelectors.getCountySummaryXYData(state),
