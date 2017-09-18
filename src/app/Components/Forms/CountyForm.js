@@ -1,10 +1,12 @@
 import React from 'react'
 import { Card, Form } from 'semantic-ui-react'
+import DropDownInput from "./Inputs/DropDownInput"
 
 export const CountyForm = (props) => {
+ 
 
-    const handleChange = (event) => {
-        props.submitAction(event.target.value)
+    const handleChange =  (e, { value }) =>{        
+        props.submitAction(value)
     }
 
     return (
@@ -12,18 +14,16 @@ export const CountyForm = (props) => {
         <Form>
             <Form.Field>
                 <label>County</label>
-                <select
-                    onChange={handleChange.bind(this)}
-                    placeholder='select a county'>
-                    {
-                        props.countyCodes.map((county, i) => (
-                            <option key={i} value={county.id}
-                            >
-                                {county.name}
-                            </option>
-                        ))
-                    }
-                </select>
+
+                {
+                    props.countyCodes ? (
+                        <DropDownInput  placeholder='select county'  
+                                        options={props.countyCodes} onChange={handleChange}
+                                        multiple={false}/>
+                    ) : (
+                            <h4>No Counties</h4>
+                        )
+                }
             </Form.Field>
         </Form>
 
