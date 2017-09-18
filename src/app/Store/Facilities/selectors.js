@@ -222,17 +222,7 @@ export function getKephLevelsOptions(state) {
     let kephLevels = []
 
     state.facilityReducer.kephLevels.map((kephLevel, i) => {
-        // Object.defineProperty(kephLevel, 'key',
-        //     Object.getOwnPropertyDescriptor(kephLevel, 'id' )
-        // )
-        // Object.defineProperty(kephLevel, 'value',
-        //     Object.getOwnPropertyDescriptor(kephLevel, 'id' )
-        // )
-        // Object.defineProperty(kephLevel, 'text',
-        //     Object.getOwnPropertyDescriptor(kephLevel, 'name' )
-        // )
-        // delete kephLevel['key'];
-        // delete kephLevel['id'];
+        
         kephLevels.push({
             key: kephLevel.id,
             value: kephLevel.id,

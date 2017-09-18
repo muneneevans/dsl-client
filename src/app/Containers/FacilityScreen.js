@@ -358,7 +358,7 @@ class FacilityScreen extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        countyCodes: commonSelectors.getCountyCodes(state),
+        countyCodes: commonSelectors.getCountyOptions(state),
 
         constituencyCodesIsFetched: commonSelectors.getCountyConstituencyCodesFetchStatus(state),
         constituencyCodes: commonSelectors.getCountyConstituencyCodes(state),

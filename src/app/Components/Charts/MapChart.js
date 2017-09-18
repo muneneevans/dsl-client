@@ -35,8 +35,7 @@ export const MapChart = (props) => {
     const linearPalleteScale = (value) => {
         // const dataValues = this.props.regionData.map(function(data) { return data.value });
         const minVal = Math.min(...props.data.countyCodeFacilityCount);
-        const maxVal = Math.max(...props.data.countyCodeFacilityCount);
-        console.log(maxVal)
+        const maxVal = Math.max(...props.data.countyCodeFacilityCount);        
         return scaleLinear().domain([minVal, maxVal]).range(["#EFEFFF","#F44336"])(value);
       }
 

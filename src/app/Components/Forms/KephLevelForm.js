@@ -14,7 +14,8 @@ export const KephLevelForm = (props) => {
                 <label>Keph level</label>
                 {
                     props.kephLevels ? (
-                        <DropDownInput placeholder='select kephLevel' options={props.kephLevels} onChange={handleChange}/>
+                        <DropDownInput placeholder='select kephLevel' 
+                                    options={props.kephLevels} onChange={handleChange} multiple={false}/>
                     ) : (
                             <h4>No keph levels</h4>
                         )
