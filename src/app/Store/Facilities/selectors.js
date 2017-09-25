@@ -74,6 +74,7 @@ export function getCountySummaryXYData(state) {
             bedsSummary: [],
             cotsSummary: [],
             facilitiesSummary: [],
+            bedCotsSummary: [],
             labels: []
         }
         state.facilityReducer.countySummary.map((county, i) => {
@@ -99,6 +100,12 @@ export function getCountySummaryXYData(state) {
                 value: county.number_of_facilities,
                 y: i,
             })
+            summary.bedCotsSummary.push({
+                label: county.constituency_name,                
+                value: county.number_of_facilities,
+                x: county.number_of_beds,
+                y: county.number_of_cots
+            })
         })
         
         return summary
@@ -121,6 +128,7 @@ export function getConstituencySummaryChartData(state) {
             bedsSummary: [],
             cotsSummary: [],
             facilitiesSummary: [],
+            bedCotsSummary:[],
             labels: []
         }
         state.facilityReducer.constituencySummary.map((ward, i) => {
@@ -145,6 +153,12 @@ export function getConstituencySummaryChartData(state) {
                 value: ward.number_of_facilities,
                 y: i
             })
+            summary.bedCotsSummary.push({
+                label: ward.ward_name,                
+                value: ward.number_of_facilities,
+                x: ward.number_of_beds,
+                y: ward.number_of_cots
+            })
         })
 
         return summary
@@ -168,6 +182,7 @@ export function getWardSummaryChartData(state) {
             bedsSummary: [],
             cotsSummary: [],
             facilitiesSummary: [],
+            bedCotsSummary:[],
             labels: []
         }
         state.facilityReducer.wardSummary.map((facility, i) => {
@@ -189,6 +204,12 @@ export function getWardSummaryChartData(state) {
                 x: facility.number_of_facilities,
                 value: facility.number_of_facilities,
                 y: i
+            })
+            summary.bedCotsSummary.push({
+                label: facility.name,                
+                value: facility.number_of_facilities,
+                x: facility.number_of_beds,
+                y: facility.number_of_cots
             })
         })
 

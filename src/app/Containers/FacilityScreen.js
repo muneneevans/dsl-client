@@ -23,6 +23,7 @@ import PieChart from "../Components/PieChart"
 import LineChart from "../Components/Charts/LineChart"
 import StackedBarChart from "../Components/Charts/StackedBarChart"
 import MapChart from "../Components/Charts/MapChart"
+import ScatterPlot from "../Components/Charts/ReactVis/ScatterPlot"
 
 class FacilityScreen extends Component {
     constructor(props) {
@@ -71,10 +72,10 @@ class FacilityScreen extends Component {
         setTimeout(() => { this.getData() }, 1500)
     }
 
-    handleFacilityTypeChange(id){
-        
+    handleFacilityTypeChange(id) {
+
     }
-    handleKephLevelChange(id){
+    handleKephLevelChange(id) {
         this.props.facilityActions.changeFacilityFilter({
             keph_level_id: id
         })
@@ -95,7 +96,7 @@ class FacilityScreen extends Component {
                         break
 
                     case facilityInformationType.MAP:
-                        
+
                         break
 
                     default:
@@ -114,7 +115,7 @@ class FacilityScreen extends Component {
                         break
 
                     case facilityInformationType.MAP:
-                        
+
                         break
 
                     default:
@@ -133,7 +134,7 @@ class FacilityScreen extends Component {
                         break
 
                     case facilityInformationType.MAP:
-                        
+
                         break
                     default:
                         break
@@ -238,7 +239,7 @@ class FacilityScreen extends Component {
                                                 title='Number of Facilities'
                                                 dataExists={this.props.countySummaryIsFetched}
                                                 data={this.getSummary().summaryChartData.facilitiesSummary}
-                                                labels={this.getSummary().summaryChartData.labels}                                                    
+                                                labels={this.getSummary().summaryChartData.labels}
                                                 width={800}
                                                 height={400}
                                             />
@@ -252,7 +253,7 @@ class FacilityScreen extends Component {
                                                     title='Number of beds'
                                                     dataExists={this.props.countySummaryIsFetched}
                                                     data={this.getSummary().summaryChartData.bedsSummary}
-                                                    labels={this.getSummary().summaryChartData.labels}                                                    
+                                                    labels={this.getSummary().summaryChartData.labels}
                                                     width={400}
                                                     height={400}
                                                 />
@@ -267,6 +268,15 @@ class FacilityScreen extends Component {
                                                     height={400} />
                                             </Segment>
                                         </Grid.Column>
+                                    </Grid.Row>
+                                    <Grid.Row >
+                                        <Segment>
+                                            <ScatterPlot
+                                                title="beds vs cots"
+                                                data={this.getSummary().summaryChartData.bedCotsSummary}
+                                                width={500}
+                                                height={500} />
+                                        </Segment>
                                     </Grid.Row>
                                 </Grid>
                             ) : (
@@ -290,7 +300,7 @@ class FacilityScreen extends Component {
                     <MapChart
                         height={500}
                         width={500}
-                        data={this.props.countrySummary}/>
+                        data={this.props.countrySummary} />
                 )
             }
         ]
@@ -316,8 +326,8 @@ class FacilityScreen extends Component {
                                     Facility Types
                                 </Header>
                                 <FacilityTypeForm
-                                    facilityTypes={this.props.facilityTypes} 
-                                    submitAction={this.handleFacilityTypeChange}/>
+                                    facilityTypes={this.props.facilityTypes}
+                                    submitAction={this.handleFacilityTypeChange} />
                             </Grid.Row>
 
                             <Grid.Row >
@@ -325,8 +335,8 @@ class FacilityScreen extends Component {
                                     Keph Levels
                                 </Header>
                                 <KephLevelForm
-                                    kephLevels={this.props.kephLevels} 
-                                    submitAction={this.handleKephLevelChange.bind(this)}/>
+                                    kephLevels={this.props.kephLevels}
+                                    submitAction={this.handleKephLevelChange.bind(this)} />
                             </Grid.Row>
                         </Grid.Column>
                     </Grid.Column>
