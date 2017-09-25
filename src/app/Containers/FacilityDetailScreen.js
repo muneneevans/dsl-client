@@ -11,6 +11,7 @@ import * as facilityActions from "../Store/Facilities/actions"
 
 import DataElementsForm from "../Components/Forms/DataElementsForm"
 import BarChart from "../Components/Charts/BarChart"
+import YearForm from "../Components/Forms/YearForm"
 
 class FacilityDetailScreen extends Component {
     constructor(props) {
@@ -60,6 +61,10 @@ class FacilityDetailScreen extends Component {
                                         </div>
                                     )
                             }
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Header as='h3' textAlign='center'>Period</Header>
+                            <YearForm/>
                         </Grid.Row>
                     </Grid.Column>
                     <Grid.Column stretched computer={12}>
