@@ -19,25 +19,76 @@ export function getCountrySummary(state) {
     return state.faciltyReducer.countrySummary
 }
 
-export function getCountrySummaryMapData(state) {    
+export function getCountrySummaryChartData(state) {
+    if (state.facilityReducer.countrySummary) {
+
+        let summary = {
+            bedsSummary: [],
+            cotsSummary: [],
+            facilitiesSummary: [],
+            bedCotsSummary: [],
+            combinedSummary: [],
+            labels: []
+        }
+
+        state.facilityReducer.map((county, i) => {
+            summary.labels.push(county.name)
+            summary.facilitiesSummary.push({
+                label: county.name,
+                value: county.number_of_facilities,
+                x: county.number_of_facilities,
+                y: i,
+            })
+            summary.bedsSummary.push({
+                label: county.name,
+                value: county.number_of_beds,
+                x: county.number_of_beds,
+                y: i,
+            })
+            summary.cotsSummary.push({
+                label: county.name,
+                value: county.number_of_cots,
+                x: county.number_of_cots,
+                y: i,
+            })
+            summary.bedCotsSummary.push({
+                label: county.name,
+                value: county.number_of_beds,
+                x: county.number_of_cots,
+                y: i,
+            })
+        })
+
+        return summary
+    }
+    else {
+        return {
+            bedsSummary: [],
+            cotsSummary: [],
+            facilitiesSummary: []
+        }
+    }
+}
+
+export function getCountrySummaryMapData(state) {
     if (!state.facilityReducer.countrySummary) { return undefined }
-    let summary = {        
+    let summary = {
         facilitiesSummary: [],
         labels: [],
         countyCodeFacilityCount: [state.facilityReducer.countrySummary.length]
     }
-        
+
     state.facilityReducer.countrySummary.map((county, i) => {
         summary.labels.push(county.name)
         summary.facilitiesSummary.push({
-            label: county.name,            
-            value: county.count,
-            x: county.count,
+            label: county.name,
+            value: county.number_of_facilities,
+            x: county.number_of_facilities,
             y: i,
-        })        
-        summary.countyCodeFacilityCount[county.code] =  county.count
+        })
+        summary.countyCodeFacilityCount[county.code] = county.number_of_facilities
     })
-     
+    console.log(summary)
     return summary
 }
 
@@ -101,13 +152,13 @@ export function getCountySummaryXYData(state) {
                 y: i,
             })
             summary.bedCotsSummary.push({
-                label: county.constituency_name,                
+                label: county.constituency_name,
                 value: county.number_of_facilities,
                 x: county.number_of_beds,
                 y: county.number_of_cots
             })
         })
-        
+
         return summary
     }
     else {
@@ -128,7 +179,7 @@ export function getConstituencySummaryChartData(state) {
             bedsSummary: [],
             cotsSummary: [],
             facilitiesSummary: [],
-            bedCotsSummary:[],
+            bedCotsSummary: [],
             labels: []
         }
         state.facilityReducer.constituencySummary.map((ward, i) => {
@@ -154,7 +205,7 @@ export function getConstituencySummaryChartData(state) {
                 y: i
             })
             summary.bedCotsSummary.push({
-                label: ward.ward_name,                
+                label: ward.ward_name,
                 value: ward.number_of_facilities,
                 x: ward.number_of_beds,
                 y: ward.number_of_cots
@@ -182,7 +233,7 @@ export function getWardSummaryChartData(state) {
             bedsSummary: [],
             cotsSummary: [],
             facilitiesSummary: [],
-            bedCotsSummary:[],
+            bedCotsSummary: [],
             labels: []
         }
         state.facilityReducer.wardSummary.map((facility, i) => {
@@ -206,7 +257,7 @@ export function getWardSummaryChartData(state) {
                 y: i
             })
             summary.bedCotsSummary.push({
-                label: facility.name,                
+                label: facility.name,
                 value: facility.number_of_facilities,
                 x: facility.number_of_beds,
                 y: facility.number_of_cots
@@ -243,7 +294,7 @@ export function getKephLevelsOptions(state) {
     let kephLevels = []
 
     state.facilityReducer.kephLevels.map((kephLevel, i) => {
-        
+
         kephLevels.push({
             key: kephLevel.id,
             value: kephLevel.id,
