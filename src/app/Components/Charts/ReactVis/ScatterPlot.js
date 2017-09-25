@@ -1,5 +1,5 @@
 import React from 'react'
-import { XYPlot, HorizontalGridLines, VerticalGridLines, MarkSeries, XAxis, YAxis} from "react-vis"
+import { XYPlot, HorizontalGridLines, VerticalGridLines, MarkSeries, LabelSeries, XAxis, YAxis} from "react-vis"
 
 export const ScatterPlot = ({data, height, width}) => {
     return (
@@ -9,6 +9,7 @@ export const ScatterPlot = ({data, height, width}) => {
             <HorizontalGridLines />
             <VerticalGridLines />
             <MarkSeries size={5} data={data} onNearestX={(d, e) => { }} />
+            <LabelSeries size={5} data={data} onNearestX={(d, e) => { }} />
         </XYPlot>
     )
 }
