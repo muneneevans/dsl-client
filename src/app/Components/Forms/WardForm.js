@@ -1,11 +1,11 @@
 import React from 'react'
 import { Form, Input } from 'semantic-ui-react'
+import DropDownInput from "./Inputs/DropDownInput"
 
 export const WardForm = (props) => {
 
-    const handleChange = (event) => {
-        // alert(event.target.value)
-        props.fetchCountyConstituencyCodes(event.target.value)
+    const handleChange =  (e, { value }) =>{                
+        props.fetchCountyConstituencyCodes(value)
     }
 
     const handleConstituencySelect = (event) => {
@@ -21,21 +21,16 @@ export const WardForm = (props) => {
         <Form>
             <Form.Field>
                 <label>County</label>
-                <select
-                    onChange={handleChange.bind(this)}
-                    placeholder='select a county'>
-                    {
-                        props.countyCodes.map((county, i) => (
-                            <option
-                                key={i}
-                                value={county.id}>
+                {
+                    props.countyCodes ? (
+                        <DropDownInput  placeholder='select county'  
+                                        options={props.countyCodes} onChange={handleChange}
+                                        multiple={false}/>
+                    ) : (
+                            <h4>No Counties</h4>
+                        )
+                }
 
-                                {county.name}
-
-                            </option>
-                        ))
-                    }
-                </select>
             </Form.Field>
             <Form.Field>
                 <label>Consitituency</label>
