@@ -7,7 +7,7 @@ export const BarChart = (props) => {
         <Bar
             data={props.data}
             keys={props.keys}
-            indexBy="country"
+            indexBy={props.indexBy}
             height={props.height}
             width={props.width}
             margin={{

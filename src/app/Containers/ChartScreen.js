@@ -70,7 +70,8 @@ export const ChartScreen = (props) => {
                 data={kenya}
                 height={800}
                 width={800} /> */}
-            <NivoBarChart data={Nivodata} keys={keys} height={500} width={900}/>
+            <NivoBarChart data={Nivodata} keys={keys} height={500} width={900}
+                indexBy="country"/>
         </div>
     )
 }
