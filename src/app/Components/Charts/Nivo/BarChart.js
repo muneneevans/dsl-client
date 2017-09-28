@@ -1,10 +1,10 @@
 import React from 'react'
-import { Bar } from 'nivo'
+import { Bar, ResponsiveBar } from 'nivo'
 
 
 export const BarChart = (props) => {
     return (
-        <Bar
+        <ResponsiveBar
             data={props.data}
             keys={props.keys}
             indexBy={props.indexBy}

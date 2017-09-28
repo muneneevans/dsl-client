@@ -14,6 +14,17 @@ export default class FacilityService {
                 throw(error)
             })
     }
+    
+    static getCountryFacilityTypeSummary(){
+        const url = this.host.concat('country/facilitytypes/summary/')
+        return fetch(url)
+            .then(response =>{
+                return response.json()
+            })
+            .catch(error =>{
+                throw(error)
+            })
+    }
     static getCountrySummary(){
         const url = this.host.concat('country/summary/')
         return fetch(url)

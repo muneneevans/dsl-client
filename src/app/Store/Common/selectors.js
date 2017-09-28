@@ -21,6 +21,20 @@ export function getCountyOptions(state){
     return countyCodes
 }
 
+export function getCountyNames(state){
+    if (!state.commonReducer.countyCodes) {
+        return undefined
+    }
+    let countyNames = []
+
+    state.commonReducer.countyCodes.map((county, i) => {
+        
+        countyNames.push(county.name)
+    })
+
+    return countyNames
+}
+
 export function getCountyConstituencyCodesFetchStatus(state){
     return state.commonReducer.constituencyCodesIsFetched
 }

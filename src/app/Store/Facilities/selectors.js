@@ -15,6 +15,15 @@ export function getFaciliyDetails(state) {
     return state.facilityReducer.facilityDetails
 }
 
+export function getCountryFacilityTypesSummary(state) {
+    if (state.facilityReducer.countryFacilityTypesSummary) {        
+        return state.facilityReducer.countryFacilityTypesSummary.data
+    }
+    else {
+        return undefined
+    }
+}
+
 export function getCountrySummary(state) {
     return state.faciltyReducer.countrySummary
 }
@@ -87,8 +96,7 @@ export function getCountrySummaryMapData(state) {
             y: i,
         })
         summary.countyCodeFacilityCount[county.code] = county.number_of_facilities
-    })
-    console.log(summary)
+    })    
     return summary
 }
 
@@ -281,6 +289,20 @@ export function getCurrentFacilityInformationType(state) {
 
 export function getFacilityTypes(state) {
     return state.facilityReducer.facilityTypes
+}
+export function getFacilityTypesNames(state) {
+    if (state.facilityReducer.facilityTypes) {
+        let facilityTypesNames = []
+
+        state.facilityReducer.facilityTypes.map((facilityType, i) => {
+            facilityTypesNames.push(facilityType.name)
+        })
+
+        console.log(facilityTypesNames)
+        return facilityTypesNames
+    }
+    else{return undefined}
+
 }
 
 export function getKephLevels(state) {

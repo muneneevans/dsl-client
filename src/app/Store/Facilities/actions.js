@@ -40,6 +40,21 @@ export function fetchCountrySummary(){
             })
     }
 }
+export function fetchCountryFacilityTypeSummary(){
+    return function (dispatch, getState){
+        dispatch(showLoading(types.COUNTRY_FACILITYTYPES_SUMMARY_REQUESTED))
+        return FacilityService.getCountryFacilityTypeSummary()
+            .then(countryFacilityTypesSummary =>{                
+                return dispatch({
+                    type: types.COUNTRY_FACILITYTYPES_SUMMARY_RECEIVED,
+                    countryFacilityTypesSummary
+                })
+            })
+            .catch(error => {
+                throw(error)
+            })
+    }
+}
 export function fetchCountySummary(countyId) {
     return function (dispatch, getState) {
         dispatch(showLoading(types.COUNTY_SUMMARY_REQUESTED))
