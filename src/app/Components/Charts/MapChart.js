@@ -2,16 +2,17 @@ import React, { Component } from "react";
 import { geoMercator, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import {scaleLinear} from "d3-scale"
+import { Segment } from "semantic-ui-react"
 import someMapData from "./kenya"
-
+import Dimensions from "react-dimensions"
 
 export const MapChart = (props) => {    
     const featureCollection = feature(someMapData, someMapData.objects.subunits);
     const mapData = featureCollection.features
 
     const projection = (data) => {
-        let height = 500;
-        let width = 1000;
+        let height = props.height;
+        let width = props.containerWidth;
         // Create a unit projection.
         var projection = geoMercator()
             .scale(1)
@@ -40,41 +41,50 @@ export const MapChart = (props) => {
       }
 
     const p = projection(featureCollection);    
-    return (
-        <div>
-            <svg style={{ height: "auto", width: "auto", maxHeight: "100%", maxWidth: "100%" }} viewBox="0 0 1000 1000">
-                <g className="countries">
-                    {
-                        mapData.map((d, i) => (
-                            <path
-                                key={`path-${i}`}
-                                d={geoPath().projection(p)(d)}
-                                className="county"
-                                fill={linearPalleteScale( props.data.countyCodeFacilityCount[d.properties.COUNTY3_ID]) }
-                                stroke="#FFFFFF"
-                                strokeWidth={0.5}
-                                value={props.data.countyCodeFacilityCount[d.properties.COUNTY3_ID]}
-                                name={d.properties.COUNTY}
-                                code={d.properties.COUNTY3_ID}>
-                                </path>
-                        ))
-                    }
-                </g>
-                <g className="markers">
-                    <circle
-                        cx={p([8, 48])[0]}
-                        cy={p([8, 48])[1]}
-                        r={10}
-                        fill="#E91E63"
-                        className="marker"
-                    />
-                </g>
-            </svg>
-        </div>
-    )
+
+    if(props.data){
+
+        return (
+            <Segment>
+                <svg style={{ height: "auto", width: "auto", maxHeight: "100%", maxWidth: "100%" }} viewBox="0 0 1000 1000">
+                    <g className="countries">
+                        {
+                            mapData.map((d, i) => (
+                                <path
+                                    key={`path-${i}`}
+                                    d={geoPath().projection(p)(d)}
+                                    className="county"
+                                    fill={linearPalleteScale( props.data.countyCodeFacilityCount[d.properties.COUNTY3_ID]) }
+                                    stroke="#FFFFFF"
+                                    strokeWidth={0.5}
+                                    value={props.data.countyCodeFacilityCount[d.properties.COUNTY3_ID]}
+                                    name={d.properties.COUNTY}
+                                    code={d.properties.COUNTY3_ID}>
+                                    </path>
+                            ))
+                        }
+                    </g>
+                    <g className="markers">
+                        <circle
+                            cx={p([8, 48])[0]}
+                            cy={p([8, 48])[1]}
+                            r={10}
+                            fill="#E91E63"
+                            className="marker"
+                        />
+                    </g>
+                </svg>
+            </Segment>
+        )
+    }
+    else{
+        return( 
+            <div>No data</div>
+        )
+    }
 }
 
 
 
 
-export default MapChart
+export default Dimensions()(MapChart)

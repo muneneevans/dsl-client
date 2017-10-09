@@ -1,9 +1,9 @@
 import React from 'react'
 import { Bar, ResponsiveBar } from 'nivo'
 import { Card, Segment,  } from "semantic-ui-react"
+import Dimensions from "react-dimensions"
 
-
-export const FacilityTypesWidget = (props) => {
+export const FacilityTypesWidget = (props) => {    
     if (props.data) {
         return (
             <Segment>
@@ -13,7 +13,7 @@ export const FacilityTypesWidget = (props) => {
                     keys={props.keys}
                     indexBy={props.indexBy}
                     height={props.height}
-                    width={props.width}
+                    width={props.containerWidth}
                     margin={{
                         "top": 50,
                         "right": 60,
@@ -52,13 +52,13 @@ export const FacilityTypesWidget = (props) => {
                     fill={[
                         {
                             "match": {
-                                "id": "fries"
+                                "id": "Medical Clinic"
                             },
                             "id": "dots"
                         },
                         {
                             "match": {
-                                "id": "sandwich"
+                                "id": "Dispensary"
                             },
                             "id": "lines"
                         }
@@ -105,4 +105,4 @@ export const FacilityTypesWidget = (props) => {
     }
 }
 
-export default FacilityTypesWidget
+export default Dimensions()(FacilityTypesWidget)
