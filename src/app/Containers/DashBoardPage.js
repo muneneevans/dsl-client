@@ -10,6 +10,8 @@ import * as facilityActions from "../Store/Facilities/actions"
 
 import CountyForm from "../Components/Forms/CountyForm"
 import FacilityTypesWidget from "../Components/FacilityTypesWidget"
+import FacilityBedsWidget from "../Components/FacilityBedsWidget"
+import MapChart from "../Components/Charts/MapChart"
 
 class DashBoardPage extends Component {
 
@@ -21,6 +23,10 @@ class DashBoardPage extends Component {
         this.props.facilityActions.fetchCountrySummary()
         this.props.facilityActions.fetchCountryFacilityTypeSummary()
         this.props.facilityActions.fetchFacilityTypes()
+        this.props.facilityActions.fetchFacilityKephLevels()
+        this.props.facilityActions.fetchCountryKephLevelsSummary()
+        this.props.facilityActions.fetchCountryBedsSummary()
+        this.props.facilityActions.fetchCountrySummary()
     }
 
     render() {
@@ -30,16 +36,17 @@ class DashBoardPage extends Component {
                 verticalAlign='top' padded>
                 <Grid.Row>
                     <Grid.Column width={4}>
-                        <Card>
+                        {/* <Card>
                             <Card.Content header='County Form' />
                             <Card.Content extra>
                                 <CountyForm countyCodes={this.props.counties} />
                             </Card.Content>
-                        </Card>
+                        </Card> */}
                     </Grid.Column>
                 </Grid.Row>
+
                 <Grid.Row >
-                    <Grid.Column padded>
+                    <Grid.Column >
                         <FacilityTypesWidget
                             data={this.props.countryFacilityTypesSummary}
                             keys={this.props.facilityTypes}
@@ -48,6 +55,37 @@ class DashBoardPage extends Component {
                             height={1000} />
                     </Grid.Column>
                 </Grid.Row>
+
+                <Grid.Row >
+                    <Grid.Column >
+                        <FacilityTypesWidget
+                            data={this.props.countryKephLevelsSummary}
+                            keys={this.props.kephLevels}
+                            indexBy='county_name'
+                            width={1100}
+                            height={1000} />
+                    </Grid.Column>
+                </Grid.Row>
+                
+                <Grid.Row width={6}>
+                    <Grid.Column width={5}>
+                        <FacilityBedsWidget data={this.props.countryBedsSummary}
+                            width={500}
+                            height={600} />
+                    </Grid.Column>
+                    <Grid.Column width={5}>
+                        <FacilityBedsWidget data={this.props.countryCotsSummary}
+                            width={500}
+                            height={600} />
+                    </Grid.Column>
+                    <Grid.Column width={6} verticalAlign='middle'>
+                        <MapChart
+                            height={700}
+                            width={600}
+                            data={this.props.countryMapSummary} />
+                    </Grid.Column>
+                </Grid.Row>
+
             </Grid>
         )
     }
@@ -60,8 +98,14 @@ const mapStateToProps = (state, ownProps) => {
         countyNames: commonSelectors.getCountyNames(state),
 
         countryFacilityTypesSummary: facilitySelectors.getCountryFacilityTypesSummary(state),
+        countryKephLevelsSummary: facilitySelectors.getCountryKephLevelsSummary(state),
+        countryMapSummary: facilitySelectors.getCountrySummaryMapData(state),
+        countrySummary: facilitySelectors.getCountrySummary(state),
+        countryBedsSummary: facilitySelectors.getCountryBedsSummary(state),
+        countryCotsSummary: facilitySelectors.getCountryCotsSummary(state),
 
-        facilityTypes: facilitySelectors.getFacilityTypesNames(state)
+        facilityTypes: facilitySelectors.getFacilityTypesNames(state),
+        kephLevels: facilitySelectors.getKephLevelsNames(state)
     }
 }
 

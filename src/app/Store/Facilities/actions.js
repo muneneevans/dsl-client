@@ -1,7 +1,7 @@
 import * as types from "./actionTypes"
 import FacilityService from "../../Services/FacilityService"
 
-export function showLoading(actionType=undefined) {
+export function showLoading(actionType = undefined) {
     return function (dispatch, getState) {
         return dispatch({
             type: actionType
@@ -9,52 +9,84 @@ export function showLoading(actionType=undefined) {
     }
 }
 
-export function fetchfacilityDetails(facilityId){
-    return function (dispatch, getState){
+export function fetchfacilityDetails(facilityId) {
+    return function (dispatch, getState) {
         showLoading(types.FACILITY_DETAILS_REQUESTED)
         FacilityService.getFacilityDetails(facilityId)
-            .then(facilityDetails=>{
+            .then(facilityDetails => {
                 return dispatch({
                     type: types.FACILITY_DETAILS_RECEIVED,
                     facilityDetails: facilityDetails[0]
                 })
             })
-            .catch(error=>{
+            .catch(error => {
                 throw error
             })
     }
 }
 
-export function fetchCountrySummary(){
+export function fetchCountryFacilityTypeSummary() {
+    return function (dispatch, getState) {
+        dispatch(showLoading(types.COUNTRY_FACILITYTYPES_SUMMARY_REQUESTED))
+        return FacilityService.getCountryFacilityTypeSummary()
+            .then(countryFacilityTypesSummary => {
+                return dispatch({
+                    type: types.COUNTRY_FACILITYTYPES_SUMMARY_RECEIVED,
+                    countryFacilityTypesSummary: countryFacilityTypesSummary.data
+                })
+            })
+            .catch(error => {
+                throw (error)
+            })
+    }
+}
+
+export function fetchCountryKephLevelsSummary(){
     return function (dispatch, getState){
+        dispatch(showLoading(types.COUNTRY_KEPHLEVELS_SUMMARY_REQUESTED))
+        return FacilityService.getCountryKephLevelSummary()
+            .then(countryKephLevelsSummary => {                                                
+                return dispatch({
+                    type: types.COUNTRY_KEPHLEVELS_SUMMARY_RECEIVED,
+                    countryKephLevelsSummary: countryKephLevelsSummary.data
+                })
+            }).catch(error =>{
+                throw(error)
+            })
+    }
+}
+
+export function fetchCountryBedsSummary(){
+    return function (dispatch, getState){
+        dispatch(showLoading(types.COUNTRY_BEDS_SUMMARY_REQUESTED))
+        return FacilityService.getCountryBedsSummary()
+            .then(countryBedsSummary => {                                                
+                return dispatch({
+                    type: types.COUNTRY_BEDS_SUMMARY_RECEIVED,
+                    countryBedsSummary: countryBedsSummary
+                })
+            }).catch(error =>{
+                throw(error)
+            })
+    }
+}
+
+export function fetchCountrySummary() {
+    return function (dispatch, getState) {
         dispatch(showLoading(types.COUNTRY_SUMMARY_REQUESTED))
         return FacilityService.getCountrySummary()
-            .then(countrySummary=>{                
+            .then(countrySummary => {
                 return dispatch({
                     type: types.COUNTRY_SUMMARY_RECEIVED,
                     countrySummary
                 })
             })
-            .catch(error=>{
-                throw(error)
-            })
-    }
-}
-export function fetchCountryFacilityTypeSummary(){
-    return function (dispatch, getState){
-        dispatch(showLoading(types.COUNTRY_FACILITYTYPES_SUMMARY_REQUESTED))
-        return FacilityService.getCountryFacilityTypeSummary()
-            .then(countryFacilityTypesSummary =>{                
-                return dispatch({
-                    type: types.COUNTRY_FACILITYTYPES_SUMMARY_RECEIVED,
-                    countryFacilityTypesSummary
-                })
-            })
             .catch(error => {
-                throw(error)
+                throw (error)
             })
     }
 }
+
 export function fetchCountySummary(countyId) {
     return function (dispatch, getState) {
         dispatch(showLoading(types.COUNTY_SUMMARY_REQUESTED))
@@ -71,8 +103,8 @@ export function fetchCountySummary(countyId) {
     }
 }
 
-export function fetchConstituencySummary(constituencyId){
-    return function(dispatch, getState){
+export function fetchConstituencySummary(constituencyId) {
+    return function (dispatch, getState) {
         dispatch(showLoading(types.CONSTITUENCY_SUMMARY_REQUESTED))
         FacilityService.getConstituencySummary(constituencyId)
             .then(constituencySummary => {
@@ -82,29 +114,29 @@ export function fetchConstituencySummary(constituencyId){
                 })
             })
             .catch(error => {
-                throw(error)
+                throw (error)
             })
     }
 }
 
-export function fetchWardSummary(wardId){
-    return function(dispatch, getState){
+export function fetchWardSummary(wardId) {
+    return function (dispatch, getState) {
         dispatch(showLoading(types.WARD_SUMMARY_REQUESTED))
         FacilityService.getWardSummary(wardId)
-            .then(wardSummary=>{
+            .then(wardSummary => {
                 return dispatch({
                     type: types.WARD_SUMMARY_RECEIVED,
                     wardSummary
                 })
             })
-            .catch(error=>{
-                throw(error)
+            .catch(error => {
+                throw (error)
             })
     }
 }
 
-export function fetchFacilities(level, id){
-    return function (dispatch, getState){
+export function fetchFacilities(level, id) {
+    return function (dispatch, getState) {
         dispatch(showLoading(types.FACILITY_LIST_REQUESTED))
         return FacilityService.getFacilities(level, id)
             .then(facilities => {
@@ -113,7 +145,7 @@ export function fetchFacilities(level, id){
                     facilities
                 })
             })
-            .catch(error => {})
+            .catch(error => { })
     }
 }
 
@@ -157,8 +189,8 @@ export function changeFacilityInformationType(informationType) {
     }
 }
 
-export function changeFacilityFilter(filterItem){
-    return function (dispatch, getState){        
+export function changeFacilityFilter(filterItem) {
+    return function (dispatch, getState) {
         dispatch({
             type: types.CHANGE_FACILITY_FILTER,
             filterItem: filterItem

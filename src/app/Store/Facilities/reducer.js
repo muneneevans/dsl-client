@@ -11,6 +11,10 @@ const InitialState = Immutable({
     facilityDetailsIsFetched: false,
     facilityDetails: undefined,
 
+    countryBedsSummary: undefined,
+
+    countryKephLevelsSummary: undefined,
+
     countryFacilityTypesSummary: undefined,
 
     countrySummary: undefined,
@@ -56,12 +60,24 @@ export default function facilityReducer(state = InitialState, action={}){
         case types.COUNTRY_FACILITYTYPES_SUMMARY_REQUESTED:
             return state.merge({})
         
-        case types.COUNTRY_FACILITYTYPES_SUMMARY_RECEIVED:
-            console.log(action.countryFacilityTypesSummary)
+        case types.COUNTRY_FACILITYTYPES_SUMMARY_RECEIVED:            
             return state.merge({
                 countryFacilityTypesSummary: action.countryFacilityTypesSummary
             })
+        case types.COUNTRY_KEPHLEVELS_SUMMARY_REQUESTED:
+            return state.merge({})
+        case types.COUNTRY_KEPHLEVELS_SUMMARY_RECEIVED:   
+            return state.merge({
+                    countryKephLevelsSummary: action.countryKephLevelsSummary
+                })
         
+        case types.COUNTRY_BEDS_SUMMARY_REQUESTED:
+            return state.merge({})
+        
+        case types.COUNTRY_BEDS_SUMMARY_RECEIVED:
+            return state.merge({
+                countryBedsSummary: action.countryBedsSummary
+            })
         case types.COUNTRY_SUMMARY_REQUESTED:
             return state.merge({
                 

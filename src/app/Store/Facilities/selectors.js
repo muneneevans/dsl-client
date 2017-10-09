@@ -16,16 +16,61 @@ export function getFaciliyDetails(state) {
 }
 
 export function getCountryFacilityTypesSummary(state) {
-    if (state.facilityReducer.countryFacilityTypesSummary) {        
-        return state.facilityReducer.countryFacilityTypesSummary.data
+    if (state.facilityReducer.countryFacilityTypesSummary) {
+        return state.facilityReducer.countryFacilityTypesSummary
     }
     else {
         return undefined
     }
 }
 
+export function getCountryKephLevelsSummary(state) {
+    if (state.facilityReducer.countryKephLevelsSummary) {
+        return state.facilityReducer.countryKephLevelsSummary
+    }
+    else {
+        return undefined
+    }
+}
+
+export function getCountryBedsSummary(state) {
+    if (state.facilityReducer.countryBedsSummary) {
+        let newSummary = []
+        Object.keys(state.facilityReducer.countryBedsSummary).map((key, i) => {
+            newSummary.push({
+                id: key,
+                label: key,
+                value: state.facilityReducer.countryBedsSummary[key]
+            })
+        })
+        return newSummary
+    }
+    else {
+        return undefined
+    }
+}
+
+export function getCountryCotsSummary(state){
+    if(state.facilityReducer.countrySummary){
+        let newSummary = []
+        state.facilityReducer.countrySummary.map((county, i) => {            
+            newSummary.push({
+                id: county.name,
+                label: county.name,
+                value: county.number_of_cots,                                
+            })            
+        })
+        return newSummary
+    }
+    else{
+        return undefined
+    }
+}
+
 export function getCountrySummary(state) {
-    return state.faciltyReducer.countrySummary
+    
+    return state.facilityReducer.countrySummary
+    
 }
 
 export function getCountrySummaryChartData(state) {
@@ -96,7 +141,7 @@ export function getCountrySummaryMapData(state) {
             y: i,
         })
         summary.countyCodeFacilityCount[county.code] = county.number_of_facilities
-    })    
+    })
     return summary
 }
 
@@ -298,10 +343,23 @@ export function getFacilityTypesNames(state) {
             facilityTypesNames.push(facilityType.name)
         })
 
-        console.log(facilityTypesNames)
         return facilityTypesNames
     }
-    else{return undefined}
+    else { return undefined }
+
+}
+
+export function getKephLevelsNames(state) {
+    if (state.facilityReducer.kephLevels) {
+        let kephLevelsName = []
+
+        state.facilityReducer.kephLevels.map((kephLevel, i) => {
+            kephLevelsName.push(kephLevel.name)
+        })
+
+        return kephLevelsName
+    }
+    else { return undefined }
 
 }
 

@@ -4,35 +4,57 @@ export default class FacilityService {
         return FacilityService.host = 'http://41.89.94.68:8000/facilities/api/'
     }
 
-    static getFacilityDetails(facilityId){
-        const url = this.host.concat(facilityId,'/')
+    static getFacilityDetails(facilityId) {
+        const url = this.host.concat(facilityId, '/')
         return fetch(url)
-            .then(response=>{
+            .then(response => {
                 return response.json()
             })
-            .catch(error=>{
-                throw(error)
+            .catch(error => {
+                throw (error)
             })
     }
-    
-    static getCountryFacilityTypeSummary(){
+
+    static getCountryFacilityTypeSummary() {
         const url = this.host.concat('country/facilitytypes/summary/')
         return fetch(url)
-            .then(response =>{
+            .then(response => {
                 return response.json()
             })
-            .catch(error =>{
-                throw(error)
+            .catch(error => {
+                throw (error)
             })
     }
-    static getCountrySummary(){
+
+    static getCountryKephLevelSummary() {
+        const url = this.host.concat('country/kephlevels/summary')
+        return fetch(url)
+            .then(response => {
+                return response.json()
+            }).catch(error => {
+                throw (error)
+            })
+    }
+
+    static getCountryBedsSummary() {
+        const url = this.host.concat('country/beds/summary')
+        return fetch(url)
+            .then(response => {
+                return response.json()
+            }).catch(error => {
+                throw (error)
+            })
+
+    }
+
+    static getCountrySummary() {
         const url = this.host.concat('country/summary/')
         return fetch(url)
-            .then(response=>{
+            .then(response => {
                 return response.json()
             })
-            .catch(error=>{
-                throw(error)
+            .catch(error => {
+                throw (error)
             })
     }
     static getCountySummary(countyId) {
@@ -57,17 +79,17 @@ export default class FacilityService {
             })
     }
 
-    static getWardSummary(wardId){
+    static getWardSummary(wardId) {
         const url = this.host.concat('ward/', wardId, '/summary/')
         return fetch(url)
-            .then(response=>{
+            .then(response => {
                 return response.json()
             })
-            .catch(error=>{
-                throw(error)
+            .catch(error => {
+                throw (error)
             })
     }
-    
+
     static getFacilities(level, id) {
         const url = this.host.concat(level, '/', id, '/facilities')
         return fetch(url)
