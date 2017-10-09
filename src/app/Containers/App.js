@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Switch, Route, Link } from "react-router"
+import { HashRouter } from "react-router-dom"
 import ChartScreen from "./ChartScreen"
 import FacilityScreen from "./FacilityScreen"
 import IndicatorScreen from "./IndicatorsScreen"
@@ -12,18 +13,20 @@ import DashBoardPage from "./DashBoardPage"
 class App extends Component {
     render() {
         return (
-            <Switch>
-                <Route exact path="/" >
-                    <DashBoardPage
-                        containerWidth={this.props.containerWidth}
-                        containerHeight={this.props.containerHeight} />
-                </Route>
-                <Route path='/maps' component={MapScreen}/>
-                <Route path='/dashboard' component={DashBoardPage}/>
-                <Route path='/charts' component={ChartScreen}/>
-                <Route path="/facilities/:id" component={FacilityDetailScreen}/>
-                <Route path='/facilities' component={FacilityScreen}/>
-            </Switch>
+            <HashRouter>
+                <Switch>
+                    <Route exact path="/" >
+                        <DashBoardPage
+                            containerWidth={this.props.containerWidth}
+                            containerHeight={this.props.containerHeight} />
+                    </Route>
+                    <Route path='/maps' component={MapScreen} />
+                    <Route path='/dashboard' component={DashBoardPage} />
+                    <Route path='/charts' component={ChartScreen} />
+                    <Route path="/facilities/:id" component={FacilityDetailScreen} />
+                    <Route path='/facilities' component={FacilityScreen} />
+                </Switch>
+            </HashRouter>
 
         );
     }
