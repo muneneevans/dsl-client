@@ -2,6 +2,8 @@ import * as types from "./actionTypes"
 import Immutable from "seamless-immutable"
 
 const InitialState = Immutable({
+    indicatorGroups: undefined,
+
     dataElementsIsFetched: false,
     dataElements: undefined,
 
@@ -14,6 +16,14 @@ export default function indicatorReducer(state= InitialState, action={}){
         case types.DATAELEMENTS_REQUESTED:
             return state.merge({
                 dataElementsIsFetched: false
+            })
+        
+        case types.INDICATORGROUP_REQUESTED:
+            return state.merge({})
+        
+        case types.INDICATORGROUP_RECEIVED:
+            return state.merge({
+                indicatorGroups: action.indicatorGroups
             })
             
         case types.DATAELEMENTS_RECEIVED:            

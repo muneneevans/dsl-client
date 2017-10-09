@@ -12,6 +12,7 @@ import * as facilityActions from "../Store/Facilities/actions"
 import DataElementsForm from "../Components/Forms/DataElementsForm"
 import BarChart from "../Components/Charts/BarChart"
 import YearForm from "../Components/Forms/YearForm"
+import IndicatorGroupsForm from "../Components/Forms/IndicatorGroupsForm"
 
 class FacilityDetailScreen extends Component {
     constructor(props) {
@@ -21,11 +22,13 @@ class FacilityDetailScreen extends Component {
     componentDidMount() {
         this.props.indicatorActions.fetchDataElements()
         this.props.facilityActions.fetchfacilityDetails(this.props.match.params.id)
+        this.props.indicatorActions.fetchIndicatorGroups()
     }
 
     handleDataElementChange(dataElementId) {
         this.props.indicatorActions.fetchFacilityDataElementDataValues(this.props.match.params.id, dataElementId)
     }
+
 
     renderLoading() {
         return (
@@ -51,10 +54,10 @@ class FacilityDetailScreen extends Component {
                             <Header as='h3' textAlign='center'>Data Elements</Header>
                             {
                                 this.props.dataElementsIsFetched ? (
-                                    <DataElementsForm
-                                        dataElements={this.props.dataElements}
-                                        submitAction={this.handleDataElementChange.bind(this)} />
-
+                                    
+                                    <IndicatorGroupsForm 
+                                        indicatorGroups={this.props.indicatorGroups}
+                                        submitAction={() =>{}}/>
                                 ) : (
                                         <div>
                                             {this.renderLoading()}
@@ -102,6 +105,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         facilityDetailsIsFetched: facilitySelectors.getFacilityDetailFetchStatus(state),
         facilityDetails: facilitySelectors.getFaciliyDetails(state),
+
+        indicatorGroups: indicatorSelectors.getIndicatorGroupsOptions(state),
 
         dataElementsIsFetched: indicatorSelectors.getDataElementsFetchStatus(state),
         dataElements: indicatorSelectors.getDataElements(state),
