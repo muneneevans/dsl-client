@@ -13,6 +13,7 @@ import DataElementsForm from "../Components/Forms/DataElementsForm"
 import BarChart from "../Components/Charts/BarChart"
 import YearForm from "../Components/Forms/YearForm"
 import IndicatorGroupsForm from "../Components/Forms/IndicatorGroupsForm"
+import PeriodForm from "../Components/Forms/PeriodForm"
 
 class FacilityDetailScreen extends Component {
     constructor(props) {
@@ -23,17 +24,22 @@ class FacilityDetailScreen extends Component {
         this.props.indicatorActions.fetchDataElements()
         this.props.facilityActions.fetchfacilityDetails(this.props.match.params.id)
         this.props.indicatorActions.fetchIndicatorGroups()
+        this.props.indicatorActions.fetchPeriodTypes()
     }
 
     handleIndicatorGroupChange(indicatorGroupId){
         this.props.indicatorActions.fetchIndicatorGroupIndicators(indicatorGroupId)
     }
     handleIndicatorChange(indicatorId){
-        alert(indicatorId)
+        
     }
 
     handlePeriodChange(year){
-        alert(year)
+        
+    }
+
+    handlePeriodTypeChange(periodTypeId){
+        
     }
 
     handleDataElementChange(dataElementId) {
@@ -82,7 +88,9 @@ class FacilityDetailScreen extends Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Header as='h3' textAlign='center'>Period</Header>
-                            <YearForm submitAction={this.handleIndicatorChange.bind(this)}/>
+                            <PeriodForm 
+                                periodTypes={this.props.periodTypes} 
+                                handlePeriodTypeChange = {this.handlePeriodTypeChange.bind(this)}/>
                         </Grid.Row>
                     </Grid.Column>
                     <Grid.Column stretched computer={12}>
@@ -124,6 +132,8 @@ const mapStateToProps = (state, ownProps) => {
         indicatorGroups: indicatorSelectors.getIndicatorGroupsOptions(state),
 
         indicatorGroupIndicators: indicatorSelectors.getIndicatorGroupIndicatorsOptions(state),
+
+        periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
 
         dataElementsIsFetched: indicatorSelectors.getDataElementsFetchStatus(state),
         dataElements: indicatorSelectors.getDataElements(state),

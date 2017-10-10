@@ -70,3 +70,19 @@ export function fetchFacilityDataElementDataValues(facilityId, dataElementId) {
             .catch(error => { })
     }
 }
+
+export function fetchPeriodTypes(){
+    return function(dispatch, getState){
+        dispatch(showLoading(types.PERIODTYPES_REQUESTED))
+        return IndicatorService.getPeriodTypes()
+            .then(periodTypes => {
+                return dispatch({
+                    type: types.PERIODTYPES_RECEIVED,
+                    periodTypes
+                })
+            })
+            .catch(error =>{
+                throw(error)
+            })
+    }
+}

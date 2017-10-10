@@ -41,6 +41,25 @@ export function getIndicatorGroupIndicatorsOptions(state) {
     }
 }
 
+export function getPeriodTypeOptions(state) {
+    if (state.indicatorReducer.periodTypes) {
+
+        let periodTypes = []
+
+        state.indicatorReducer.periodTypes.map((periodType, i) => {
+            periodTypes.push({
+                key: periodType.id,
+                value: periodType.id,
+                text: periodType.name
+            })
+        })        
+        return periodTypes
+    }
+    else {
+        return undefined
+    }
+
+}
 export function getDataElements(state) {
     return state.indicatorReducer.dataElements
 }

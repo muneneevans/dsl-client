@@ -78,5 +78,16 @@ export default class IndicatorService {
             })
     }
 
+    static getPeriodTypes(){
+        const url = this.host.concat('periods/periodtypes')
+
+        return fetch(url)
+            .then(response =>{
+                return response.json()
+            })
+            .catch(error => {
+                throw(error)
+            })
+    }
 
 }
