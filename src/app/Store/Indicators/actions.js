@@ -25,6 +25,21 @@ export function fetchIndicatorGroups() {
     }
 }
 
+export function fetchIndicatorGroupIndicators(indicatorGroupId){
+    return function(dispatch, getState){
+        dispatch(showLoading(types.INDICATORGROUP_INDICATORS_REQUESTED))
+        return IndicatorService.getIndicatorGroupIndicators(indicatorGroupId)
+            .then(indicatorGroupIndicators =>{                
+                return dispatch({
+                    type: types.INDICATORGROUP_INDICATORS_RECEIVED,
+                    indicatorGroupIndicators
+                })
+            }).catch(error => {
+                throw(error)
+            })
+    }
+}
+
 export function fetchDataElements() {
     return function (dispatch, getState) {
         dispatch(showLoading(types.DATAELEMENTS_REQUESTED))

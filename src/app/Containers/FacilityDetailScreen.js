@@ -25,6 +25,17 @@ class FacilityDetailScreen extends Component {
         this.props.indicatorActions.fetchIndicatorGroups()
     }
 
+    handleIndicatorGroupChange(indicatorGroupId){
+        this.props.indicatorActions.fetchIndicatorGroupIndicators(indicatorGroupId)
+    }
+    handleIndicatorChange(indicatorId){
+        alert(indicatorId)
+    }
+
+    handlePeriodChange(year){
+        alert(year)
+    }
+
     handleDataElementChange(dataElementId) {
         this.props.indicatorActions.fetchFacilityDataElementDataValues(this.props.match.params.id, dataElementId)
     }
@@ -51,13 +62,17 @@ class FacilityDetailScreen extends Component {
                             }
                         </Grid.Row>
                         <Grid.Row>
-                            <Header as='h3' textAlign='center'>Data Elements</Header>
+                            <Header as='h3' textAlign='center'>Indicators</Header>
                             {
                                 this.props.dataElementsIsFetched ? (
-                                    
-                                    <IndicatorGroupsForm 
-                                        indicatorGroups={this.props.indicatorGroups}
-                                        submitAction={() =>{}}/>
+                                    <Segment>
+                                        <IndicatorGroupsForm
+                                            indicatorGroups={this.props.indicatorGroups}
+                                            indicatorGroupIndicators={this.props.indicatorGroupIndicators}                                            
+                                            submitAction={this.handleIndicatorChange.bind(this)} 
+                                            handleIndicatorGroupChange={this.handleIndicatorGroupChange.bind(this)}
+                                            />
+                                    </Segment>
                                 ) : (
                                         <div>
                                             {this.renderLoading()}
@@ -67,7 +82,7 @@ class FacilityDetailScreen extends Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Header as='h3' textAlign='center'>Period</Header>
-                            <YearForm/>
+                            <YearForm submitAction={this.handleIndicatorChange.bind(this)}/>
                         </Grid.Row>
                     </Grid.Column>
                     <Grid.Column stretched computer={12}>
@@ -91,9 +106,9 @@ class FacilityDetailScreen extends Component {
                     </Grid.Column>
                 </Grid>
             ) : (
-                   <div>
-                       {this.renderLoading()}
-                   </div>
+                    <Grid>
+                        {this.renderLoading()}
+                    </Grid>
                 )
         )
     }
@@ -107,6 +122,8 @@ const mapStateToProps = (state, ownProps) => {
         facilityDetails: facilitySelectors.getFaciliyDetails(state),
 
         indicatorGroups: indicatorSelectors.getIndicatorGroupsOptions(state),
+
+        indicatorGroupIndicators: indicatorSelectors.getIndicatorGroupIndicatorsOptions(state),
 
         dataElementsIsFetched: indicatorSelectors.getDataElementsFetchStatus(state),
         dataElements: indicatorSelectors.getDataElements(state),

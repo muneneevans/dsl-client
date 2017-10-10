@@ -22,6 +22,25 @@ export function getIndicatorGroupsOptions(state) {
     }
 }
 
+export function getIndicatorGroupIndicatorsOptions(state) {
+    if (state.indicatorReducer.indicatorGroupIndicators) {
+
+        let indicatorGroupIndicators = []
+
+        state.indicatorReducer.indicatorGroupIndicators.map((indicatorGroupIndicator, i) => {
+            indicatorGroupIndicators.push({
+                key: indicatorGroupIndicator.indicatorid,
+                value: indicatorGroupIndicator.indicatorid,
+                text: indicatorGroupIndicator.indicatorname
+            })
+        })        
+        return indicatorGroupIndicators
+    }
+    else {
+        return undefined
+    }
+}
+
 export function getDataElements(state) {
     return state.indicatorReducer.dataElements
 }

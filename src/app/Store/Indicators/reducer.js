@@ -4,6 +4,8 @@ import Immutable from "seamless-immutable"
 const InitialState = Immutable({
     indicatorGroups: undefined,
 
+    indicatorGroupIndicators: undefined,
+
     dataElementsIsFetched: false,
     dataElements: undefined,
 
@@ -26,6 +28,13 @@ export default function indicatorReducer(state= InitialState, action={}){
                 indicatorGroups: action.indicatorGroups
             })
             
+        case types.INDICATORGROUP_INDICATORS_REQUESTED:
+            return state.merge({})
+        
+        case types.INDICATORGROUP_INDICATORS_RECEIVED:
+            return state.merge({
+                indicatorGroupIndicators: action.indicatorGroupIndicators
+            })
         case types.DATAELEMENTS_RECEIVED:            
             return state.merge({
                 dataElements: action.dataElements,
@@ -48,12 +57,3 @@ export default function indicatorReducer(state= InitialState, action={}){
 
 
 //selectors
-export function getDataElements(state){
-    return state.indicatorReducer.dataElements
-    // return []
-}
-
-export function getDataElementFetchStatus(state){
-    return state.indicatorReducer.dataElementsIsFetched
-    // return false
-}

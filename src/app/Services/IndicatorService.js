@@ -10,7 +10,20 @@ export default class IndicatorService {
         return fetch(url)
             .then(response => {
                 return response.json()
-            }).catch(error =>{
+            })
+            .catch(error =>{
+                throw(error)
+            })
+    }
+
+    static getIndicatorGroupIndicators(indicatorGroupdId){
+        const url = this.host.concat('indicators/indicatorgroups/'+indicatorGroupdId)
+        
+        return fetch(url)
+            .then(indicators =>{
+                return indicators.json()
+            })
+            .catch(error =>{
                 throw(error)
             })
     }
