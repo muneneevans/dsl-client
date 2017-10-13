@@ -40,6 +40,24 @@ export function fetchIndicatorGroupIndicators(indicatorGroupId){
     }
 }
 
+export function addFacilityIndicator(indicatorId){
+    return function(dispatch, getState){
+        return dispatch({
+            type: types.ADD_FACILITY_INDICATOR_REQUESTED,
+            indicatorId
+        })
+    }
+}
+
+export function setFacilityPeriodType(periodTypeId){
+    return function(dispatch , getState){
+        return dispatch({
+            type : types.SET_FACILITY_PERIOD_TYPE_REQUESTED,
+            periodTypeId
+        })
+    }
+}
+
 export function fetchDataElements() {
     return function (dispatch, getState) {
         dispatch(showLoading(types.DATAELEMENTS_REQUESTED))

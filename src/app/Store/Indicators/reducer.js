@@ -6,6 +6,10 @@ const InitialState = Immutable({
 
     indicatorGroupIndicators: undefined,
 
+    facilityIndicators: undefined,
+
+    facilityPeriodType: undefined,
+
     periodTypes: undefined,
 
     dataElementsIsFetched: false,
@@ -38,14 +42,23 @@ export default function indicatorReducer(state = InitialState, action = {}) {
                 indicatorGroupIndicators: action.indicatorGroupIndicators
             })
 
+        case types.SET_FACILITY_PERIOD_TYPE_REQUESTED:
+            return state.merge({
+                facilityPeriodType : action.periodTypeId
+            })
+            
         case types.PERIODTYPES_REQUESTED:
             return state.merge({})
 
-        case types.PERIODTYPES_RECEIVED:            
+        case types.PERIODTYPES_RECEIVED:
             return state.merge({
                 periodTypes: action.periodTypes
             })
 
+        case types.ADD_FACILITY_INDICATOR_REQUESTED:
+            return state.merge({
+                facilityIndicators: addIndicatorToIndicatorsList(action.indicatorId,state.facilityIndicators)
+            })
         case types.DATAELEMENTS_RECEIVED:
             return state.merge({
                 dataElements: action.dataElements,
@@ -67,4 +80,20 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 }
 
 
-//selectors
+//combiners
+function addIndicatorToIndicatorsList(newindicatorid, indicatorIds) {
+    if (indicatorIds) {
+        let existingIndicatorIds = Immutable.asMutable(indicatorIds,  { deep: true })
+        if (!existingIndicatorIds.includes(newindicatorid)) {
+            existingIndicatorIds.push(newindicatorid)
+        }
+        return existingIndicatorIds
+    }
+    else {
+        let existingIndicatorIds = []
+        existingIndicatorIds.push(newindicatorid)
+        return existingIndicatorIds
+    }
+}
+
+

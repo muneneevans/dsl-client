@@ -31,15 +31,15 @@ class FacilityDetailScreen extends Component {
         this.props.indicatorActions.fetchIndicatorGroupIndicators(indicatorGroupId)
     }
     handleIndicatorChange(indicatorId) {
-
+        this.props.indicatorActions.addFacilityIndicator(indicatorId)
     }
 
     handlePeriodChange(year) {
-
+        
     }
 
-    handlePeriodTypeChange(periodTypeId) {
-
+    handlePeriodTypeChange(periodTypeId) {        
+        this.props.indicatorActions.setFacilityPeriodType(periodTypeId)
     }
 
     handleDataElementChange(dataElementId) {
@@ -138,6 +138,10 @@ const mapStateToProps = (state, ownProps) => {
 
         periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
 
+        facilityIndicators: indicatorSelectors.getFacilityIndicators(state),
+
+        facilityPeriodType: indicatorSelectors.getFacilityPeriodType(state),
+
         dataElementsIsFetched: indicatorSelectors.getDataElementsFetchStatus(state),
         dataElements: indicatorSelectors.getDataElements(state),
 
@@ -151,6 +155,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         indicatorActions: bindActionCreators(indicatorActions, dispatch),
         facilityActions: bindActionCreators(facilityActions, dispatch)
+        
     }
 }
 
