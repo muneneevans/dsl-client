@@ -27,19 +27,19 @@ class FacilityDetailScreen extends Component {
         this.props.indicatorActions.fetchPeriodTypes()
     }
 
-    handleIndicatorGroupChange(indicatorGroupId){
+    handleIndicatorGroupChange(indicatorGroupId) {
         this.props.indicatorActions.fetchIndicatorGroupIndicators(indicatorGroupId)
     }
-    handleIndicatorChange(indicatorId){
-        
+    handleIndicatorChange(indicatorId) {
+
     }
 
-    handlePeriodChange(year){
-        
+    handlePeriodChange(year) {
+
     }
 
-    handlePeriodTypeChange(periodTypeId){
-        
+    handlePeriodTypeChange(periodTypeId) {
+
     }
 
     handleDataElementChange(dataElementId) {
@@ -74,10 +74,10 @@ class FacilityDetailScreen extends Component {
                                     <Segment>
                                         <IndicatorGroupsForm
                                             indicatorGroups={this.props.indicatorGroups}
-                                            indicatorGroupIndicators={this.props.indicatorGroupIndicators}                                            
-                                            submitAction={this.handleIndicatorChange.bind(this)} 
+                                            indicatorGroupIndicators={this.props.indicatorGroupIndicators}
+                                            submitAction={this.handleIndicatorChange.bind(this)}
                                             handleIndicatorGroupChange={this.handleIndicatorGroupChange.bind(this)}
-                                            />
+                                        />
                                     </Segment>
                                 ) : (
                                         <div>
@@ -88,9 +88,12 @@ class FacilityDetailScreen extends Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Header as='h3' textAlign='center'>Period</Header>
-                            <PeriodForm 
-                                periodTypes={this.props.periodTypes} 
-                                handlePeriodTypeChange = {this.handlePeriodTypeChange.bind(this)}/>
+                            <Segment>
+                                <PeriodForm
+                                    periodTypes={this.props.periodTypes}
+                                    handlePeriodTypeChange={this.handlePeriodTypeChange.bind(this)} />
+                                <YearForm submitAction={this.handlePeriodChange.bind(this)}/>
+                            </Segment>
                         </Grid.Row>
                     </Grid.Column>
                     <Grid.Column stretched computer={12}>
