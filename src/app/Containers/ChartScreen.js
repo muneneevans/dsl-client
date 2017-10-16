@@ -37,15 +37,12 @@ export const ChartScreen = (props) => {
         { label: 'Nov', value: 60 },
         { label: 'Dec', value: 75 }
     ]
-    let Nivodata = [{"country":"AD","hot dog":191,"burger":102,"sandwich":89,"kebab":181,"fries":154,"donut":92},{"country":"AE","hot dog":55,"burger":168,"sandwich":13,"kebab":104,"fries":130,"donut":26},{"country":"AF","hot dog":0,"burger":20,"sandwich":181,"kebab":174,"fries":53,"donut":122},{"country":"AG","hot dog":133,"burger":52,"sandwich":40,"kebab":131,"fries":103,"donut":24},{"country":"AI","hot dog":119,"burger":67,"sandwich":50,"kebab":196,"fries":197,"donut":82},{"country":"AL","hot dog":175,"burger":164,"sandwich":195,"kebab":118,"fries":165,"donut":15},{"country":"AM","hot dog":146,"burger":123,"sandwich":45,"kebab":96,"fries":29,"donut":20}]
+    let Nivodata = [{"61829":0,"61901":0,"month":"12"},{"61829":0,"61901":0,"month":"10"},{"61829":0.015625,"61901":0,"month":"1"},{"61829":0.11666666666666667,"61901":0,"month":"2"},{"61829":0.061224489795918366,"61901":0,"month":"3"},{"61829":0.020833333333333332,"61901":0,"month":"4"},{"61829":0.014492753623188406,"61901":0,"month":"5"},{"61829":0.08163265306122448,"61901":0,"month":"6"},{"61829":0.027777777777777776,"61901":0,"month":"7"},{"61829":0.045454545454545456,"61901":0,"month":"8"},{"61829":0.13157894736842105,"61901":0.8,"month":"9"},{"61829":0.08333333333333333,"61901":0,"month":"11"}]
     let keys = [
-        "hot dog",
-        "burger",
-        "sandwich",
-        "kebab",
-        "fries",
-        "donut"
+        "61829",
+        "61901"
     ]
+
 
     return (
         <div>
@@ -71,7 +68,7 @@ export const ChartScreen = (props) => {
                 height={800}
                 width={800} /> */}
             <NivoBarChart data={Nivodata} keys={keys} height={500} width={900}
-                indexBy="country"/>
+                indexBy="month"/>
         </div>
     )
 }
