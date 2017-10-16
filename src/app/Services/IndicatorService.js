@@ -28,9 +28,9 @@ export default class IndicatorService {
             })
     }
 
-    static getIndicatorDataValues(facilityId, filters) {
+    static getIndicatorDataValues(filters) {
         const url = this.host.concat('datavalues/facility/indicator/')
-
+        console.log(filters)
         const request = {
             method: "POST",
             headers: {
@@ -38,18 +38,21 @@ export default class IndicatorService {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                facilityId: filters.facilityId,
-                indicatorId: filters.indicatorId,
-                periodTypeId: filters.periodTypeId,
-                year: filters.year
+                filters: {
+                    facilityId: filters.facilityId,
+                    indicatorId: filters.indicatorId,
+                    periodTypeId: filters.periodTypeId,
+                    year: filters.year
+                }
             })
         };
+        // console.log(requst.body)
         return fetch(url, request)
             .then(response => {
                 return response.json()
-             })
-            .catch(error => { 
-                throw(error)
+            })
+            .catch(error => {
+                throw (error)
             })
     }
 

@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux"
-import { Grid, Segment, Tab, Header } from "semantic-ui-react"
+import { Grid, Segment, Tab, Header, Button, Card } from "semantic-ui-react"
+import { Bar, ResponsiveBar } from 'nivo'
 import { match } from "react-router"
 
 import * as indicatorSelectors from "../Store/Indicators/selectors"
@@ -35,15 +36,22 @@ class FacilityDetailScreen extends Component {
     }
 
     handlePeriodChange(year) {
-        
+
+    }
+    handleYearChange(year) {
+        this.props.indicatorActions.setFacilityYear(year)
     }
 
-    handlePeriodTypeChange(periodTypeId) {        
+    handlePeriodTypeChange(periodTypeId) {
         this.props.indicatorActions.setFacilityPeriodType(periodTypeId)
     }
 
     handleDataElementChange(dataElementId) {
         this.props.indicatorActions.fetchFacilityDataElementDataValues(this.props.match.params.id, dataElementId)
+    }
+
+    updateGraphs() {
+        this.props.indicatorActions.fetchFacilityIndicatorValues(this.props.facilityDetails.id, this.props.facilityIndicators, this.props.facilityPeriodType, this.props.facilityYear)
     }
 
 
@@ -92,21 +100,110 @@ class FacilityDetailScreen extends Component {
                                 <PeriodForm
                                     periodTypes={this.props.periodTypes}
                                     handlePeriodTypeChange={this.handlePeriodTypeChange.bind(this)} />
-                                <YearForm submitAction={this.handlePeriodChange.bind(this)}/>
+                                <YearForm submitAction={this.handleYearChange.bind(this)} />
+                            </Segment>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Segment>
+                                <Button primary fluid
+                                    onClick={this.updateGraphs.bind(this)}>Upate</Button>
                             </Segment>
                         </Grid.Row>
                     </Grid.Column>
                     <Grid.Column stretched computer={12}>
                         {
-                            this.props.facilityDataElementDataValuesIsFetched ? (
+                            this.props.facilityIndicatorDataValuesMapData ? (
                                 <Segment>
-                                    <BarChart
-                                        data={this.props.facilityDataElementDataValues}
-                                        width={800} height={400}
-                                        title="data element"
-                                        xLabel='data elemtns' yLabel='value'
-
-                                    />
+                                    <Segment>
+                                        <Card.Content header='Indicators' />
+                                        <Bar
+                                            data={this.props.facilityIndicatorDataValuesMapData.data}
+                                            keys={this.props.facilityIndicatorDataValuesMapData.keys}
+                                            indexBy={this.props.facilityIndicatorDataValuesMapData.indexBy}
+                                            height={800}
+                                            width={800}
+                                            margin={{
+                                                "top": 50,
+                                                "right": 60,
+                                                "bottom": 50,
+                                                "left": 100
+                                            }}
+                                            padding={0.2}
+                                            innerPadding={0}
+                                            minValue="auto"
+                                            maxValue="auto"
+                                            groupMode="grouped"
+                                            layout="vertical"
+                                            reverse={false}
+                                            colors="nivo"
+                                            colorBy="id"
+                                            defs={[
+                                                {
+                                                    "id": "dots",
+                                                    "type": "patternDots",
+                                                    "background": "inherit",
+                                                    "color": "#38bcb2",
+                                                    "size": 4,
+                                                    "padding": 1,
+                                                    "stagger": true
+                                                },
+                                                {
+                                                    "id": "lines",
+                                                    "type": "patternLines",
+                                                    "background": "inherit",
+                                                    "color": "#eed312",
+                                                    "rotation": -45,
+                                                    "lineWidth": 6,
+                                                    "spacing": 10
+                                                }
+                                            ]}
+                                            fill={[
+                                                {
+                                                    "match": {
+                                                        "id": "Medical Clinic"
+                                                    },
+                                                    "id": "dots"
+                                                },
+                                                {
+                                                    "match": {
+                                                        "id": "Dispensary"
+                                                    },
+                                                    "id": "lines"
+                                                }
+                                            ]}
+                                            borderRadius={0}
+                                            borderWidth={0}
+                                            borderColor="inherit:darker(1.6)"
+                                            axisBottom={{
+                                                "orient": "bottom",
+                                                "tickSize": 5,
+                                                "tickPadding": 5,
+                                                "tickRotation": 0,
+                                                "legend": "period",
+                                                "legendPosition": "center",
+                                                "legendOffset": 36
+                                            }}
+                                            axisLeft={{
+                                                "orient": "left",
+                                                "tickSize": 5,
+                                                "tickPadding": 5,
+                                                "tickRotation": 0,
+                                                "legend": "values",
+                                                "legendPosition": "center",
+                                                "legendOffset": -40
+                                            }}
+                                            enableGridX={false}
+                                            enableGridY={true}
+                                            enableLabel={false}
+                                            labelSkipWidth={12}
+                                            labelSkipHeight={12}
+                                            labelTextColor="inherit:darker(1.6)"
+                                            animate={true}
+                                            motionStiffness={90}
+                                            motionDamping={15}
+                                            isInteractive={true}
+                                        />
+                                    </Segment >
                                 </Segment>
                             ) : (
                                     <div>
@@ -139,8 +236,10 @@ const mapStateToProps = (state, ownProps) => {
         periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
 
         facilityIndicators: indicatorSelectors.getFacilityIndicators(state),
-
         facilityPeriodType: indicatorSelectors.getFacilityPeriodType(state),
+        facilityYear: indicatorSelectors.getFacilityYear(state),
+        facilityIndicatorDataVailues: indicatorSelectors.getFacilityIndicatorDataValues(state),
+        facilityIndicatorDataValuesMapData: indicatorSelectors.getFacilityIndicatorDataValuesMapData(state),
 
         dataElementsIsFetched: indicatorSelectors.getDataElementsFetchStatus(state),
         dataElements: indicatorSelectors.getDataElements(state),
@@ -155,7 +254,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         indicatorActions: bindActionCreators(indicatorActions, dispatch),
         facilityActions: bindActionCreators(facilityActions, dispatch)
-        
+
     }
 }
 

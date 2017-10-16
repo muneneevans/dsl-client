@@ -7,8 +7,9 @@ const InitialState = Immutable({
     indicatorGroupIndicators: undefined,
 
     facilityIndicators: undefined,
-
     facilityPeriodType: undefined,
+    facilityYear: undefined,
+    facilityIndicatorDataValues: undefined,
 
     periodTypes: undefined,
 
@@ -44,9 +45,17 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 
         case types.SET_FACILITY_PERIOD_TYPE_REQUESTED:
             return state.merge({
-                facilityPeriodType : action.periodTypeId
+                facilityPeriodType: action.periodTypeId
             })
-            
+
+        case types.SET_FACILITY_YEAR_REQUESTED:
+            return state.merge({
+                facilityYear: action.year
+            })
+        case types.GET_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:
+            return state.merge({
+                facilityIndicatorDataValues: addIndicatorDataValuesToList(action.indicatorDataValues, action.indicatorId, state.facilityIndicatorDataValues)
+            })
         case types.PERIODTYPES_REQUESTED:
             return state.merge({})
 
@@ -57,7 +66,7 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 
         case types.ADD_FACILITY_INDICATOR_REQUESTED:
             return state.merge({
-                facilityIndicators: addIndicatorToIndicatorsList(action.indicatorId,state.facilityIndicators)
+                facilityIndicators: addIndicatorToIndicatorsList(action.indicatorId, state.facilityIndicators)
             })
         case types.DATAELEMENTS_RECEIVED:
             return state.merge({
@@ -83,7 +92,7 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 //combiners
 function addIndicatorToIndicatorsList(newindicatorid, indicatorIds) {
     if (indicatorIds) {
-        let existingIndicatorIds = Immutable.asMutable(indicatorIds,  { deep: true })
+        let existingIndicatorIds = Immutable.asMutable(indicatorIds, { deep: true })
         if (!existingIndicatorIds.includes(newindicatorid)) {
             existingIndicatorIds.push(newindicatorid)
         }
@@ -96,4 +105,20 @@ function addIndicatorToIndicatorsList(newindicatorid, indicatorIds) {
     }
 }
 
+
+function addIndicatorDataValuesToList(newIndicatorDataValues, newIndicatorId, indicatorDatavalues) {
+    if (indicatorDatavalues) {
+        let existingIndicatorDataValues = Immutable.asMutable(indicatorDatavalues)
+        // existingIndicatorDataValues.merge({
+        //     newIndicatorId: newIndicatorDataValues.datavalues
+        // })
+        existingIndicatorDataValues[newIndicatorId] = newIndicatorDataValues.datavalues
+        return existingIndicatorDataValues
+    }
+    else {
+        let existingIndicatorDataValues = {}
+        existingIndicatorDataValues[newIndicatorId] = newIndicatorDataValues.datavalues
+        return existingIndicatorDataValues
+    }
+}
 

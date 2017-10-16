@@ -58,6 +58,41 @@ export function setFacilityPeriodType(periodTypeId){
     }
 }
 
+export function setFacilityYear(year){
+    return function(dispatch, getState){
+        return dispatch({
+            type: types.SET_FACILITY_YEAR_REQUESTED,
+            year
+        })
+    }
+}
+
+export function fetchFacilityIndicatorValues(facilityId, indicators, periodTypeId, year){
+    return function(dispatch, getState){
+        dispatch({type: types.GET_FACILITY_INDICATORS_VALUES_START})
+
+        let filters ={
+            facilityId,
+            periodTypeId,
+            year
+        }
+        
+        indicators.map((indicator, i) =>{
+            IndicatorService.getIndicatorDataValues({...filters , indicatorId: indicator})
+                .then(indicatorDataValues =>{
+                    dispatch({
+                        type: types.GET_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED,
+                        indicatorDataValues,
+                        indicatorId: indicator
+                    })
+                })
+                .catch(error =>{
+                    throw(error)
+                })
+        })
+    }
+}
+
 export function fetchDataElements() {
     return function (dispatch, getState) {
         dispatch(showLoading(types.DATAELEMENTS_REQUESTED))

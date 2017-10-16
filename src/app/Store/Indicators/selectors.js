@@ -14,7 +14,7 @@ export function getIndicatorGroupsOptions(state) {
                 text: indicatorGroup.name
             })
         })
-        
+
         return indicatorGroups
     }
     else {
@@ -33,7 +33,7 @@ export function getIndicatorGroupIndicatorsOptions(state) {
                 value: indicatorGroupIndicator.indicatorid,
                 text: indicatorGroupIndicator.indicatorname
             })
-        })        
+        })
         return indicatorGroupIndicators
     }
     else {
@@ -44,30 +44,103 @@ export function getIndicatorGroupIndicatorsOptions(state) {
 
 export function getPeriodTypeOptions(state) {
     if (state.indicatorReducer.periodTypes) {
-        
+
         let periodTypes = []
-        
+
         state.indicatorReducer.periodTypes.map((periodType, i) => {
             periodTypes.push({
                 key: periodType.id,
                 value: periodType.id,
                 text: periodType.name
             })
-        })        
+        })
         return periodTypes
     }
     else {
         return undefined
     }
-    
+
 }
 
-export function getFacilityIndicators(state){
+export function getFacilityIndicators(state) {
     return state.indicatorReducer.facilityIndicators
 }
 
-export function getFacilityPeriodType(state){
+export function getFacilityPeriodType(state) {
     return state.indicatorReducer.facilityPeriodType
+}
+
+export function getFacilityYear(state) {
+    return state.indicatorReducer.facilityYear
+}
+
+export function getFacilityIndicatorDataValues(state) {
+    return state.indicatorReducer.facilityIndicatorDataValues
+}
+
+export function getFacilityIndicatorDataValuesMapData(state) {
+    if (state.indicatorReducer.facilityIndicatorDataValues && state.indicatorReducer.facilityIndicators) {
+
+        let ids = state.indicatorReducer.facilityIndicators
+        let data = state.indicatorReducer.facilityIndicatorDataValues
+        let mData = {}
+        let output = []
+        let keys = []
+        let monthDict = {
+            1:'January',
+            2:'February',
+            3:'March',
+            4:'April',
+            5:'May',
+            6:'June',
+            7:'July',
+            8:'August',
+            9:'September',
+            10:'October',
+            11:'November',
+            12:'December',            
+        }
+        if (ids.length == 0) {
+            return undefined
+        }
+        else {
+            ids.map((indicator, j) => {
+                try{
+                keys.push(data[indicator][0].name)
+                }
+                catch(error){
+
+                }
+            })
+            for (var i = 0; i < data[ids[0]].length; i++) {
+                mData = {
+                    month: data[ids[0]][i].month,
+                    monthName: monthDict[data[ids[0]][i].month]
+                }
+
+                ids.map((indicator, j) => {
+                    try {
+                        mData[data[indicator][i].name] = data[indicator][i].value
+                    }
+                    catch (error) {
+                        mData[indicator] = 0
+                    }
+
+
+                })
+                output.push(mData)
+            }
+
+            return {
+                data: output,
+                keys,
+                indexBy: 'monthName'
+            }
+        }
+    }
+    else {
+        return undefined
+    }
 }
 
 export function getDataElements(state) {
