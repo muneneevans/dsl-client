@@ -131,6 +131,10 @@ export function getFacilityIndicatorDataValuesMapData(state) {
                 output.push(mData)
             }
 
+            output.sort( (a, b) => {
+                return a.month - b.month;
+              })
+
             return {
                 data: output,
                 keys,
