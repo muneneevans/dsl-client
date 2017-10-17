@@ -9,12 +9,16 @@ import * as indicatorSelectors from "../Store/Indicators/selectors"
 import * as indicatorActions from "../Store/Indicators/actions"
 import * as facilitySelectors from "../Store/Facilities/selectors"
 import * as facilityActions from "../Store/Facilities/actions"
+import * as commodityActions from "../Store/Commodities/actions"
+import * as commoditySelectors from "../Store/Commodities/selectors"
+
 
 import DataElementsForm from "../Components/Forms/DataElementsForm"
 import BarChart from "../Components/Charts/BarChart"
 import YearForm from "../Components/Forms/YearForm"
 import IndicatorGroupsForm from "../Components/Forms/IndicatorGroupsForm"
 import PeriodForm from "../Components/Forms/PeriodForm"
+import ProductsForm from "../Components/Forms/ProductsForm"
 
 class FacilityDetailScreen extends Component {
     constructor(props) {
@@ -26,6 +30,7 @@ class FacilityDetailScreen extends Component {
         this.props.facilityActions.fetchfacilityDetails(this.props.match.params.id)
         this.props.indicatorActions.fetchIndicatorGroups()
         this.props.indicatorActions.fetchPeriodTypes()
+        this.props.commodityActions.fetchProducts()
     }
 
     handleIndicatorGroupChange(indicatorGroupId) {
@@ -48,6 +53,10 @@ class FacilityDetailScreen extends Component {
 
     handleDataElementChange(dataElementId) {
         this.props.indicatorActions.fetchFacilityDataElementDataValues(this.props.match.params.id, dataElementId)
+    }
+
+    handleProductChange(productId) {
+        
     }
 
     updateGraphs() {
@@ -76,31 +85,33 @@ class FacilityDetailScreen extends Component {
                             }
                         </Grid.Row>
                         <Grid.Row>
-                            <Header as='h3' textAlign='center'>Indicators</Header>
-                            {
-                                this.props.dataElementsIsFetched ? (
-                                    <Segment>
-                                        <IndicatorGroupsForm
-                                            indicatorGroups={this.props.indicatorGroups}
-                                            indicatorGroupIndicators={this.props.indicatorGroupIndicators}
-                                            submitAction={this.handleIndicatorChange.bind(this)}
-                                            handleIndicatorGroupChange={this.handleIndicatorGroupChange.bind(this)}
-                                        />
-                                    </Segment>
-                                ) : (
-                                        <div>
-                                            {this.renderLoading()}
-                                        </div>
-                                    )
-                            }
+
+                            <Segment>
+                                <Header as='h3' >Indicators</Header>
+                                <IndicatorGroupsForm
+                                    indicatorGroups={this.props.indicatorGroups}
+                                    indicatorGroupIndicators={this.props.indicatorGroupIndicators}
+                                    submitAction={this.handleIndicatorChange.bind(this)}
+                                    handleIndicatorGroupChange={this.handleIndicatorGroupChange.bind(this)}
+                                />
+                            </Segment>
+
                         </Grid.Row>
                         <Grid.Row>
-                            <Header as='h3' textAlign='center'>Period</Header>
                             <Segment>
+                                <Header as='h3' >Period</Header>
                                 <PeriodForm
                                     periodTypes={this.props.periodTypes}
                                     handlePeriodTypeChange={this.handlePeriodTypeChange.bind(this)} />
                                 <YearForm submitAction={this.handleYearChange.bind(this)} />
+                            </Segment>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Segment>
+                                <Header as='h3'>Commodities</Header>
+                                <ProductsForm
+                                    products={this.props.products}
+                                    submitAction={this.handleProductChange.bind(this)} />
                             </Segment>
                         </Grid.Row>
                         <Grid.Row>
@@ -111,106 +122,113 @@ class FacilityDetailScreen extends Component {
                         </Grid.Row>
                     </Grid.Column>
                     <Grid.Column stretched computer={12}>
-                        {
-                            this.props.facilityIndicatorDataValuesMapData ? (
-                                <Segment>
+                        <Grid.Row>
+                            {
+                                this.props.facilityIndicatorDataValuesMapData ? (
                                     <Segment>
-                                        <Card.Content header='Indicators' />
-                                        <Bar
-                                            data={this.props.facilityIndicatorDataValuesMapData.data}
-                                            keys={this.props.facilityIndicatorDataValuesMapData.keys}
-                                            indexBy={this.props.facilityIndicatorDataValuesMapData.indexBy}
-                                            height={800}
-                                            width={800}
-                                            margin={{
-                                                "top": 50,
-                                                "right": 60,
-                                                "bottom": 50,
-                                                "left": 100
-                                            }}
-                                            padding={0.2}
-                                            innerPadding={0}
-                                            minValue="auto"
-                                            maxValue="auto"
-                                            groupMode="grouped"
-                                            layout="vertical"
-                                            reverse={false}
-                                            colors="nivo"
-                                            colorBy="id"
-                                            defs={[
-                                                {
-                                                    "id": "dots",
-                                                    "type": "patternDots",
-                                                    "background": "inherit",
-                                                    "color": "#38bcb2",
-                                                    "size": 4,
-                                                    "padding": 1,
-                                                    "stagger": true
-                                                },
-                                                {
-                                                    "id": "lines",
-                                                    "type": "patternLines",
-                                                    "background": "inherit",
-                                                    "color": "#eed312",
-                                                    "rotation": -45,
-                                                    "lineWidth": 6,
-                                                    "spacing": 10
-                                                }
-                                            ]}
-                                            fill={[
-                                                {
-                                                    "match": {
-                                                        "id": "Medical Clinic"
+                                        <Segment>
+                                            <Card.Content header='Indicators' />
+                                            <Bar
+                                                data={this.props.facilityIndicatorDataValuesMapData.data}
+                                                keys={this.props.facilityIndicatorDataValuesMapData.keys}
+                                                indexBy={this.props.facilityIndicatorDataValuesMapData.indexBy}
+                                                height={800}
+                                                width={800}
+                                                margin={{
+                                                    "top": 50,
+                                                    "right": 60,
+                                                    "bottom": 50,
+                                                    "left": 100
+                                                }}
+                                                padding={0.2}
+                                                innerPadding={0}
+                                                minValue="auto"
+                                                maxValue="auto"
+                                                groupMode="grouped"
+                                                layout="vertical"
+                                                reverse={false}
+                                                colors="nivo"
+                                                colorBy="id"
+                                                defs={[
+                                                    {
+                                                        "id": "dots",
+                                                        "type": "patternDots",
+                                                        "background": "inherit",
+                                                        "color": "#38bcb2",
+                                                        "size": 4,
+                                                        "padding": 1,
+                                                        "stagger": true
                                                     },
-                                                    "id": "dots"
-                                                },
-                                                {
-                                                    "match": {
-                                                        "id": "Dispensary"
+                                                    {
+                                                        "id": "lines",
+                                                        "type": "patternLines",
+                                                        "background": "inherit",
+                                                        "color": "#eed312",
+                                                        "rotation": -45,
+                                                        "lineWidth": 6,
+                                                        "spacing": 10
+                                                    }
+                                                ]}
+                                                fill={[
+                                                    {
+                                                        "match": {
+                                                            "id": "Medical Clinic"
+                                                        },
+                                                        "id": "dots"
                                                     },
-                                                    "id": "lines"
-                                                }
-                                            ]}
-                                            borderRadius={0}
-                                            borderWidth={0}
-                                            borderColor="inherit:darker(1.6)"
-                                            axisBottom={{
-                                                "orient": "bottom",
-                                                "tickSize": 5,
-                                                "tickPadding": 5,
-                                                "tickRotation": 0,
-                                                "legend": "period",
-                                                "legendPosition": "center",
-                                                "legendOffset": 36
-                                            }}
-                                            axisLeft={{
-                                                "orient": "left",
-                                                "tickSize": 5,
-                                                "tickPadding": 5,
-                                                "tickRotation": 0,
-                                                "legend": "values",
-                                                "legendPosition": "center",
-                                                "legendOffset": -40
-                                            }}
-                                            enableGridX={false}
-                                            enableGridY={true}
-                                            enableLabel={false}
-                                            labelSkipWidth={12}
-                                            labelSkipHeight={12}
-                                            labelTextColor="inherit:darker(1.6)"
-                                            animate={true}
-                                            motionStiffness={90}
-                                            motionDamping={15}
-                                            isInteractive={true}
-                                        />
-                                    </Segment >
-                                </Segment>
-                            ) : (
-                                    <div>
-                                        {this.renderLoading()}
-                                    </div>
-                                )
-                        }
+                                                    {
+                                                        "match": {
+                                                            "id": "Dispensary"
+                                                        },
+                                                        "id": "lines"
+                                                    }
+                                                ]}
+                                                borderRadius={0}
+                                                borderWidth={0}
+                                                borderColor="inherit:darker(1.6)"
+                                                axisBottom={{
+                                                    "orient": "bottom",
+                                                    "tickSize": 5,
+                                                    "tickPadding": 5,
+                                                    "tickRotation": 0,
+                                                    "legend": "period",
+                                                    "legendPosition": "center",
+                                                    "legendOffset": 36
+                                                }}
+                                                axisLeft={{
+                                                    "orient": "left",
+                                                    "tickSize": 5,
+                                                    "tickPadding": 5,
+                                                    "tickRotation": 0,
+                                                    "legend": "values",
+                                                    "legendPosition": "center",
+                                                    "legendOffset": -40
+                                                }}
+                                                enableGridX={false}
+                                                enableGridY={true}
+                                                enableLabel={false}
+                                                labelSkipWidth={12}
+                                                labelSkipHeight={12}
+                                                labelTextColor="inherit:darker(1.6)"
+                                                animate={true}
+                                                motionStiffness={90}
+                                                motionDamping={15}
+                                                isInteractive={true}
+                                            />
+                                        </Segment >
+                                    </Segment>
+                                ) : (
+                                        <div>
+                                            {this.renderLoading()}
+                                        </div>
+                                    )
+                            }
+                        </Grid.Row>
+                        <Grid.Row>
+                            {
+
+                            }
+                        </Grid.Row>
                     </Grid.Column>
                 </Grid>
             ) : (
@@ -230,8 +248,9 @@ const mapStateToProps = (state, ownProps) => {
         facilityDetails: facilitySelectors.getFaciliyDetails(state),
 
         indicatorGroups: indicatorSelectors.getIndicatorGroupsOptions(state),
-
         indicatorGroupIndicators: indicatorSelectors.getIndicatorGroupIndicatorsOptions(state),
+
+        products: commoditySelectors.getProductOptions(state),
 
         periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
 
@@ -241,11 +260,6 @@ const mapStateToProps = (state, ownProps) => {
         facilityIndicatorDataVailues: indicatorSelectors.getFacilityIndicatorDataValues(state),
         facilityIndicatorDataValuesMapData: indicatorSelectors.getFacilityIndicatorDataValuesMapData(state),
 
-        dataElementsIsFetched: indicatorSelectors.getDataElementsFetchStatus(state),
-        dataElements: indicatorSelectors.getDataElements(state),
-
-        facilityDataElementDataValuesIsFetched: indicatorSelectors.getFacilityDataElementDataValuesFetchStatus(state),
-        facilityDataElementDataValues: indicatorSelectors.getFacilityDataElementDataValues(state)
 
     }
 }
@@ -253,8 +267,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         indicatorActions: bindActionCreators(indicatorActions, dispatch),
-        facilityActions: bindActionCreators(facilityActions, dispatch)
-
+        facilityActions: bindActionCreators(facilityActions, dispatch),
+        commodityActions: bindActionCreators(commodityActions, dispatch)
     }
 }
 

@@ -1,0 +1,2 @@
+export const PRODUCTS_REQUESTED = 'commodities.PRODUCTS_REQUESTED'
+export const PRODUCTS_RECEIVED = 'commodities.PRODUCTS_RECEIVED'
