@@ -31,6 +31,7 @@ class FacilityDetailScreen extends Component {
         this.props.indicatorActions.fetchIndicatorGroups()
         this.props.indicatorActions.fetchPeriodTypes()
         this.props.commodityActions.fetchProducts()
+        this.props.commodityActions.fetchFacilityProducts(this.props.match.params.id)
     }
 
     handleIndicatorGroupChange(indicatorGroupId) {
@@ -110,7 +111,7 @@ class FacilityDetailScreen extends Component {
                             <Segment>
                                 <Header as='h3'>Commodities</Header>
                                 <ProductsForm
-                                    products={this.props.products}
+                                    products={this.props.facilityProducts}
                                     submitAction={this.handleProductChange.bind(this)} />
                             </Segment>
                         </Grid.Row>
@@ -251,6 +252,7 @@ const mapStateToProps = (state, ownProps) => {
         indicatorGroupIndicators: indicatorSelectors.getIndicatorGroupIndicatorsOptions(state),
 
         products: commoditySelectors.getProductOptions(state),
+        facilityProducts: commoditySelectors.getFacilityProductOptions(state),
 
         periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
 

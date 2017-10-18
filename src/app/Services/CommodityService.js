@@ -15,4 +15,16 @@ export default class CommodityService {
                 throw (error)
             })
     }
+
+    static getFacilityProducts(facility_id) {
+        const url = this.host.concat('products/facility/' + facility_id)
+
+        return fetch(url)
+            .then(response => {
+                return response.json()
+            })
+            .catch(error => {
+                throw (error)
+            })
+    }
 }

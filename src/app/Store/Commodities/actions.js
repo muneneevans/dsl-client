@@ -17,3 +17,19 @@ export function fetchProducts() {
             })
     }
 }
+
+export function fetchFacilityProducts(facilityId){
+    return function (dispatch, getState){
+        dispatch({type: types.FACILITY_PRODUCTS_REQUESTED})
+        return CommodityService.getFacilityProducts(facilityId)
+            .then(facilityProducts =>{
+                dispatch({
+                    type: types.FACILITY_PRODUCTS_RECEIVED,
+                    facilityProducts
+                })
+            })
+            .catch(error => {
+                throw(error)
+            })
+    }
+}
