@@ -3,15 +3,15 @@ import { Button, Form, Grid, Header, Image, Message, Segment, Card } from 'seman
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux"
-import * as commonSelectors from "../Store/Common/selectors"
-import * as commonActions from "../Store/Common/actions"
-import * as facilitySelectors from "../Store/Facilities/selectors"
-import * as facilityActions from "../Store/Facilities/actions"
+import * as commonSelectors from "../../Store/Common/selectors"
+import * as commonActions from "../../Store/Common/actions"
+import * as facilitySelectors from "../../Store/Facilities/selectors"
+import * as facilityActions from "../../Store/Facilities/actions"
 
-import CountyForm from "../Components/Forms/CountyForm"
-import FacilityTypesWidget from "../Components/FacilityTypesWidget"
-import FacilityBedsWidget from "../Components/FacilityBedsWidget"
-import MapChart from "../Components/Charts/MapChart"
+import CountyForm from "../../Components/Forms/CountyForm"
+import FacilityTypesWidget from "../../Components/FacilityTypesWidget"
+import FacilityBedsWidget from "../../Components/FacilityBedsWidget"
+import MapChart from "../../Components/Charts/MapChart"
 
 class DashBoardPage extends Component {
 

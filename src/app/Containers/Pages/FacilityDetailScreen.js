@@ -5,20 +5,20 @@ import { Grid, Segment, Tab, Header, Button, Card } from "semantic-ui-react"
 import { Bar, ResponsiveBar } from 'nivo'
 import { match } from "react-router"
 
-import * as indicatorSelectors from "../Store/Indicators/selectors"
-import * as indicatorActions from "../Store/Indicators/actions"
-import * as facilitySelectors from "../Store/Facilities/selectors"
-import * as facilityActions from "../Store/Facilities/actions"
-import * as commodityActions from "../Store/Commodities/actions"
-import * as commoditySelectors from "../Store/Commodities/selectors"
+import * as indicatorSelectors from "../../Store/Indicators/selectors"
+import * as indicatorActions from "../../Store/Indicators/actions"
+import * as facilitySelectors from "../../Store/Facilities/selectors"
+import * as facilityActions from "../../Store/Facilities/actions"
+import * as commodityActions from "../../Store/Commodities/actions"
+import * as commoditySelectors from "../../Store/Commodities/selectors"
 
 
-import DataElementsForm from "../Components/Forms/DataElementsForm"
-import BarChart from "../Components/Charts/BarChart"
-import YearForm from "../Components/Forms/YearForm"
-import IndicatorGroupsForm from "../Components/Forms/IndicatorGroupsForm"
-import PeriodForm from "../Components/Forms/PeriodForm"
-import ProductsForm from "../Components/Forms/ProductsForm"
+import DataElementsForm from "../../Components/Forms/DataElementsForm"
+import BarChart from "../../Components/Charts/BarChart"
+import YearForm from "../../Components/Forms/YearForm"
+import IndicatorGroupsForm from "../../Components/Forms/IndicatorGroupsForm"
+import PeriodForm from "../../Components/Forms/PeriodForm"
+import ProductsForm from "../../Components/Forms/ProductsForm"
 
 class FacilityDetailScreen extends Component {
     constructor(props) {

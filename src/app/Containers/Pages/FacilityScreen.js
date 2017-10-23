@@ -3,27 +3,27 @@ import { connect } from 'react-redux'
 import { Grid, Header, Segment, Dimmer, Loader, Tab, Menu } from 'semantic-ui-react'
 import { bindActionCreators } from 'redux'
 
-import * as commonSelectors from "../Store/Common/selectors"
-import * as commonActions from "../Store/Common/actions"
-import { levels } from "../Store/Common/dataTypes"
+import * as commonSelectors from "../../Store/Common/selectors"
+import * as commonActions from "../../Store/Common/actions"
+import { levels } from "../../Store/Common/dataTypes"
 
-import * as facilitySelectors from "../Store/Facilities/selectors"
-import * as facilityActions from "../Store/Facilities/actions"
-import { facilityInformationType } from "../Store/Facilities/dataTypes"
+import * as facilitySelectors from "../../Store/Facilities/selectors"
+import * as facilityActions from "../../Store/Facilities/actions"
+import { facilityInformationType } from "../../Store/Facilities/dataTypes"
 
-import CountyForm from "../Components/Forms/CountyForm"
-import ConstituencyForm from "../Components/Forms/ConstituencyForm"
-import WardForm from "../Components/Forms/WardForm"
-import FacilityTypeForm from "../Components/Forms/FacilityTypeForm"
-import KephLevelForm from "../Components/Forms/KephLevelForm"
-import FacilityList from "../Components/FacilityList"
+import CountyForm from "../../Components/Forms/CountyForm"
+import ConstituencyForm from "../../Components/Forms/ConstituencyForm"
+import WardForm from "../../Components/Forms/WardForm"
+import FacilityTypeForm from "../../Components/Forms/FacilityTypeForm"
+import KephLevelForm from "../../Components/Forms/KephLevelForm"
+import FacilityList from "../../Components/FacilityList"
 // import BarChart from "../Components/BarChart"
-import BarChart from "../Components/Charts/BarChart"
-import PieChart from "../Components/PieChart"
-import LineChart from "../Components/Charts/LineChart"
-import StackedBarChart from "../Components/Charts/StackedBarChart"
-import MapChart from "../Components/Charts/MapChart"
-import ScatterPlot from "../Components/Charts/ReactVis/ScatterPlot"
+import BarChart from "../../Components/Charts/BarChart"
+import PieChart from "../../Components/PieChart"
+import StackedBarChart from "../../Components/Charts/StackedBarChart"
+import LineChart from "../../Components/Charts/LineChart"
+import MapChart from "../../Components/Charts/MapChart"
+import ScatterPlot from "../../Components/Charts/ReactVis/ScatterPlot"
 
 class FacilityScreen extends Component {
     constructor(props) {

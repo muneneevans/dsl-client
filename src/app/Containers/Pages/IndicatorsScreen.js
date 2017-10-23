@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { Grid, Card, Header, Segment, Dimmer, Loader, Form, Input, Select} from 'semantic-ui-react'
 import {bindActionCreators } from 'redux'
 
-import * as facilitySelectors from "../Store/Facilities/reducer"
-import * as facilityActions from "../Store/Facilities/actions"
+import * as facilitySelectors from "../../Store/Facilities/reducer"
+import * as facilityActions from "../../Store/Facilities/actions"
 
-import * as indicatorSelectors from "../Store/Indicators/reducer"
-import * as indicatorActions from "../Store/Indicators/actions"
+import * as indicatorSelectors from "../../Store/Indicators/reducer"
+import * as indicatorActions from "../../Store/Indicators/actions"
 
 class IndicatorScreen extends Component{
     constructor(props){

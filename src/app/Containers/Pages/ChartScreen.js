@@ -1,11 +1,11 @@
 import React from 'react'
-import MapChart from "../Components/Charts/MapChart"
-import kenya from "../Components/Charts/kenya"
-import BarChart from "../Components/Charts/BarChart"
-// import DotChart from "../Components/Charts/DotChart"
-import LineChart from "../Components/Charts/LineChart"
-import HorizontalBarChart from "../Components/Charts/HorizontalBarChart"
-import NivoBarChart from "../Components/Charts/Nivo/BarChart"
+import MapChart from "../../Components/Charts/MapChart"
+import kenya from "../../Components/Charts/kenya"
+import BarChart from "../../Components/Charts/BarChart"
+// import DotChart from "../../Components/Charts/DotChart"
+import LineChart from "../../Components/Charts/LineChart"
+import HorizontalBarChart from "../../Components/Charts/HorizontalBarChart"
+import NivoBarChart from "../../Components/Charts/Nivo/BarChart"
 
 // const kenya = require('../Components/Charts/kenya.json')
 

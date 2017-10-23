@@ -1,13 +1,14 @@
 import React, { Component } from "react"
 import { Switch, Route, Link } from "react-router"
 import { HashRouter } from "react-router-dom"
-import ChartScreen from "./ChartScreen"
-import FacilityScreen from "./FacilityScreen"
-import IndicatorScreen from "./IndicatorsScreen"
-import MapScreen from "./MapScreen"
 import Dimensions from "react-dimensions"
-import FacilityDetailScreen from "./FacilityDetailScreen"
-import DashBoardPage from "./DashBoardPage"
+
+import ChartScreen from "./Pages/ChartScreen"
+import FacilityScreen from "./Pages/FacilityScreen"
+import IndicatorScreen from "./Pages/IndicatorsScreen"
+import MapScreen from "./Pages/MapScreen"
+import FacilityDetailScreen from "./Pages/FacilityDetailScreen"
+import DashBoardPage from "./Pages/DashBoardPage"
 // import ChartScreen from "./ChartScreen"
 
 class App extends Component {
