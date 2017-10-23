@@ -36,12 +36,12 @@ class DashBoardPage extends Component {
                 verticalAlign='top' padded>
                 <Grid.Row>
                     <Grid.Column width={4}>
-                        {/* <Card>
+                        <Card>
                             <Card.Content header='County Form' />
                             <Card.Content extra>
                                 <CountyForm countyCodes={this.props.counties} />
                             </Card.Content>
-                        </Card> */}
+                        </Card>
                     </Grid.Column>
                 </Grid.Row>
 
@@ -66,7 +66,7 @@ class DashBoardPage extends Component {
                             height={1000} />
                     </Grid.Column>
                 </Grid.Row>
-                
+
                 <Grid.Row width={6}>
                     <Grid.Column width={5}>
                         <FacilityBedsWidget data={this.props.countryBedsSummary}
