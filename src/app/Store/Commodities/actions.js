@@ -18,18 +18,33 @@ export function fetchProducts() {
     }
 }
 
-export function fetchFacilityProducts(facilityId){
-    return function (dispatch, getState){
-        dispatch({type: types.FACILITY_PRODUCTS_REQUESTED})
+export function fetchFacilityProducts(facilityId) {
+    return function (dispatch, getState) {
+        dispatch({ type: types.FACILITY_PRODUCTS_REQUESTED })
         return CommodityService.getFacilityProducts(facilityId)
-            .then(facilityProducts =>{
+            .then(facilityProducts => {
                 dispatch({
                     type: types.FACILITY_PRODUCTS_RECEIVED,
                     facilityProducts
                 })
             })
             .catch(error => {
-                throw(error)
+                throw (error)
+            })
+    }
+}
+
+export function fetchFacilityYearProducts(facilityId, year) {
+    return function (dispatch, getState) {
+        dispatch({ type: types.FACILITY_YEAR_PRODUCT_REQUESTED })
+        return CommodityService.getFacilityYearProducts(facilityId, year)
+            .then(facilityYearProducts => {
+                return dispatch({
+                    type: types.FACILITY_YEAR_PRODUCTS_RECEIVED,
+                    facilityYearProducts
+                })
+            }).catch(error => {
+                throw (error)
             })
     }
 }

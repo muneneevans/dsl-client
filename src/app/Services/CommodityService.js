@@ -27,4 +27,28 @@ export default class CommodityService {
                 throw (error)
             })
     }
+
+    static getFacilityYearProducts(facilityId, year) {
+        const url = this.host.concat('products/facility/' + facilityId +'/')
+        const request = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                filters: {
+                    facilityId: facilityId,
+                    year: year
+                }
+            })
+        };
+        return fetch(url, request)
+            .then(response => {
+                return response.json()
+            })
+            .catch(error => {
+                throw (error)
+            })
+    }
 }
