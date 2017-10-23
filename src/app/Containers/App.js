@@ -3,13 +3,13 @@ import { Switch, Route, Link } from "react-router"
 import { HashRouter } from "react-router-dom"
 import Dimensions from "react-dimensions"
 
-import ChartScreen from "./Pages/ChartScreen"
-import FacilityScreen from "./Pages/FacilityScreen"
-import IndicatorScreen from "./Pages/IndicatorsScreen"
-import MapScreen from "./Pages/MapScreen"
-import FacilityDetailScreen from "./Pages/FacilityDetailScreen"
+import ChartPage from "./Pages/ChartPage"
+import FacilityPage from "./Pages/FacilityPage"
+import IndicatorPage from "./Pages/IndicatorsPage"
+import MapPage from "./Pages/MapPage"
+import FacilityDetailPage from "./Pages/FacilityDetailPage"
 import DashBoardPage from "./Pages/DashBoardPage"
-// import ChartScreen from "./ChartScreen"
+// import ChartPage from "./ChartPage"
 
 class App extends Component {
     render() {
@@ -21,11 +21,11 @@ class App extends Component {
                             containerWidth={this.props.containerWidth}
                             containerHeight={this.props.containerHeight} />
                     </Route>
-                    <Route path='/maps' component={MapScreen} />
+                    <Route path='/maps' component={MapPage} />
                     <Route path='/dashboard' component={DashBoardPage} />
-                    <Route path='/charts' component={ChartScreen} />
-                    <Route path="/facilities/:id" component={FacilityDetailScreen} />
-                    <Route path='/facilities' component={FacilityScreen} />
+                    <Route path='/charts' component={ChartPage} />
+                    <Route path="/facilities/:id" component={FacilityDetailPage} />
+                    <Route path='/facilities' component={FacilityPage} />
                 </Switch>
             </HashRouter>
 
