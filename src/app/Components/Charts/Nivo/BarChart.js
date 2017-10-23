@@ -4,7 +4,7 @@ import { Bar, ResponsiveBar } from 'nivo'
 
 export const BarChart = (props) => {
     return (
-        <ResponsiveBar
+        <Bar
             data={props.data}
             keys={props.keys}
             indexBy={props.indexBy}
