@@ -30,7 +30,10 @@ export function getCountryFacilityTypesSummary(state) {
 
 export function getCountryKephLevelsSummary(state) {
     if (state.facilityReducer.countryKephLevelsSummary) {
-        return state.facilityReducer.countryKephLevelsSummary
+        return { 
+            summary: state.facilityReducer.countryKephLevelsSummary,
+            indexBy: 'county_name'
+        }
     }
     else {
         return undefined
