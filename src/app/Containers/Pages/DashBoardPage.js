@@ -7,6 +7,9 @@ import * as commonSelectors from "../../Store/Common/selectors"
 import * as commonActions from "../../Store/Common/actions"
 import * as facilitySelectors from "../../Store/Facilities/selectors"
 import * as facilityActions from "../../Store/Facilities/actions"
+import * as sharedSelectors from "../../Store/Shared/selectors"
+
+import {levels} from "../../Store/Common/dataTypes"
 
 import CountyForm from "../../Components/Forms/CountyForm"
 import FacilityTypesWidget from "../../Components/FacilityTypesWidget"
@@ -19,6 +22,7 @@ class DashBoardPage extends Component {
         super(props)
     }
     componentDidMount() {
+        this.props.commonActions.changeLevel(levels.COUNTRY)
         this.props.commonActions.fetchCountyIds()
         this.props.facilityActions.fetchCountrySummary()
         this.props.facilityActions.fetchCountryFacilityTypeSummary()
@@ -27,6 +31,12 @@ class DashBoardPage extends Component {
         this.props.facilityActions.fetchCountryKephLevelsSummary()
         this.props.facilityActions.fetchCountryBedsSummary()
         this.props.facilityActions.fetchCountrySummary()
+    }
+
+    handleCountyChange(countyId) {
+        this.props.commonActions.changeLevel(levels.COUNTY)
+        this.props.facilityActions.fetchCountyFacilityTypeSummary(countyId)
+        this.props.facilityActions.fetchCountyKephLevelsSummary(countyId)
     }
 
     render() {
@@ -39,7 +49,8 @@ class DashBoardPage extends Component {
                         <Card>
                             <Card.Content header='County Form' />
                             <Card.Content extra>
-                                <CountyForm countyCodes={this.props.counties} />
+                                <CountyForm countyCodes={this.props.counties}
+                                    submitAction={this.handleCountyChange.bind(this)} />
                             </Card.Content>
                         </Card>
                     </Grid.Column>
@@ -48,9 +59,9 @@ class DashBoardPage extends Component {
                 <Grid.Row >
                     <Grid.Column >
                         <FacilityTypesWidget
-                            data={this.props.countryFacilityTypesSummary}
+                            data={this.props.countryFacilityTypesSummary.summary}
                             keys={this.props.facilityTypes}
-                            indexBy='county_name'
+                            indexBy={this.props.countryFacilityTypesSummary.indexBy}
                             width={1500}
                             height={1000} />
                     </Grid.Column>
@@ -97,12 +108,15 @@ const mapStateToProps = (state, ownProps) => {
         counties: commonSelectors.getCountyOptions(state),
         countyNames: commonSelectors.getCountyNames(state),
 
-        countryFacilityTypesSummary: facilitySelectors.getCountryFacilityTypesSummary(state),
+        countryFacilityTypesSummary: sharedSelectors.getCurrentFacilityTypeSummary(state),
         countryKephLevelsSummary: facilitySelectors.getCountryKephLevelsSummary(state),
         countryMapSummary: facilitySelectors.getCountrySummaryMapData(state),
         countrySummary: facilitySelectors.getCountrySummary(state),
         countryBedsSummary: facilitySelectors.getCountryBedsSummary(state),
         countryCotsSummary: facilitySelectors.getCountryCotsSummary(state),
+
+        countyFacilityTypeSummary: facilitySelectors.getCountyFacilityTypesSummary(state),
+        countyKephLevelsSummary: facilitySelectors.getCountyKephLevelsSummary(state),
 
         facilityTypes: facilitySelectors.getFacilityTypesNames(state),
         kephLevels: facilitySelectors.getKephLevelsNames(state)

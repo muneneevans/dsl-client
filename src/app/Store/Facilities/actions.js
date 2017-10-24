@@ -103,6 +103,38 @@ export function fetchCountySummary(countyId) {
     }
 }
 
+export function fetchCountyFacilityTypeSummary(countyId) {
+    return function (dispatch, getState) {
+        dispatch(showLoading(types.COUNTY_FACILITYTYPES_SUMMARY_REQUESTED))
+        return FacilityService.getCountyFacilityTypeSummary(countyId)
+            .then(countyFacilityTypesSummary => {
+                return dispatch({
+                    type: types.COUNTY_FACILITYTYPES_SUMMARY_RECEIVED,
+                    countyFacilityTypesSummary: countyFacilityTypesSummary.data 
+                })
+            })
+            .catch(error => {
+                throw (error)
+            })
+    }
+}
+
+export function fetchCountyKephLevelsSummary(countyId) {
+    return function (dispatch, getState) {
+        dispatch(showLoading(types.COUNTY_KEPHLEVELS_SUMMARY_REQUESTED))
+        return FacilityService.getCountyKephLevelsSummary(countyId)
+            .then(countyKephLevelsSummary => {
+                return dispatch({
+                    type: types.COUNTY_KEPHLEVELS_SUMMARY_RECEIVED,
+                    countyKephLevelsSummary: countyKephLevelsSummary.data 
+                })
+            })
+            .catch(error => {
+                throw (error)
+            })
+    }
+}
+
 export function fetchConstituencySummary(constituencyId) {
     return function (dispatch, getState) {
         dispatch(showLoading(types.CONSTITUENCY_SUMMARY_REQUESTED))

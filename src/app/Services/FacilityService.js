@@ -57,8 +57,31 @@ export default class FacilityService {
                 throw (error)
             })
     }
+
     static getCountySummary(countyId) {
         const url = this.host.concat('county/', countyId, '/summary/')
+        return fetch(url)
+            .then(response => {
+                return response.json()
+            })
+            .catch(error => {
+                throw (error)
+            })
+    }
+
+    static getCountyFacilityTypeSummary(countyId) {
+        const url = this.host.concat('county/', countyId, '/facilitytypes/summary/')
+        return fetch(url)
+            .then(response => {
+                return response.json()
+            })
+            .catch(error => {
+                throw (error)
+            })
+    }
+
+    static getCountyKephLevelsSummary(countyId) {
+        const url = this.host.concat('county/', countyId, '/kephlevels/summary/')
         return fetch(url)
             .then(response => {
                 return response.json()

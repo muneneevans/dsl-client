@@ -17,7 +17,11 @@ export function getFaciliyDetails(state) {
 
 export function getCountryFacilityTypesSummary(state) {
     if (state.facilityReducer.countryFacilityTypesSummary) {
-        return state.facilityReducer.countryFacilityTypesSummary
+        return{
+            summary: state.facilityReducer.countryFacilityTypesSummary,
+            indexBy: 'county_name'
+        } 
+            
     }
     else {
         return undefined
@@ -50,27 +54,27 @@ export function getCountryBedsSummary(state) {
     }
 }
 
-export function getCountryCotsSummary(state){
-    if(state.facilityReducer.countrySummary){
+export function getCountryCotsSummary(state) {
+    if (state.facilityReducer.countrySummary) {
         let newSummary = []
-        state.facilityReducer.countrySummary.map((county, i) => {            
+        state.facilityReducer.countrySummary.map((county, i) => {
             newSummary.push({
                 id: county.name,
                 label: county.name,
-                value: county.number_of_cots,                                
-            })            
+                value: county.number_of_cots,
+            })
         })
         return newSummary
     }
-    else{
+    else {
         return undefined
     }
 }
 
 export function getCountrySummary(state) {
-    
+
     return state.facilityReducer.countrySummary
-    
+
 }
 
 export function getCountrySummaryChartData(state) {
@@ -151,6 +155,27 @@ export function getCountySummaryFetchStatus(state) {
 
 export function getCountySummary(state) {
     return state.facilityReducer.countySummary
+}
+
+export function getCountyFacilityTypesSummary(state) {
+    if(state.facilityReducer.countyFacilityTypesSummary){
+        return { 
+            summary: state.facilityReducer.countyFacilityTypesSummary,
+            indexBy: 'constituency_name'
+            }
+    }
+    else{
+        return undefined
+    }
+}
+
+export function getCountyKephLevelsSummary(state) {
+    if(state.facilityReducer.countyKephLevelsSummary){
+        return state.facilityReducer.countyKephLevelsSummary
+    }
+    else{
+        return undefined
+    }
 }
 
 export function getCountySummaryChartData(state) {
