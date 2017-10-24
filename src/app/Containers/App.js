@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Switch, Route, Link } from "react-router"
 import { HashRouter } from "react-router-dom"
 import Dimensions from "react-dimensions"
+import SiteHeader from "../Components/Header"
 
 import ChartPage from "./Pages/ChartPage"
 import FacilityPage from "./Pages/FacilityPage"
@@ -14,20 +15,23 @@ import DashBoardPage from "./Pages/DashBoardPage"
 class App extends Component {
     render() {
         return (
-            <HashRouter>
-                <Switch>
-                    <Route exact path="/" >
-                        <DashBoardPage
-                            containerWidth={this.props.containerWidth}
-                            containerHeight={this.props.containerHeight} />
-                    </Route>
-                    <Route path='/maps' component={MapPage} />
-                    <Route path='/dashboard' component={DashBoardPage} />
-                    <Route path='/charts' component={ChartPage} />
-                    <Route path="/facilities/:id" component={FacilityDetailPage} />
-                    <Route path='/facilities' component={FacilityPage} />
-                </Switch>
-            </HashRouter>
+            
+                <div>
+                    <SiteHeader />
+                    <Switch>
+                        <Route exact path="/" >
+                            <DashBoardPage
+                                containerWidth={this.props.containerWidth}
+                                containerHeight={this.props.containerHeight} />
+                        </Route>
+                        <Route path='/maps' component={MapPage} />
+                        <Route path='/dashboard' component={DashBoardPage} />
+                        <Route path='/charts' component={ChartPage} />
+                        <Route path="/facilities/:id" component={FacilityDetailPage} />
+                        <Route path='/facilities' component={FacilityPage} />
+                    </Switch>
+                </div>
+        
 
         );
     }
