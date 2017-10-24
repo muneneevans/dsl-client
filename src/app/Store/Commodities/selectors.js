@@ -49,9 +49,11 @@ export function getFacilityYearProductGraphs(state) {
         let months = [...new Set(state.commodityReducer.facilityYearProducts.map(a => a.month))]
         let output = []
         let keys = []
+
         months.map(month => {
             var item = {
-                'month': month
+                'month': month,
+                monthName: monthDict[data[ids[0]][i].month]
             }
 
             var foundProducts = state.commodityReducer.facilityYearProducts.filter(obj => {
@@ -67,12 +69,12 @@ export function getFacilityYearProductGraphs(state) {
         console.log(JSON.stringify({
             data: output,
             keys,
-            indexBy: 'month'
+            indexBy: 'monthName'
         }))
         return {
             data: output,
             keys,
-            indexBy: 'month'
+            indexBy: 'monthName'
         }
     }
     else { return undefined }

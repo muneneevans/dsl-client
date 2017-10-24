@@ -12,9 +12,9 @@ export const FacilityTypesWidget = (props) => {
                 menuItem: "Bar Graph",
                 render: () => (
                     <Bar
-                        data={props.data}
+                        data={props.data.summary}
                         keys={props.keys}
-                        indexBy={props.indexBy}
+                        indexBy={props.indexBy.indexBy}
                         height={props.height}
                         width={props.containerWidth}
                         margin={{
@@ -105,9 +105,9 @@ export const FacilityTypesWidget = (props) => {
                 menuItem: "Heat Map",
                 render: () => (
                     <HeatMap
-                        data={props.data}
+                        data={props.data.summary}
                         keys={props.keys}
-                        indexBy={props.indexBy}
+                        indexBy={props.data.indexBy}
                         height={props.height}
                         width={props.containerWidth}
                         margin={{
@@ -163,9 +163,9 @@ export const FacilityTypesWidget = (props) => {
             {
                 menuItem: "Radar", render: () => (
                     <Radar
-                        data={props.data}
+                        data={props.data.summary}
                         keys={props.keys}
-                        indexBy={props.indexBy}
+                        indexBy={props.data.indexBy}
                         margin={{
                             "top": 70,
                             "right": 80,

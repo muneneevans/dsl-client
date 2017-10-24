@@ -59,11 +59,11 @@ class DashBoardPage extends Component {
                 <Grid.Row >
                     <Grid.Column >
                         <FacilityTypesWidget
-                            data={this.props.countryFacilityTypesSummary.summary}
+                            data={this.props.countryFacilityTypesSummary}
                             keys={this.props.facilityTypes}
-                            indexBy={this.props.countryFacilityTypesSummary.indexBy}
+                            indexBy={this.props.countryFacilityTypesSummary}
                             width={1500}
-                            height={1000} />
+                            height={800} />
                     </Grid.Column>
                 </Grid.Row>
 
