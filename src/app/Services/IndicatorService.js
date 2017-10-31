@@ -30,7 +30,7 @@ export default class IndicatorService {
 
     static getIndicatorDataValues(filters) {
         const url = this.host.concat('datavalues/facility/indicator/')
-        console.log(filters)
+        
         const request = {
             method: "POST",
             headers: {
@@ -45,8 +45,7 @@ export default class IndicatorService {
                     year: filters.year
                 }
             })
-        };
-        // console.log(requst.body)
+        };        
         return fetch(url, request)
             .then(response => {
                 return response.json()

@@ -15,9 +15,10 @@ import DashBoardPage from "./Pages/DashBoardPage"
 class App extends Component {
     render() {
         return (
-            
-                <div>
-                    <SiteHeader />
+
+            <div>
+                <SiteHeader />
+                <HashRouter>
                     <Switch>
                         <Route exact path="/" >
                             <DashBoardPage
@@ -30,8 +31,9 @@ class App extends Component {
                         <Route path="/facilities/:id" component={FacilityDetailPage} />
                         <Route path='/facilities' component={FacilityPage} />
                     </Switch>
-                </div>
-        
+                </HashRouter>
+            </div>
+
 
         );
     }

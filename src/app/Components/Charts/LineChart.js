@@ -32,7 +32,7 @@ export const LineChart = ({ data, width, height }) => {
         return axisLeft(y).ticks(5)
     }
     const xAxis = () => {
-        console.log(x)
+        
         return axisBottom(x)
             .tickValues(data.map((d, i) => {
                     if (i > 0) {

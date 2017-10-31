@@ -66,11 +66,7 @@ export function getFacilityYearProductGraphs(state) {
             })
             output.push(item)
         })
-        console.log(JSON.stringify({
-            data: output,
-            keys,
-            indexBy: 'monthName'
-        }))
+        
         return {
             data: output,
             keys,

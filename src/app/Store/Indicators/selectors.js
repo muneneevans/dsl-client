@@ -170,6 +170,5 @@ export function getFacilityDataElementDataValues(state) {
             categoryoptioncomboid: d.categoryoptioncomboid
         })
     })
-    console.log(newDataValues)
     return newDataValues
 }

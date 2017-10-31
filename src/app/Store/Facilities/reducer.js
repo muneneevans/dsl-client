@@ -161,16 +161,13 @@ export default function facilityReducer(state = InitialState, action = {}) {
                 newFilters = Immutable.asMutable(state.filters, { deep: true })
                 let keyList = Object.keys(action.filterItem)
                 if (keyList[0] in newFilters) {
-                    console.log(' updating')
+                    
                     newFilters[keyList[0]] = action.filterItem[keyList[0]]
-                }
-
-                console.log(newFilters)
+                }   
             }
             else {
                 newFilters.push(action.filterItem)
-            }
-            // console.log(newFilters)
+            }            
             return state.merge({
                 filters: newFilters
             })
