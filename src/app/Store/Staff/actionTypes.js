@@ -1,0 +1,5 @@
+export const JOB_TYPES_REQUESTED = 'staff.JOB_TYPES_REQUESTED'
+export const JOB_TYPES_RECEIVED = 'staff.JOB_TYPES_RECEIVED'
+
+export const CADRES_REQUESTED = 'staff.CADRES_REQUESTED'
+export const CADRES_RECEIVED = 'staff.CADRES_RECEIVED'

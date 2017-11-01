@@ -7,7 +7,7 @@ import facilityReducer from './Facilities/reducer'
 import indicatorReducer from "./Indicators/reducer"
 import commonReducer from "./Common/reducer"
 import commodityReducer from "./Commodities/reducer"
-
+import staffReducer from "./Staff/reducer"
 
 const rootReducer = combineReducers({
      mapReducer,
@@ -15,6 +15,7 @@ const rootReducer = combineReducers({
      facilityReducer,
      indicatorReducer,
      commodityReducer,
+     staffReducer,
      router: routerReducer
 })
 

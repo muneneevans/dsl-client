@@ -41,7 +41,6 @@ export function getIndicatorGroupIndicatorsOptions(state) {
     }
 }
 
-
 export function getPeriodTypeOptions(state) {
     if (state.indicatorReducer.periodTypes) {
 
@@ -83,32 +82,35 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 
         let ids = state.indicatorReducer.facilityIndicators
         let data = state.indicatorReducer.facilityIndicatorDataValues
+        let lineGraph = []
         let mData = {}
         let output = []
         let keys = []
         let monthDict = {
-            1:'January',
-            2:'February',
-            3:'March',
-            4:'April',
-            5:'May',
-            6:'June',
-            7:'July',
-            8:'August',
-            9:'September',
-            10:'October',
-            11:'November',
-            12:'December',            
+            1: 'January',
+            2: 'February',
+            3: 'March',
+            4: 'April',
+            5: 'May',
+            6: 'June',
+            7: 'July',
+            8: 'August',
+            9: 'September',
+            10: 'October',
+            11: 'November',
+            12: 'December',
         }
         if (ids.length == 0) {
             return undefined
         }
         else {
+            //get a list of the indicator names
             ids.map((indicator, j) => {
-                try{
-                keys.push(data[indicator][0].name)
+                try {
+                    keys.push(data[indicator][0].name)
+                    lineGraph.push(data[data[indicator][0].name])
                 }
-                catch(error){
+                catch (error) {
 
                 }
             })
@@ -131,9 +133,9 @@ export function getFacilityIndicatorDataValuesMapData(state) {
                 output.push(mData)
             }
 
-            output.sort( (a, b) => {
+            output.sort((a, b) => {
                 return a.month - b.month;
-              })
+            })
 
             return {
                 data: output,

@@ -11,6 +11,9 @@ import * as facilitySelectors from "../../Store/Facilities/selectors"
 import * as facilityActions from "../../Store/Facilities/actions"
 import * as commodityActions from "../../Store/Commodities/actions"
 import * as commoditySelectors from "../../Store/Commodities/selectors"
+import * as staffSelectors from "../../Store/Staff/selectors"
+import * as staffActions from "../../Store/Staff/actions"
+
 
 
 import DataElementsForm from "../../Components/Forms/DataElementsForm"
@@ -32,6 +35,8 @@ class FacilityDetailScreen extends Component {
         this.props.indicatorActions.fetchPeriodTypes()
         this.props.commodityActions.fetchProducts()
         this.props.commodityActions.fetchFacilityProducts(this.props.match.params.id)
+        this.props.staffActions.fetchJobTypes()
+        this.props.staffActions.fetchCadres()
     }
 
     handleIndicatorGroupChange(indicatorGroupId) {
@@ -365,6 +370,9 @@ const mapStateToProps = (state, ownProps) => {
         facilityIndicatorDataVailues: indicatorSelectors.getFacilityIndicatorDataValues(state),
         facilityIndicatorDataValuesMapData: indicatorSelectors.getFacilityIndicatorDataValuesMapData(state),
 
+        jobTypes: staffSelectors.getJobTypes(state),
+        cadres : staffSelectors.getCadres(state),
+
 
     }
 }
@@ -373,7 +381,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         indicatorActions: bindActionCreators(indicatorActions, dispatch),
         facilityActions: bindActionCreators(facilityActions, dispatch),
-        commodityActions: bindActionCreators(commodityActions, dispatch)
+        commodityActions: bindActionCreators(commodityActions, dispatch),
+        staffActions: bindActionCreators(staffActions, dispatch)
     }
 }
 
