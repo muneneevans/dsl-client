@@ -23,11 +23,12 @@ const IndicatorGroupForm = (props) => {
                             options={props.indicatorGroups} onChange={handleIndicatorGroupChange}
                             multiple={false} search fluid selection/>
                     ) : (
-                            <h4>No Indicator Groups</h4>
-                        )
+                        <h4>No Indicator Groups</h4>
+                    )
                 }
             </Form.Field>
             <Form.Field>
+                <label>Indicators</label>
                 {
                     props.indicatorGroupIndicators ? (                        
                         <Dropdown

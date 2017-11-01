@@ -42,7 +42,6 @@ class FacilityDetailScreen extends Component {
     }
 
     handlePeriodChange(year) {
-
     }
     handleYearChange(year) {
         this.props.indicatorActions.setFacilityYear(year)
@@ -57,12 +56,12 @@ class FacilityDetailScreen extends Component {
     }
 
     handleProductChange(productId) {
-        
+
     }
 
     updateGraphs() {
         this.props.indicatorActions.fetchFacilityIndicatorValues(this.props.facilityDetails.id, this.props.facilityIndicators, this.props.facilityPeriodType, this.props.facilityYear)
-        this.props.commodityActions.fetchFacilityYearProducts(this.props.match.params.id,this.props.facilityYear)
+        this.props.commodityActions.fetchFacilityYearProducts(this.props.match.params.id, this.props.facilityYear)
     }
 
 
@@ -75,19 +74,19 @@ class FacilityDetailScreen extends Component {
     render() {
         return (
             this.props.facilityDetailsIsFetched ? (
-                <Grid padded stretched>
-                    <Grid.Column  computer={4} mobile={4}>
-                        <Grid.Row>
-                            {
-                                this.props.facilityDetailsIsFetched ? (
-                                    <Header as='h2'>{this.props.facilityDetails.name}</Header>
-                                ) : (
-                                        <Header as='h3'>{this.props.match.params.id}</Header>
-                                    )
-                            }
-                        </Grid.Row>
-                        <Grid.Row>
+                <Grid padded>
+                    <Grid.Row>
+                        {
+                            this.props.facilityDetailsIsFetched ? (
+                                <Header as='h2'>{this.props.facilityDetails.name}</Header>
+                            ) : (
+                                    <Header as='h3'>{this.props.match.params.id}</Header>
+                                )
+                        }
+                    </Grid.Row>
 
+                    <Grid.Row columns={3} className='ui large info message'>
+                        <Grid.Column>
                             <Segment>
                                 <Header as='h3' >Indicators</Header>
                                 <IndicatorGroupsForm
@@ -97,9 +96,9 @@ class FacilityDetailScreen extends Component {
                                     handleIndicatorGroupChange={this.handleIndicatorGroupChange.bind(this)}
                                 />
                             </Segment>
+                        </Grid.Column>
 
-                        </Grid.Row>
-                        <Grid.Row>
+                        <Grid.Column>
                             <Segment>
                                 <Header as='h3' >Period</Header>
                                 <PeriodForm
@@ -107,23 +106,28 @@ class FacilityDetailScreen extends Component {
                                     handlePeriodTypeChange={this.handlePeriodTypeChange.bind(this)} />
                                 <YearForm submitAction={this.handleYearChange.bind(this)} />
                             </Segment>
-                        </Grid.Row>
-                        <Grid.Row>
+                        </Grid.Column>
+
+                        <Grid.Column>
                             <Segment>
                                 <Header as='h3'>Commodities</Header>
                                 <ProductsForm
                                     products={this.props.facilityProducts}
                                     submitAction={this.handleProductChange.bind(this)} />
                             </Segment>
-                        </Grid.Row>
-                        <Grid.Row>
+                        </Grid.Column>
+                    </Grid.Row>
+
+                    <Grid.Row>
+                        <Grid.Column>
                             <Segment>
                                 <Button primary fluid
-                                    onClick={this.updateGraphs.bind(this)}>Upate</Button>
+                                    onClick={this.updateGraphs.bind(this)}>Update</Button>
                             </Segment>
-                        </Grid.Row>
-                    </Grid.Column>
-                    <Grid.Column stretched computer={12}>
+                        </Grid.Column>
+                    </Grid.Row>
+
+                    <Grid.Row>
                         <Grid.Row>
                             {
                                 this.props.facilityIndicatorDataValuesMapData ? (
@@ -135,7 +139,7 @@ class FacilityDetailScreen extends Component {
                                                 keys={this.props.facilityIndicatorDataValuesMapData.keys}
                                                 indexBy={this.props.facilityIndicatorDataValuesMapData.indexBy}
                                                 height={800}
-                                                width={800}
+                                                width={1500}
                                                 margin={{
                                                     "top": 50,
                                                     "right": 60,
@@ -226,6 +230,7 @@ class FacilityDetailScreen extends Component {
                                     )
                             }
                         </Grid.Row>
+
                         <Grid.Row>
                             {
                                 this.props.facilityYearProducts ? (
@@ -329,12 +334,7 @@ class FacilityDetailScreen extends Component {
                                     )
                             }
                         </Grid.Row>
-                        <Grid.Row>
-                            {
-
-                            }
-                        </Grid.Row>
-                    </Grid.Column>
+                    </Grid.Row>
                 </Grid>
             ) : (
                     <Grid>
@@ -344,8 +344,6 @@ class FacilityDetailScreen extends Component {
         )
     }
 }
-
-
 
 const mapStateToProps = (state, ownProps) => {
     return {
