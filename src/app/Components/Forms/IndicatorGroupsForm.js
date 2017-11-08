@@ -7,7 +7,7 @@ const IndicatorGroupForm = (props) => {
         props.submitAction(value)
     }
 
-    const handleIndicatorGroupChange = ( e, {value}) =>{
+    const handleIndicatorGroupChange = (e, { value }) => {
         props.handleIndicatorGroupChange(value)
     }
 
@@ -21,23 +21,23 @@ const IndicatorGroupForm = (props) => {
                         <Dropdown
                             placeholder='select an indicator group'
                             options={props.indicatorGroups} onChange={handleIndicatorGroupChange}
-                            multiple={false} search fluid selection/>
+                            multiple={false} search fluid selection />
                     ) : (
-                        <h4>No Indicator Groups</h4>
-                    )
+                            <h4 className='ui negative message' >No Indicator Groups</h4>
+                        )
                 }
             </Form.Field>
             <Form.Field>
                 <label>Indicators</label>
                 {
-                    props.indicatorGroupIndicators ? (                        
+                    props.indicatorGroupIndicators ? (
                         <Dropdown
                             placeholder='select an indicator'
                             options={props.indicatorGroupIndicators} onChange={handleChange}
-                            multiple={false} search fluid selection/>
-                    ):(
-                        <Header as="h4">No Indicators</Header>
-                    )
+                            multiple={false} search fluid selection />
+                    ) : (
+                            <Header as="h4" className='ui negative message' >No indicators. Please select an Indicator group</Header>
+                        )
                 }
             </Form.Field>
         </Form>

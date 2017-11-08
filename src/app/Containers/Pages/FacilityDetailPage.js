@@ -22,6 +22,7 @@ import YearForm from "../../Components/Forms/YearForm"
 import IndicatorGroupsForm from "../../Components/Forms/IndicatorGroupsForm"
 import PeriodForm from "../../Components/Forms/PeriodForm"
 import ProductsForm from "../../Components/Forms/ProductsForm"
+import StaffForm from "../../Components/Forms/StaffForm"
 
 class FacilityDetailScreen extends Component {
     constructor(props) {
@@ -90,7 +91,7 @@ class FacilityDetailScreen extends Component {
                         }
                     </Grid.Row>
 
-                    <Grid.Row columns={3} className='ui large info message'>
+                    <Grid.Row columns={4} className='ui large info message'>
                         <Grid.Column>
                             <Segment>
                                 <Header as='h3' >Indicators</Header>
@@ -121,6 +122,16 @@ class FacilityDetailScreen extends Component {
                                     submitAction={this.handleProductChange.bind(this)} />
                             </Segment>
                         </Grid.Column>
+
+                        <Grid.Column>
+                            <Segment>
+                                <Header as='h3'>Staff</Header>
+                                <StaffForm
+                                    cadres={this.props.cadres}
+                                    jobTypes={this.props.jobTypes}
+                                />
+                            </Segment>
+                        </Grid.Column>
                     </Grid.Row>
 
                     <Grid.Row>
@@ -143,7 +154,7 @@ class FacilityDetailScreen extends Component {
                                                 data={this.props.facilityIndicatorDataValuesMapData.data}
                                                 keys={this.props.facilityIndicatorDataValuesMapData.keys}
                                                 indexBy={this.props.facilityIndicatorDataValuesMapData.indexBy}
-                                                height={800}
+                                                height={500}
                                                 width={1500}
                                                 margin={{
                                                     "top": 50,
@@ -370,8 +381,8 @@ const mapStateToProps = (state, ownProps) => {
         facilityIndicatorDataVailues: indicatorSelectors.getFacilityIndicatorDataValues(state),
         facilityIndicatorDataValuesMapData: indicatorSelectors.getFacilityIndicatorDataValuesMapData(state),
 
-        jobTypes: staffSelectors.getJobTypes(state),
-        cadres : staffSelectors.getCadres(state),
+        jobTypes: staffSelectors.getJobTypeOptions(state),
+        cadres: staffSelectors.getCadreOptions(state),
 
 
     }
