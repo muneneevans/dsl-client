@@ -107,25 +107,27 @@ export function getFacilityIndicatorDataValuesMapData(state) {
             //get a list of the indicator names
             ids.map((indicator, j) => {
                 try {
-                    keys.push(data[indicator][0].name)
-                    lineGraph.push(data[data[indicator][0].name])
+                    keys.push(data[indicator.id][0].name)
+                    lineGraph.push(data[data[indicator.id][0].name])
                 }
                 catch (error) {
 
                 }
             })
-            for (var i = 0; i < data[ids[0]].length; i++) {
+            //loop through each month 
+            for (var i = 0; i < data[ids[0].id].length; i++) {
                 mData = {
-                    month: data[ids[0]][i].month,
-                    monthName: monthDict[data[ids[0]][i].month]
+                    month: data[ids[0].id][i].month,
+                    monthName: monthDict[data[ids[0].id][i].month]
                 }
 
+                //get month value for each indicator
                 ids.map((indicator, j) => {
                     try {
-                        mData[data[indicator][i].name] = data[indicator][i].value
+                        mData[data[indicator.id][i].name] = data[indicator.id][i].value
                     }
                     catch (error) {
-                        mData[indicator] = 0
+                        mData[indicator.id] = 0
                     }
 
 
@@ -137,6 +139,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
                 return a.month - b.month;
             })
 
+            console.log(output)
             return {
                 data: output,
                 keys,

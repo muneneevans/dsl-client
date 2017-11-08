@@ -3,7 +3,6 @@ import Immutable from "seamless-immutable"
 
 const InitialState = Immutable({
     indicatorGroups: undefined,
-
     indicatorGroupIndicators: undefined,
 
     facilityIndicators: undefined,
@@ -93,14 +92,24 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 function addIndicatorToIndicatorsList(newindicatorid, indicatorIds) {
     if (indicatorIds) {
         let existingIndicatorIds = Immutable.asMutable(indicatorIds, { deep: true })
-        if (!existingIndicatorIds.includes(newindicatorid)) {
-            existingIndicatorIds.push(newindicatorid)
+        //check if the indicator exists in the list of facility indicators
+        if (existingIndicatorIds.filter((indicator) => { return indicator.id == newindicatorid }).length <= 0) {
+            existingIndicatorIds.push({
+                id: newindicatorid,
+                isFetched: false
+            })
         }
+        // if (!existingIndicatorIds.includes(newindicatorid)) {
+        //     existingIndicatorIds.push(newindicatorid)
+        // }
         return existingIndicatorIds
     }
     else {
         let existingIndicatorIds = []
-        existingIndicatorIds.push(newindicatorid)
+        existingIndicatorIds.push({
+            id: newindicatorid,
+            isFetched: false
+        })
         return existingIndicatorIds
     }
 }
