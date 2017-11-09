@@ -67,6 +67,10 @@ export default function indicatorReducer(state = InitialState, action = {}) {
             return state.merge({
                 facilityIndicators: addIndicatorToIndicatorsList(action.indicatorId, state.facilityIndicators)
             })
+        case types.REMOVE_FACILITY_INDICATOR_REQUESTED:
+            return state.merge({
+                facilityIndicators: removeIndicatorFromIndicatorsList(action.indicatorId, state.facilityIndicators)
+            })
         case types.DATAELEMENTS_RECEIVED:
             return state.merge({
                 dataElements: action.dataElements,
@@ -111,6 +115,29 @@ function addIndicatorToIndicatorsList(newindicatorid, indicatorIds) {
             isFetched: false
         })
         return existingIndicatorIds
+    }
+}
+
+function removeIndicatorFromIndicatorsList(newIndicatorId, indicatorIds) {
+    if (indicatorIds) {
+        let existingIndicatorIds = Immutable.asMutable(indicatorIds, { deep: true })
+        //check if the indicator exists in the list of facility indicators, 
+        existingIndicatorIds.find((indicator, i) => {
+            //if indicator exists, splice from array          
+            if (indicator.id == newIndicatorId) {
+                existingIndicatorIds.splice(i, 1)
+                return true
+            } else {
+                return false
+            }
+        })
+        if(existingIndicatorIds.length <1){
+            return undefined
+        }
+        return existingIndicatorIds
+    }
+    else {        
+        return undefined
     }
 }
 

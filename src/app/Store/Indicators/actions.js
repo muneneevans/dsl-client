@@ -49,6 +49,15 @@ export function addFacilityIndicator(indicatorId){
     }
 }
 
+export function removeFacilityIndicator(indicatorId){
+    return function (dispatch, getState){
+        return dispatch({
+            type: types.REMOVE_FACILITY_INDICATOR_REQUESTED,
+            indicatorId
+        })
+    }
+}
+
 export function setFacilityPeriodType(periodTypeId){
     return function(dispatch , getState){
         return dispatch({
