@@ -23,6 +23,7 @@ import IndicatorGroupsForm from "../../Components/Forms/IndicatorGroupsForm"
 import PeriodForm from "../../Components/Forms/PeriodForm"
 import ProductsForm from "../../Components/Forms/ProductsForm"
 import StaffForm from "../../Components/Forms/StaffForm"
+import FacilityIndicatorCheckList from "../../Components/Widgets/FacilityIndicatorCheckList"
 
 class FacilityDetailScreen extends Component {
     constructor(props) {
@@ -130,6 +131,16 @@ class FacilityDetailScreen extends Component {
                                     cadres={this.props.cadres}
                                     jobTypes={this.props.jobTypes}
                                 />
+                            </Segment>
+                        </Grid.Column>
+                    </Grid.Row>
+
+                    <Grid.Row >
+                        <Grid.Column>
+                            <Segment vertical>
+                                <FacilityIndicatorCheckList 
+                                    facilityIndicators={this.props.facilityIndicators} 
+                                    removeAction={(id)=>{this.props.indicatorActions.removeFacilityIndicator(id)}}/>
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
