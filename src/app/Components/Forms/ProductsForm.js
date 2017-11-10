@@ -1,7 +1,7 @@
 import React from 'react'
 import {card , Form , Header, Dropdown} from "semantic-ui-react"
 
-export const ProductsForm = (props) => {
+const ProductsForm = (props) => {
 
     const handleChange = (e, {value}) =>{
         props.submitAction(value)

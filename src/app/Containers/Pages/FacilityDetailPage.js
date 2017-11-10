@@ -24,6 +24,7 @@ import PeriodForm from "../../Components/Forms/PeriodForm"
 import ProductsForm from "../../Components/Forms/ProductsForm"
 import StaffForm from "../../Components/Forms/StaffForm"
 import FacilityIndicatorCheckList from "../../Components/Widgets/FacilityIndicatorCheckList"
+import FacilityIndicatorWidget from '../../Components/Widgets/FacilityIncidatorWidget'
 
 class FacilityDetailScreen extends Component {
     constructor(props) {
@@ -81,7 +82,8 @@ class FacilityDetailScreen extends Component {
     render() {
         return (
             this.props.facilityDetailsIsFetched ? (
-                <Grid padded>
+                <Grid padded
+                >
                     <Grid.Row>
                         {
                             this.props.facilityDetailsIsFetched ? (
@@ -154,8 +156,28 @@ class FacilityDetailScreen extends Component {
                         </Grid.Column>
                     </Grid.Row>
 
-                    <Grid.Row>
-                        <Grid.Row>
+                    <Grid.Row stretched centered columns={1}>
+
+                        <Grid.Column >
+                            {
+                                this.props.facilityIndicatorDataValuesMapData ? (
+
+                                    <FacilityIndicatorWidget
+                                        barGraph={this.props.facilityIndicatorDataValuesMapData.barGraph}
+                                        heatMap={this.props.facilityIndicatorDataValuesMapData.barGraph}
+                                        lineGraph={this.props.facilityIndicatorDataValuesMapData.lineGraph}
+                                        radarGraph={this.props.facilityIndicatorDataValuesMapData.barGraph}
+                                        height={500} width={1500} />
+
+                                ) : (
+                                        <div>
+                                            {this.renderLoading()}
+                                        </div>
+                                    )
+                            }
+                        </Grid.Column>
+
+                        <Grid.Column stretched computer={16}>
                             {
                                 this.props.facilityIndicatorDataValuesMapData ? (
                                     <Segment>
@@ -256,9 +278,9 @@ class FacilityDetailScreen extends Component {
                                         </div>
                                     )
                             }
-                        </Grid.Row>
+                        </Grid.Column>
 
-                        <Grid.Row>
+                        <Grid.Column>
                             {
                                 this.props.facilityIndicatorDataValuesMapData ? (
                                     <Segment>
@@ -323,9 +345,9 @@ class FacilityDetailScreen extends Component {
                                         </div>
                                     )
                             }
-                        </Grid.Row>
+                        </Grid.Column>
 
-                        <Grid.Row>
+                        <Grid.Column>
                             {
                                 this.props.facilityYearProducts ? (
                                     <Segment>
@@ -427,7 +449,7 @@ class FacilityDetailScreen extends Component {
                                         </div>
                                     )
                             }
-                        </Grid.Row>
+                        </Grid.Column>
                     </Grid.Row>
                 </Grid>
             ) : (
