@@ -82,10 +82,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 
         let ids = state.indicatorReducer.facilityIndicators
         let data = state.indicatorReducer.facilityIndicatorDataValues
-        let lineGraph = []
-        let mData = {}
-        let output = []
-        let keys = []
+        let lineGraphKeys = []
         let monthDict = {
             1: 'January',
             2: 'February',
@@ -100,15 +97,22 @@ export function getFacilityIndicatorDataValuesMapData(state) {
             11: 'November',
             12: 'December',
         }
+        
         if (ids.length == 0) {
             return undefined
         }
         else {
+
+            //Create the braGraph data
+            let barGraphData = {}
+            let barGraphDataArray = []
+            let barGarphKeys = []
             //get a list of the indicator names
+            
             ids.map((indicator, j) => {
                 try {
-                    keys.push(data[indicator.id][0].name)
-                    lineGraph.push(data[data[indicator.id][0].name])
+                    barGarphKeys.push(data[indicator.id][0].name)
+                    lineGraphKeys.push(indicator.id)
                 }
                 catch (error) {
 
@@ -116,34 +120,61 @@ export function getFacilityIndicatorDataValuesMapData(state) {
             })
             //loop through each month 
             for (var i = 0; i < data[ids[0].id].length; i++) {
-                mData = {
+                barGraphData = {
                     month: data[ids[0].id][i].month,
                     monthName: monthDict[data[ids[0].id][i].month]
                 }
-
                 //get month value for each indicator
                 ids.map((indicator, j) => {
                     try {
-                        mData[data[indicator.id][i].name] = data[indicator.id][i].value
+                        barGraphData[data[indicator.id][i].name] = Math.round( data[indicator.id][i].value * 100) / 100
                     }
                     catch (error) {
-                        mData[indicator.id] = 0
+                        barGraphData[indicator.id] = 0
                     }
-
-
                 })
-                output.push(mData)
+                barGraphDataArray.push(barGraphData)
             }
-
-            output.sort((a, b) => {
+            //sort the result by month
+            barGraphDataArray.sort((a, b) => {
                 return a.month - b.month;
             })
 
-            console.log(output)
+
+            //create the lineGraph Data
+            let lineGraphDataArray = []
+            // lineGraphKeys = Object.keys(data)
+            console.log(lineGraphKeys)
+            let lineGraphData = {}
+            lineGraphKeys.map((indicator, i) => {
+                lineGraphData[indicator] = []
+                data[indicator].map((d, i) => {
+
+                    lineGraphData[indicator].push({
+                        month: d.month,
+                        x: monthDict[d.month],
+                        y: Math.round( d.value * 100)/100
+                    })
+                })
+            })
+            //append new data to the lineGraphArray
+            lineGraphKeys.map((key, i) => {
+                lineGraphDataArray.push({
+                    id: data[key][0].name,
+                    data: lineGraphData[key]
+                })
+
+            })
+
+
+
             return {
-                data: output,
-                keys,
-                indexBy: 'monthName'
+                barGraph: {
+                    data: barGraphDataArray,
+                    keys: barGarphKeys,
+                    indexBy: 'monthName'
+                },
+                lineGraph: lineGraphDataArray
             }
         }
     }

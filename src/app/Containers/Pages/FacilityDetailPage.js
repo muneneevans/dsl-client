@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux"
 import { Grid, Segment, Tab, Header, Button, Card } from "semantic-ui-react"
-import { Bar, ResponsiveBar } from 'nivo'
+import { Bar, Line, HeatMap } from 'nivo'
 import { match } from "react-router"
 
 import * as indicatorSelectors from "../../Store/Indicators/selectors"
@@ -138,9 +138,9 @@ class FacilityDetailScreen extends Component {
                     <Grid.Row >
                         <Grid.Column>
                             <Segment vertical>
-                                <FacilityIndicatorCheckList 
-                                    facilityIndicators={this.props.facilityIndicators} 
-                                    removeAction={(id)=>{this.props.indicatorActions.removeFacilityIndicator(id)}}/>
+                                <FacilityIndicatorCheckList
+                                    facilityIndicators={this.props.facilityIndicators}
+                                    removeAction={(id) => { this.props.indicatorActions.removeFacilityIndicator(id) }} />
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
@@ -161,10 +161,10 @@ class FacilityDetailScreen extends Component {
                                     <Segment>
                                         <Segment>
                                             <Card.Content header='Indicators' />
-                                            <Bar
-                                                data={this.props.facilityIndicatorDataValuesMapData.data}
-                                                keys={this.props.facilityIndicatorDataValuesMapData.keys}
-                                                indexBy={this.props.facilityIndicatorDataValuesMapData.indexBy}
+                                            <HeatMap
+                                                data={this.props.facilityIndicatorDataValuesMapData.barGraph.data}
+                                                keys={this.props.facilityIndicatorDataValuesMapData.barGraph.keys}
+                                                indexBy={this.props.facilityIndicatorDataValuesMapData.barGraph.indexBy}
                                                 height={500}
                                                 width={1500}
                                                 margin={{
@@ -247,6 +247,73 @@ class FacilityDetailScreen extends Component {
                                                 motionStiffness={90}
                                                 motionDamping={15}
                                                 isInteractive={true}
+                                            />
+                                        </Segment >
+                                    </Segment>
+                                ) : (
+                                        <div>
+                                            {this.renderLoading()}
+                                        </div>
+                                    )
+                            }
+                        </Grid.Row>
+
+                        <Grid.Row>
+                            {
+                                this.props.facilityIndicatorDataValuesMapData ? (
+                                    <Segment>
+                                        <Segment>
+                                            <Card.Content header='Indicators' />
+                                            <Line
+                                                data={this.props.facilityIndicatorDataValuesMapData.lineGraph}
+                                                height={500}
+                                                width={1500}
+                                                margin={{
+                                                    "top": 50,
+                                                    "right": 60,
+                                                    "bottom": 50,
+                                                    "left": 60
+                                                }}
+                                                minY="auto"
+                                                maxY="auto"
+                                                stacked={true}
+                                                curve="linear"
+                                                axisBottom={{
+                                                    "orient": "bottom",
+                                                    "tickSize": 5,
+                                                    "tickPadding": 5,
+                                                    "tickRotation": 0,
+                                                    "legend": "country code",
+                                                    "legendOffset": 36,
+                                                    "legendPosition": "center"
+                                                }}
+                                                axisLeft={{
+                                                    "orient": "left",
+                                                    "tickSize": 5,
+                                                    "tickPadding": 5,
+                                                    "tickRotation": 0,
+                                                    "legend": "count",
+                                                    "legendOffset": -40,
+                                                    "legendPosition": "center"
+                                                }}
+                                                enableGridX={true}
+                                                enableGridY={true}
+                                                colors="nivo"
+                                                colorBy="id"
+                                                lineWidth={2}
+                                                enableDots={true}
+                                                dotSize={10}
+                                                dotColor="inherit:darker(0.3)"
+                                                dotBorderWidth={2}
+                                                dotBorderColor="#ffffff"
+                                                enableDotLabel={true}
+                                                dotLabel="y"
+                                                dotLabelYOffset={-12}
+                                                animate={true}
+                                                motionStiffness={90}
+                                                motionDamping={15}
+                                                isInteractive={true}
+                                                enableStackTooltip={true}
                                             />
                                         </Segment >
                                     </Segment>
