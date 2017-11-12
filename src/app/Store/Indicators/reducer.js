@@ -65,7 +65,7 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 
         case types.ADD_FACILITY_INDICATOR_REQUESTED:
             return state.merge({
-                facilityIndicators: addIndicatorToIndicatorsList(action.indicatorId, state.facilityIndicators)
+                facilityIndicators: addIndicatorToIndicatorsList(action.indicatorId, state.facilityIndicators, state.indicatorGroupIndicators)
             })
         case types.REMOVE_FACILITY_INDICATOR_REQUESTED:
             return state.merge({
@@ -93,25 +93,26 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 
 
 //combiners
-function addIndicatorToIndicatorsList(newindicatorid, indicatorIds) {
+function addIndicatorToIndicatorsList(newIndicatorId, indicatorIds, allindicators) {
     if (indicatorIds) {
         let existingIndicatorIds = Immutable.asMutable(indicatorIds, { deep: true })
         //check if the indicator exists in the list of facility indicators
-        if (existingIndicatorIds.filter((indicator) => { return indicator.id == newindicatorid }).length <= 0) {
+        let foundIndicator = existingIndicatorIds.find((indicator) => { return indicator.id == newIndicatorId })
+        if (!foundIndicator) {
             existingIndicatorIds.push({
-                id: newindicatorid,
+                id: newIndicatorId,                
+                name: allindicators.find((indicator) => { return indicator.indicatorid == newIndicatorId }).indicatorname,
                 isFetched: false
             })
         }
-        // if (!existingIndicatorIds.includes(newindicatorid)) {
-        //     existingIndicatorIds.push(newindicatorid)
-        // }
+        
         return existingIndicatorIds
     }
     else {
         let existingIndicatorIds = []
         existingIndicatorIds.push({
-            id: newindicatorid,
+            id: newIndicatorId,
+            name: allindicators.find((indicator) => { return indicator.indicatorid == newIndicatorId }).indicatorname,
             isFetched: false
         })
         return existingIndicatorIds
@@ -131,12 +132,12 @@ function removeIndicatorFromIndicatorsList(newIndicatorId, indicatorIds) {
                 return false
             }
         })
-        if(existingIndicatorIds.length <1){
+        if (existingIndicatorIds.length < 1) {
             return undefined
         }
         return existingIndicatorIds
     }
-    else {        
+    else {
         return undefined
     }
 }

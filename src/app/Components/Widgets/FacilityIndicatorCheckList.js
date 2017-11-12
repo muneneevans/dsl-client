@@ -18,7 +18,7 @@ const FacilityIndicatorCheckList = (props) => {
                         {
                             props.facilityIndicators.map((indicator, i) => (
                                 <Table.Row key={i}>
-                                    <Table.Cell >{indicator.id}</Table.Cell>
+                                    <Table.Cell >{indicator.name}</Table.Cell>
                                     <Table.Cell>{"" + indicator.isFetched}</Table.Cell>
                                     <Table.Cell>
                                         <Button basic color='red'
