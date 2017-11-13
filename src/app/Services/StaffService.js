@@ -25,4 +25,15 @@ export default class StaffService {
                 throw (error)
             })
     }
+
+    static getFacilityStaff(facilityId) {
+        const url = this.host.concat('staff/facility/' + facilityId)
+        return fetch(url)
+            .then(response => {
+                return response.json()
+            })
+            .catch(error => { 
+                throw(error)
+            })
+    }
 }

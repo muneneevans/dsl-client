@@ -70,6 +70,7 @@ class FacilityDetailScreen extends Component {
     updateGraphs() {
         this.props.indicatorActions.fetchFacilityIndicatorValues(this.props.facilityDetails.id, this.props.facilityIndicators, this.props.facilityPeriodType, this.props.facilityYear)
         this.props.commodityActions.fetchFacilityYearProducts(this.props.match.params.id, this.props.facilityYear)
+        this.props.staffActions.fetchFacilityStaff(this.props.match.params.id)
     }
 
 
@@ -481,6 +482,7 @@ const mapStateToProps = (state, ownProps) => {
         facilityIndicatorDataVailues: indicatorSelectors.getFacilityIndicatorDataValues(state),
         facilityIndicatorDataValuesMapData: indicatorSelectors.getFacilityIndicatorDataValuesMapData(state),
 
+        facilityStaff: staffSelectors.getFacilityStaffGraphData(state),
         jobTypes: staffSelectors.getJobTypeOptions(state),
         cadres: staffSelectors.getCadreOptions(state),
 

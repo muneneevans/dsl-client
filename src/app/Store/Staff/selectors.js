@@ -41,3 +41,48 @@ export function getCadreOptions(state) {
         return undefined
     }
 }
+
+export function getFacilityStaffGraphData(state) {
+    if (state.staffReducer.facilityStaff) {
+        let monthDict = {
+            1: 'January',
+            2: 'February',
+            3: 'March',
+            4: 'April',
+            5: 'May',
+            6: 'June',
+            7: 'July',
+            8: 'August',
+            9: 'September',
+            10: 'October',
+            11: 'November',
+            12: 'December',
+        }
+
+        var staffBarGraph = []
+        Object.keys(monthDict).map((month, i) => {
+            let item = {
+                month: i,
+                monthName: monthDict[i]
+            }
+            state.staffReducer.facilityStaff.map((jobType, i) => {
+                item[jobType.jobtype] = jobType.value
+            })
+            staffBarGraph.push(
+                item
+            )
+
+        })
+        return {
+            barGraph: {
+                data: staffBarGraph,
+                keys: state.staffReducer.jobTypes.map(jobType => jobType.name),
+                indexBy: 'monthName'
+            }
+        }
+
+    }
+    else {
+        return undefined
+    }
+}
