@@ -7,7 +7,7 @@ export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGra
     if (barGraph) {
         const chartPanes = [
             {
-                menuItem: "Bar Map",
+                menuItem: "Bar Graph",
                 render: () => (
                     <Bar
                         data={barGraph.data}
@@ -287,21 +287,21 @@ export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGra
             },
         ]
 
-        console.log(containerWidth)
+
         return (
-            <div>
-                <Segment.Group size='huge'>
-                    <Segment>
-                        Indicator Performance
+
+            <Segment.Group size='huge'>
+                <Segment>
+                    Indicator Performance
                     </Segment>
-                    <Segment>
-                        <Tab
-                            menu={{ secondary: true, attached: 'bottom', color: 'green' }}
-                            panes={chartPanes}
-                        />
-                    </Segment>
-                </Segment.Group>
-            </div>
+                <Segment>
+                    <Tab
+                        menu={{ secondary: true, attached: 'bottom', color: 'green' }}
+                        panes={chartPanes}
+                    />
+                </Segment>
+            </Segment.Group>
+
         )
     }
     else {
