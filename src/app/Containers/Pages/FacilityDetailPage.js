@@ -25,7 +25,7 @@ import ProductsForm from "../../Components/Forms/ProductsForm"
 import StaffForm from "../../Components/Forms/StaffForm"
 import FacilityIndicatorCheckList from "../../Components/Widgets/FacilityIndicatorCheckList"
 import FacilityIndicatorWidget from '../../Components/Widgets/FacilityIncidatorWidget'
-
+import FacilityStaffGraphWidget from '../../Components/Widgets/FacilityStaffGraphWidget'
 class FacilityDetailScreen extends Component {
     constructor(props) {
         super(props)
@@ -83,8 +83,7 @@ class FacilityDetailScreen extends Component {
     render() {
         return (
             this.props.facilityDetailsIsFetched ? (
-                <Grid padded
-                >
+                <Grid padded>
                     <Grid.Row>
                         {
                             this.props.facilityDetailsIsFetched ? (
@@ -96,7 +95,7 @@ class FacilityDetailScreen extends Component {
                     </Grid.Row>
 
                     <Grid.Row columns={4} className='ui large info message'>
-                        <Grid.Column>
+                        <Grid.Column tablet={8} mobile={16} computer={4}>
                             <Segment>
                                 <Header as='h3' >Indicators</Header>
                                 <IndicatorGroupsForm
@@ -108,7 +107,7 @@ class FacilityDetailScreen extends Component {
                             </Segment>
                         </Grid.Column>
 
-                        <Grid.Column>
+                        <Grid.Column tablet={8} mobile={16} computer={4}>
                             <Segment>
                                 <Header as='h3' >Period</Header>
                                 <PeriodForm
@@ -118,7 +117,7 @@ class FacilityDetailScreen extends Component {
                             </Segment>
                         </Grid.Column>
 
-                        <Grid.Column>
+                        <Grid.Column tablet={8} mobile={16} computer={4}>
                             <Segment>
                                 <Header as='h3'>Commodities</Header>
                                 <ProductsForm
@@ -127,7 +126,7 @@ class FacilityDetailScreen extends Component {
                             </Segment>
                         </Grid.Column>
 
-                        <Grid.Column>
+                        <Grid.Column tablet={8} mobile={16} computer={4}>
                             <Segment>
                                 <Header as='h3'>Staff</Header>
                                 <StaffForm
@@ -168,6 +167,25 @@ class FacilityDetailScreen extends Component {
                                         heatMap={this.props.facilityIndicatorDataValuesMapData.barGraph}
                                         lineGraph={this.props.facilityIndicatorDataValuesMapData.lineGraph}
                                         radarGraph={this.props.facilityIndicatorDataValuesMapData.barGraph}
+                                        height={500} width={1500} />
+
+                                ) : (
+                                        <div>
+                                            {this.renderLoading()}
+                                        </div>
+                                    )
+                            }
+                        </Grid.Column>
+
+                        <Grid.Column >
+                            {
+                                this.props.facilityIndicatorDataValuesMapData ? (
+
+                                    <FacilityStaffGraphWidget
+                                        barGraph={this.props.facilityStaffGraphData.barGraph}
+                                        heatMap={this.props.facilityStaffGraphData.barGraph}
+                                        lineGraph={this.props.facilityStaffGraphData.lineGraph}
+                                        radarGraph={this.props.facilityStaffGraphData.barGraph}
                                         height={500} width={1500} />
 
                                 ) : (
@@ -482,7 +500,7 @@ const mapStateToProps = (state, ownProps) => {
         facilityIndicatorDataVailues: indicatorSelectors.getFacilityIndicatorDataValues(state),
         facilityIndicatorDataValuesMapData: indicatorSelectors.getFacilityIndicatorDataValuesMapData(state),
 
-        facilityStaff: staffSelectors.getFacilityStaffGraphData(state),
+        facilityStaffGraphData: staffSelectors.getFacilityStaffGraphData(state),
         jobTypes: staffSelectors.getJobTypeOptions(state),
         cadres: staffSelectors.getCadreOptions(state),
 
