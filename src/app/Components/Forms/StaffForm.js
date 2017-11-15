@@ -8,7 +8,7 @@ export const StaffForm = (props) => {
     }
 
     const handleJobTypeChange = (e, { value }) => {
-
+        props.submitAction(value)
     }
 
     return (

@@ -1,30 +1,30 @@
 import React from "react"
 import { Table, Icon, Label, Button } from "semantic-ui-react"
 
-const FacilityIndicatorCheckList = (props) => {
+const FacilityHrCheckList = (props) => {
 
     return (
         <Table celled>
             <Table.Header>
                 <Table.Row>
-                    <Table.HeaderCell rowSpan='5'>Indicator Name</Table.HeaderCell>
+                    <Table.HeaderCell rowSpan='5'>Job Type</Table.HeaderCell>
                     <Table.HeaderCell rowSpan='2'>Status</Table.HeaderCell>
                     <Table.HeaderCell rowSpan='1'>Actions</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             {
-                props.facilityIndicators ? (
+                props.jobTypes ? (
                     <Table.Body>
                         {
-                            props.facilityIndicators.map((indicator, i) => (
+                            props.jobTypes.map((jobType, i) => (
                                 <Table.Row key={i}>
-                                    <Table.Cell >{indicator.name}</Table.Cell>
+                                    <Table.Cell >{jobType.name}</Table.Cell>
                                     {
-                                        (indicator.fetchedStatus == -1) ? (
+                                        (jobType.fetchedStatus == -1) ? (
                                             <Table.Cell active textAlign='center'>Not Fetched</Table.Cell>
-                                        ) : (indicator.fetchedStatus == 0) ? (
+                                        ) : (jobType.fetchedStatus == 0) ? (
                                             <Table.Cell error textAlign='center'>Failed/Error occured</Table.Cell>
-                                        ) : (indicator.fetchedStatus == 1) ? (
+                                        ) : (jobType.fetchedStatus == 1) ? (
                                             <Table.Cell positive textAlign='center'>Fetched successfully</Table.Cell>
                                         ) : (
                                             <Table.Cell warning textAlign='center'>Fetching...</Table.Cell>
@@ -32,7 +32,7 @@ const FacilityIndicatorCheckList = (props) => {
                                     }
                                     <Table.Cell>
                                         <Button basic color='red'
-                                            onClick={() => { props.removeAction(indicator.id) }}>
+                                            onClick={() => { props.removeAction(jobType.id) }}>
                                             Remove
                                         </Button>
                                     </Table.Cell>
@@ -43,7 +43,7 @@ const FacilityIndicatorCheckList = (props) => {
                 ) : (
                         <Table.Body>
                             <Table.Row>
-                                <Table.Cell warning textAlign='center' colSpan='3'>Please select a an Indicator</Table.Cell>
+                                <Table.Cell warning textAlign='center' colSpan='3'>Please select a Job type</Table.Cell>
                             </Table.Row>
                         </Table.Body>
 
@@ -54,4 +54,4 @@ const FacilityIndicatorCheckList = (props) => {
 
 }
 
-export default FacilityIndicatorCheckList
+export default FacilityHrCheckList

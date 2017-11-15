@@ -49,3 +49,21 @@ export function fetchFacilityStaff(facilityId){
             })
     }
 }
+
+export function addSelectedFacilityJobType(jobTypeId){
+    return function(dispatch, getState){
+        return dispatch({
+            type: types.ADD_SELECTED_FACILITY_JOB_TYPE_REQUESTED,
+            jobTypeId
+        })
+    }
+}
+
+export function removeSelectedFacilityJobType(jobTypeId){
+    return function (dispatch, getState){
+        return dispatch({
+            type: types.REMOVE_SELECTED_FACILITY_JOB_TYPE_REQUESTED,
+            jobTypeId
+        })
+    }
+}

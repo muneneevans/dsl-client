@@ -8,7 +8,5 @@ export function getCurrentFacilityTypeSummary(state){
             return facilitySelectors.getCountryFacilityTypesSummary(state)
         case levels.COUNTY:
             return facilitySelectors.getCountyFacilityTypesSummary(state)        
-    }
-
-    
+    }    
 }
