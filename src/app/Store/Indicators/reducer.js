@@ -188,7 +188,7 @@ function updateFetchStateOfSelectedFacilityIndicators(selectedIndicatorId, indic
     return existingIndicatorIds
 }
 
-function addIndicatorDataValuesToList(newIndicatorDataValues, newIndicatorId, selectedIndicatorId, indicatorDatavalues) {
+function addIndicatorDataValuesToList(newIndicatorDataValues, newIndicatorId, indicatorDatavalues) {
     if (indicatorDatavalues) {
         let existingIndicatorDataValues = Immutable.asMutable(indicatorDatavalues)
         // existingIndicatorDataValues.merge({
