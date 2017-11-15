@@ -15,7 +15,6 @@ import * as staffSelectors from "../../Store/Staff/selectors"
 import * as staffActions from "../../Store/Staff/actions"
 
 
-
 import DataElementsForm from "../../Components/Forms/DataElementsForm"
 import BarChart from "../../Components/Charts/BarChart"
 import YearForm from "../../Components/Forms/YearForm"
@@ -40,6 +39,12 @@ class FacilityDetailScreen extends Component {
         this.props.commodityActions.fetchFacilityProducts(this.props.match.params.id)
         this.props.staffActions.fetchJobTypes()
         this.props.staffActions.fetchCadres()
+    }
+
+    componentWillUnmount(){
+        this.props.indicatorActions.clearFacilityIndicatorData()
+        this.props.staffActions.clearFacilityStaffData()
+        this.props.commodityActions.clearFacilityProductsData()
     }
 
     handleIndicatorGroupChange(indicatorGroupId) {

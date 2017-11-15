@@ -29,6 +29,11 @@ export default function commodityReducer(state = initialState, action = {}) {
             return state.merge({
                 facilityYearProducts: action.facilityYearProducts
             })
+        case types.CLEAR_FACILITY_PRODUCTS_DATA:
+            return state.merge({
+                facilityYearProducts: undefined,
+                facilityProducts: undefined,
+            })
         default:
             return state
     }

@@ -48,3 +48,9 @@ export function fetchFacilityYearProducts(facilityId, year) {
             })
     }
 }
+
+export function clearFacilityProductsData(){
+    return (dispatch, getState) =>{
+        return dispatch({ type: types.CLEAR_FACILITY_PRODUCTS_DATA})
+    }
+}
