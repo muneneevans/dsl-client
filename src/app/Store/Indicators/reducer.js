@@ -107,6 +107,13 @@ export default function indicatorReducer(state = InitialState, action = {}) {
                     state.facilityIndicators
                 )
             })
+        case types.ClEAR_FACILITY_INDICATOR_DATA_REQUESTED:
+            return state.merge({
+                facilityIndicators: undefined,
+                facilityPeriodType: undefined,
+                facilityYear: undefined,
+                facilityIndicatorDataValues: undefined,
+            })
         case types.DATAELEMENTS_RECEIVED:
             return state.merge({
                 dataElements: action.dataElements,
@@ -136,12 +143,12 @@ function addIndicatorToIndicatorsList(newIndicatorId, indicatorIds, allindicator
         let foundIndicator = existingIndicatorIds.find((indicator) => { return indicator.id == newIndicatorId })
         if (!foundIndicator) {
             existingIndicatorIds.push({
-                id: newIndicatorId,                
+                id: newIndicatorId,
                 name: allindicators.find((indicator) => { return indicator.indicatorid == newIndicatorId }).indicatorname,
                 fetchedStatus: -1
             })
         }
-        
+
         return existingIndicatorIds
     }
     else {

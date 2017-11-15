@@ -27,8 +27,8 @@ export default function staffReducer(state=initialState, action={}){
             })
         case types.FACILITY_STAFF_REQUESTED:
             return state
-        
-            case types.FACILITY_STAFF_RECEIVED:
+
+        case types.FACILITY_STAFF_RECEIVED:
             return state.merge({
                 facilityStaff: action.facilityStaff
             })

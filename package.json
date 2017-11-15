@@ -46,7 +46,7 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "react-toolbox": "^2.0.0-beta.12",
-    "react-vis": "^1.7.4",
+    "react-vis": "^1.6.7",
     "redux": "^3.7.1",
     "redux-thunk": "^2.2.0",
     "seamless-immutable": "^7.1.2",
@@ -63,7 +63,11 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "webpack": "^2.5.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^0.11.2",
+    "style-loader": "^0.18.2"
   },
   "resolve": {
     "alias": {

@@ -171,3 +171,11 @@ export function fetchPeriodTypes(){
             })
     }
 }
+
+export function clearFacilityIndicatorData(){
+    return (dispatch, getState) =>{
+        return dispatch({
+            type: types.ClEAR_FACILITY_INDICATOR_DATA_REQUESTED
+        })
+    }
+}

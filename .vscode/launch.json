@@ -26,6 +26,16 @@
             "sourceMapPathOverrides": {
                 "webpack:///*": "${workspaceRoot}/*"
             }
-        }
+        },{
+            "type": "chrome",
+            "request": "launch",
+            "name": "KNH debugging",
+            "url": "http://localhost:8080/#/facilities/2e21b2de-7c5b-4db7-bb1d-26930af9274d",
+            "webRoot": "${workspaceRoot}",
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///*": "${workspaceRoot}/*"
+            }
+        },
     ]
 }
