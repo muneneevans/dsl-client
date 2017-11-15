@@ -1,3 +1,5 @@
+import {schemeCategory10} from "d3-scale"
+
 export function getDataElementsFetchStatus(state) {
     return state.indicatorReducer.dataElementsIsFetched
 }
@@ -97,6 +99,10 @@ export function getFacilityIndicatorDataValuesMapData(state) {
             11: 'November',
             12: 'December',
         }
+
+        //define a set fo colors
+        var colors = d3.scale.category10();
+
         
         if (ids.length == 0) {
             return undefined
@@ -122,12 +128,12 @@ export function getFacilityIndicatorDataValuesMapData(state) {
             for (var i = 0; i < data[ids[0].id].length; i++) {
                 barGraphData = {
                     month: data[ids[0].id][i].month,
-                    monthName: monthDict[data[ids[0].id][i].month]
+                    monthName: monthDict[data[ids[0].id][i].month],                    
                 }
                 //get month value for each indicator
                 ids.map((indicator, j) => {
                     try {
-                        barGraphData[data[indicator.id][i].name] = Math.round( data[indicator.id][i].value * 100) / 100
+                        barGraphData[data[indicator.id][i].name] = Math.round( data[indicator.id][i].value * 100) / 100                        
                     }
                     catch (error) {
                         barGraphData[indicator.id] = 0
@@ -149,18 +155,21 @@ export function getFacilityIndicatorDataValuesMapData(state) {
             lineGraphKeys.map((indicator, i) => {
                 lineGraphData[indicator] = []
                 data[indicator].map((d, i) => {
-
                     lineGraphData[indicator].push({
-                        month: d.month,
-                        x: monthDict[d.month],
+                        month: monthDict[d.month],
+                        x: parseInt(d.month),
                         y: Math.round( d.value * 100)/100
                     })
                 })
             })
+            // barGraphDataArray.sort((a, b) => {
+            //     return a.month - b.month;
+            // })
             //append new data to the lineGraphArray
             lineGraphKeys.map((key, i) => {
                 lineGraphDataArray.push({
                     id: data[key][0].name,
+                    color: colors(key),
                     data: lineGraphData[key]
                 })
 

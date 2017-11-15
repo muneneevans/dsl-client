@@ -20,7 +20,7 @@ export const BarChart = (props) => {
             innerPadding={0}
             minValue="auto"
             maxValue="auto"
-            groupMode="stacked"
+            groupMode="grouped"
             layout="horizontal"
             reverse={false}
             colors="nivo"
