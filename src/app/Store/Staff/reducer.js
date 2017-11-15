@@ -3,7 +3,9 @@ import Immutable from "seamless-immutable"
 
 const initialState = Immutable({
     jobTypes: undefined,
-    cadres: undefined
+    cadres: undefined,
+
+    facilityStaff: undefined
 })
 
 
@@ -20,6 +22,13 @@ function staffReducer(state=initialState, action={}){
         case types.CADRES_RECEIVED:
             return state.merge({
                 cadres: action.cadres
+            })
+        case types.FACILITY_STAFF_REQUESTED:
+            return state
+        
+            case types.FACILITY_STAFF_RECEIVED:
+            return state.merge({
+                facilityStaff: action.facilityStaff
             })
         default:
             return state

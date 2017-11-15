@@ -6,6 +6,7 @@ var SRC_DIR = path.resolve(__dirname, "src");
 
 var config = {
     entry: SRC_DIR + "/app/index.js",
+    devtool: 'inline-cheap-module-source-map',
     output: {
       path: DIST_DIR + "/app",
       filename: "bundle.js",

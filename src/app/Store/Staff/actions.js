@@ -34,3 +34,18 @@ export function fetchCadres(){
             })
     }
 }
+
+export function fetchFacilityStaff(facilityId){
+    return (dispatch, getState) =>{
+        return StaffService.getFacilityStaff(facilityId)
+            .then(facilityStaff =>{
+                return dispatch({
+                    type: types.FACILITY_STAFF_RECEIVED,
+                    facilityStaff
+                })
+            })
+            .catch(error => {
+                throw(error)
+            })
+    }
+}

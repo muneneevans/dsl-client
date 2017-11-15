@@ -49,6 +49,15 @@ export function addFacilityIndicator(indicatorId){
     }
 }
 
+export function removeFacilityIndicator(indicatorId){
+    return function (dispatch, getState){
+        return dispatch({
+            type: types.REMOVE_FACILITY_INDICATOR_REQUESTED,
+            indicatorId
+        })
+    }
+}
+
 export function setFacilityPeriodType(periodTypeId){
     return function(dispatch , getState){
         return dispatch({
@@ -78,12 +87,12 @@ export function fetchFacilityIndicatorValues(facilityId, indicators, periodTypeI
         }
         
         indicators.map((indicator, i) =>{
-            IndicatorService.getIndicatorDataValues({...filters , indicatorId: indicator})
+            IndicatorService.getIndicatorDataValues({...filters , indicatorId: indicator.id})
                 .then(indicatorDataValues =>{
                     dispatch({
                         type: types.GET_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED,
                         indicatorDataValues,
-                        indicatorId: indicator
+                        indicatorId: indicator.id
                     })
                 })
                 .catch(error =>{

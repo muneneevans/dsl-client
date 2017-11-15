@@ -3,7 +3,6 @@ import Immutable from "seamless-immutable"
 
 const InitialState = Immutable({
     indicatorGroups: undefined,
-
     indicatorGroupIndicators: undefined,
 
     facilityIndicators: undefined,
@@ -66,7 +65,11 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 
         case types.ADD_FACILITY_INDICATOR_REQUESTED:
             return state.merge({
-                facilityIndicators: addIndicatorToIndicatorsList(action.indicatorId, state.facilityIndicators)
+                facilityIndicators: addIndicatorToIndicatorsList(action.indicatorId, state.facilityIndicators, state.indicatorGroupIndicators)
+            })
+        case types.REMOVE_FACILITY_INDICATOR_REQUESTED:
+            return state.merge({
+                facilityIndicators: removeIndicatorFromIndicatorsList(action.indicatorId, state.facilityIndicators)
             })
         case types.DATAELEMENTS_RECEIVED:
             return state.merge({
@@ -90,18 +93,52 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 
 
 //combiners
-function addIndicatorToIndicatorsList(newindicatorid, indicatorIds) {
+function addIndicatorToIndicatorsList(newIndicatorId, indicatorIds, allindicators) {
     if (indicatorIds) {
         let existingIndicatorIds = Immutable.asMutable(indicatorIds, { deep: true })
-        if (!existingIndicatorIds.includes(newindicatorid)) {
-            existingIndicatorIds.push(newindicatorid)
+        //check if the indicator exists in the list of facility indicators
+        let foundIndicator = existingIndicatorIds.find((indicator) => { return indicator.id == newIndicatorId })
+        if (!foundIndicator) {
+            existingIndicatorIds.push({
+                id: newIndicatorId,                
+                name: allindicators.find((indicator) => { return indicator.indicatorid == newIndicatorId }).indicatorname,
+                isFetched: false
+            })
         }
+        
         return existingIndicatorIds
     }
     else {
         let existingIndicatorIds = []
-        existingIndicatorIds.push(newindicatorid)
+        existingIndicatorIds.push({
+            id: newIndicatorId,
+            name: allindicators.find((indicator) => { return indicator.indicatorid == newIndicatorId }).indicatorname,
+            isFetched: false
+        })
         return existingIndicatorIds
+    }
+}
+
+function removeIndicatorFromIndicatorsList(newIndicatorId, indicatorIds) {
+    if (indicatorIds) {
+        let existingIndicatorIds = Immutable.asMutable(indicatorIds, { deep: true })
+        //check if the indicator exists in the list of facility indicators, 
+        existingIndicatorIds.find((indicator, i) => {
+            //if indicator exists, splice from array          
+            if (indicator.id == newIndicatorId) {
+                existingIndicatorIds.splice(i, 1)
+                return true
+            } else {
+                return false
+            }
+        })
+        if (existingIndicatorIds.length < 1) {
+            return undefined
+        }
+        return existingIndicatorIds
+    }
+    else {
+        return undefined
     }
 }
 

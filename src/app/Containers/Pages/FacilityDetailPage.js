@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux"
 import { Grid, Segment, Tab, Header, Button, Card } from "semantic-ui-react"
-import { Bar, ResponsiveBar } from 'nivo'
+import { Bar, Line, HeatMap } from 'nivo'
 import { match } from "react-router"
 
 import * as indicatorSelectors from "../../Store/Indicators/selectors"
@@ -22,7 +22,10 @@ import YearForm from "../../Components/Forms/YearForm"
 import IndicatorGroupsForm from "../../Components/Forms/IndicatorGroupsForm"
 import PeriodForm from "../../Components/Forms/PeriodForm"
 import ProductsForm from "../../Components/Forms/ProductsForm"
-
+import StaffForm from "../../Components/Forms/StaffForm"
+import FacilityIndicatorCheckList from "../../Components/Widgets/FacilityIndicatorCheckList"
+import FacilityIndicatorWidget from '../../Components/Widgets/FacilityIncidatorWidget'
+import FacilityStaffGraphWidget from '../../Components/Widgets/FacilityStaffGraphWidget'
 class FacilityDetailScreen extends Component {
     constructor(props) {
         super(props)
@@ -67,6 +70,7 @@ class FacilityDetailScreen extends Component {
     updateGraphs() {
         this.props.indicatorActions.fetchFacilityIndicatorValues(this.props.facilityDetails.id, this.props.facilityIndicators, this.props.facilityPeriodType, this.props.facilityYear)
         this.props.commodityActions.fetchFacilityYearProducts(this.props.match.params.id, this.props.facilityYear)
+        this.props.staffActions.fetchFacilityStaff(this.props.match.params.id)
     }
 
 
@@ -90,8 +94,8 @@ class FacilityDetailScreen extends Component {
                         }
                     </Grid.Row>
 
-                    <Grid.Row columns={3} className='ui large info message'>
-                        <Grid.Column>
+                    <Grid.Row columns={4} className='ui large info message'>
+                        <Grid.Column tablet={8} mobile={16} computer={4}>
                             <Segment>
                                 <Header as='h3' >Indicators</Header>
                                 <IndicatorGroupsForm
@@ -103,7 +107,7 @@ class FacilityDetailScreen extends Component {
                             </Segment>
                         </Grid.Column>
 
-                        <Grid.Column>
+                        <Grid.Column tablet={8} mobile={16} computer={4}>
                             <Segment>
                                 <Header as='h3' >Period</Header>
                                 <PeriodForm
@@ -113,12 +117,32 @@ class FacilityDetailScreen extends Component {
                             </Segment>
                         </Grid.Column>
 
-                        <Grid.Column>
+                        <Grid.Column tablet={8} mobile={16} computer={4}>
                             <Segment>
                                 <Header as='h3'>Commodities</Header>
                                 <ProductsForm
                                     products={this.props.facilityProducts}
                                     submitAction={this.handleProductChange.bind(this)} />
+                            </Segment>
+                        </Grid.Column>
+
+                        <Grid.Column tablet={8} mobile={16} computer={4}>
+                            <Segment>
+                                <Header as='h3'>Staff</Header>
+                                <StaffForm
+                                    cadres={this.props.cadres}
+                                    jobTypes={this.props.jobTypes}
+                                />
+                            </Segment>
+                        </Grid.Column>
+                    </Grid.Row>
+
+                    <Grid.Row >
+                        <Grid.Column>
+                            <Segment vertical>
+                                <FacilityIndicatorCheckList
+                                    facilityIndicators={this.props.facilityIndicators}
+                                    removeAction={(id) => { this.props.indicatorActions.removeFacilityIndicator(id) }} />
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
@@ -132,18 +156,57 @@ class FacilityDetailScreen extends Component {
                         </Grid.Column>
                     </Grid.Row>
 
-                    <Grid.Row>
-                        <Grid.Row>
+                    <Grid.Row stretched centered columns={1}>
+
+                        <Grid.Column >
+                            {
+                                this.props.facilityIndicatorDataValuesMapData ? (
+
+                                    <FacilityIndicatorWidget
+                                        barGraph={this.props.facilityIndicatorDataValuesMapData.barGraph}
+                                        heatMap={this.props.facilityIndicatorDataValuesMapData.barGraph}
+                                        lineGraph={this.props.facilityIndicatorDataValuesMapData.lineGraph}
+                                        radarGraph={this.props.facilityIndicatorDataValuesMapData.barGraph}
+                                        height={500} width={1500} />
+
+                                ) : (
+                                        <div>
+                                            {this.renderLoading()}
+                                        </div>
+                                    )
+                            }
+                        </Grid.Column>
+
+                        <Grid.Column >
+                            {
+                                this.props.facilityIndicatorDataValuesMapData ? (
+
+                                    <FacilityStaffGraphWidget
+                                        barGraph={this.props.facilityStaffGraphData.barGraph}
+                                        heatMap={this.props.facilityStaffGraphData.barGraph}
+                                        lineGraph={this.props.facilityStaffGraphData.lineGraph}
+                                        radarGraph={this.props.facilityStaffGraphData.barGraph}
+                                        height={500} width={1500} />
+
+                                ) : (
+                                        <div>
+                                            {this.renderLoading()}
+                                        </div>
+                                    )
+                            }
+                        </Grid.Column>
+
+                        <Grid.Column stretched computer={16}>
                             {
                                 this.props.facilityIndicatorDataValuesMapData ? (
                                     <Segment>
                                         <Segment>
                                             <Card.Content header='Indicators' />
-                                            <Bar
-                                                data={this.props.facilityIndicatorDataValuesMapData.data}
-                                                keys={this.props.facilityIndicatorDataValuesMapData.keys}
-                                                indexBy={this.props.facilityIndicatorDataValuesMapData.indexBy}
-                                                height={800}
+                                            <HeatMap
+                                                data={this.props.facilityIndicatorDataValuesMapData.barGraph.data}
+                                                keys={this.props.facilityIndicatorDataValuesMapData.barGraph.keys}
+                                                indexBy={this.props.facilityIndicatorDataValuesMapData.barGraph.indexBy}
+                                                height={500}
                                                 width={1500}
                                                 margin={{
                                                     "top": 50,
@@ -234,9 +297,76 @@ class FacilityDetailScreen extends Component {
                                         </div>
                                     )
                             }
-                        </Grid.Row>
+                        </Grid.Column>
 
-                        <Grid.Row>
+                        <Grid.Column>
+                            {
+                                this.props.facilityIndicatorDataValuesMapData ? (
+                                    <Segment>
+                                        <Segment>
+                                            <Card.Content header='Indicators' />
+                                            <Line
+                                                data={this.props.facilityIndicatorDataValuesMapData.lineGraph}
+                                                height={500}
+                                                width={1500}
+                                                margin={{
+                                                    "top": 50,
+                                                    "right": 60,
+                                                    "bottom": 50,
+                                                    "left": 60
+                                                }}
+                                                minY="auto"
+                                                maxY="auto"
+                                                stacked={true}
+                                                curve="linear"
+                                                axisBottom={{
+                                                    "orient": "bottom",
+                                                    "tickSize": 5,
+                                                    "tickPadding": 5,
+                                                    "tickRotation": 0,
+                                                    "legend": "country code",
+                                                    "legendOffset": 36,
+                                                    "legendPosition": "center"
+                                                }}
+                                                axisLeft={{
+                                                    "orient": "left",
+                                                    "tickSize": 5,
+                                                    "tickPadding": 5,
+                                                    "tickRotation": 0,
+                                                    "legend": "count",
+                                                    "legendOffset": -40,
+                                                    "legendPosition": "center"
+                                                }}
+                                                enableGridX={true}
+                                                enableGridY={true}
+                                                colors="nivo"
+                                                colorBy="id"
+                                                lineWidth={2}
+                                                enableDots={true}
+                                                dotSize={10}
+                                                dotColor="inherit:darker(0.3)"
+                                                dotBorderWidth={2}
+                                                dotBorderColor="#ffffff"
+                                                enableDotLabel={true}
+                                                dotLabel="y"
+                                                dotLabelYOffset={-12}
+                                                animate={true}
+                                                motionStiffness={90}
+                                                motionDamping={15}
+                                                isInteractive={true}
+                                                enableStackTooltip={true}
+                                            />
+                                        </Segment >
+                                    </Segment>
+                                ) : (
+                                        <div>
+                                            {this.renderLoading()}
+                                        </div>
+                                    )
+                            }
+                        </Grid.Column>
+
+                        <Grid.Column>
                             {
                                 this.props.facilityYearProducts ? (
                                     <Segment>
@@ -338,7 +468,7 @@ class FacilityDetailScreen extends Component {
                                         </div>
                                     )
                             }
-                        </Grid.Row>
+                        </Grid.Column>
                     </Grid.Row>
                 </Grid>
             ) : (
@@ -370,8 +500,9 @@ const mapStateToProps = (state, ownProps) => {
         facilityIndicatorDataVailues: indicatorSelectors.getFacilityIndicatorDataValues(state),
         facilityIndicatorDataValuesMapData: indicatorSelectors.getFacilityIndicatorDataValuesMapData(state),
 
-        jobTypes: staffSelectors.getJobTypes(state),
-        cadres : staffSelectors.getCadres(state),
+        facilityStaffGraphData: staffSelectors.getFacilityStaffGraphData(state),
+        jobTypes: staffSelectors.getJobTypeOptions(state),
+        cadres: staffSelectors.getCadreOptions(state),
 
 
     }
