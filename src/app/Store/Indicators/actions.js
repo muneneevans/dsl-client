@@ -87,16 +87,39 @@ export function fetchFacilityIndicatorValues(facilityId, indicators, periodTypeI
         }
         
         indicators.map((indicator, i) =>{
+            dispatch({
+                type: types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_REQUESTED,
+                selectedIndicatorId: indicator.id
+            })
+            console.log("@fetchFacilityIndicatorValues", indicator)
+
             IndicatorService.getIndicatorDataValues({...filters , indicatorId: indicator.id})
                 .then(indicatorDataValues =>{
-                    dispatch({
-                        type: types.GET_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED,
-                        indicatorDataValues,
-                        indicatorId: indicator.id
-                    })
+
+                    console.log("@response", indicatorDataValues)
+                    console.log("@next", indicator.id)
+
+                    if(indicatorDataValues.datavalues){
+                        dispatch({
+                            type: types.GET_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED,
+                            indicatorDataValues,
+                            indicatorId: indicator.id,
+                            selectedIndicatorId: indicator.id
+                        })
+                    }else{
+                        dispatch({
+                            type: types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_ERROR,
+                            selectedIndicatorId: indicator.id
+                        })
+                    }
+                    
                 })
                 .catch(error =>{
                     throw(error)
+                    dispatch({
+                        type: types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_ERROR,
+                        selectedIndicatorId: indicator.id
+                    })
                 })
         })
     }

@@ -23,6 +23,8 @@ import PeriodForm from "../../Components/Forms/PeriodForm"
 import ProductsForm from "../../Components/Forms/ProductsForm"
 import StaffForm from "../../Components/Forms/StaffForm"
 import FacilityIndicatorCheckList from "../../Components/Widgets/FacilityIndicatorCheckList"
+import FacilityHrCheckList from "../../Components/Widgets/FacilityHrCheckList"
+import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommoditiesChekList"
 import FacilityIndicatorWidget from '../../Components/Widgets/FacilityIncidatorWidget'
 import FacilityStaffGraphWidget from '../../Components/Widgets/FacilityStaffGraphWidget'
 class FacilityDetailScreen extends Component {
@@ -70,6 +72,10 @@ class FacilityDetailScreen extends Component {
 
     handleProductChange(productId) {
 
+    }
+
+    handleJobTypeChange(jobTypeId){
+        this.props.staffActions.addSelectedFacilityJobType(jobTypeId)
     }
 
     updateGraphs() {
@@ -137,17 +143,32 @@ class FacilityDetailScreen extends Component {
                                 <StaffForm
                                     cadres={this.props.cadres}
                                     jobTypes={this.props.jobTypes}
+                                    submitAction={this.handleJobTypeChange.bind(this)}
                                 />
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
 
-                    <Grid.Row >
-                        <Grid.Column>
+                    <Grid.Row columns={3}>
+                        <Grid.Column tablet={8} mobile={16} computer={8}>
                             <Segment vertical>
                                 <FacilityIndicatorCheckList
                                     facilityIndicators={this.props.facilityIndicators}
                                     removeAction={(id) => { this.props.indicatorActions.removeFacilityIndicator(id) }} />
+                            </Segment>
+                        </Grid.Column>
+                        <Grid.Column tablet={4} mobile={16} computer={4}>
+                            <Segment vertical>
+                                <FacilityCommoditiesChekList
+                                    commodities={undefined}
+                                    removeAction={(id) => { this.props.staffActions.removeSelectedFacilityJobType(id) }} />
+                            </Segment>
+                        </Grid.Column>
+                        <Grid.Column tablet={4} mobile={16} computer={4}>
+                            <Segment vertical>
+                                <FacilityHrCheckList
+                                    jobTypes={this.props.selectedFacilityJobTypes}
+                                    removeAction={(id) => { this.props.staffActions.removeSelectedFacilityJobType(id) }} />
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
@@ -509,7 +530,7 @@ const mapStateToProps = (state, ownProps) => {
         jobTypes: staffSelectors.getJobTypeOptions(state),
         cadres: staffSelectors.getCadreOptions(state),
 
-
+        selectedFacilityJobTypes: staffSelectors.getSelectedFacilityJobTypes(state),
     }
 }
 

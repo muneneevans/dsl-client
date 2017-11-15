@@ -51,10 +51,39 @@ export default function indicatorReducer(state = InitialState, action = {}) {
             return state.merge({
                 facilityYear: action.year
             })
+
+        case types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_REQUESTED:
+            return state.merge({
+                facilityIndicators: updateFetchStateOfSelectedFacilityIndicators(
+                    action.selectedIndicatorId, 
+                    state.facilityIndicators,
+                    2
+                )
+            })
+
         case types.GET_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:
             return state.merge({
-                facilityIndicatorDataValues: addIndicatorDataValuesToList(action.indicatorDataValues, action.indicatorId, state.facilityIndicatorDataValues)
+                facilityIndicatorDataValues: addIndicatorDataValuesToList(
+                    action.indicatorDataValues, 
+                    action.indicatorId, 
+                    state.facilityIndicatorDataValues
+                ),
+                facilityIndicators: updateFetchStateOfSelectedFacilityIndicators(
+                    action.selectedIndicatorId,
+                    state.facilityIndicators,
+                    1
+                )
             })
+
+        case types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_ERROR:
+            return state.merge({
+                facilityIndicators: updateFetchStateOfSelectedFacilityIndicators(
+                    action.selectedIndicatorId,
+                    state.facilityIndicators,
+                    0
+                )
+            })
+
         case types.PERIODTYPES_REQUESTED:
             return state.merge({})
 
@@ -65,11 +94,18 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 
         case types.ADD_FACILITY_INDICATOR_REQUESTED:
             return state.merge({
-                facilityIndicators: addIndicatorToIndicatorsList(action.indicatorId, state.facilityIndicators, state.indicatorGroupIndicators)
+                facilityIndicators: addIndicatorToIndicatorsList(
+                    action.indicatorId, 
+                    state.facilityIndicators, 
+                    state.indicatorGroupIndicators
+                )
             })
         case types.REMOVE_FACILITY_INDICATOR_REQUESTED:
             return state.merge({
-                facilityIndicators: removeIndicatorFromIndicatorsList(action.indicatorId, state.facilityIndicators)
+                facilityIndicators: removeIndicatorFromIndicatorsList(
+                    action.indicatorId, 
+                    state.facilityIndicators
+                )
             })
         case types.ClEAR_FACILITY_INDICATOR_DATA_REQUESTED:
             return state.merge({
@@ -109,7 +145,7 @@ function addIndicatorToIndicatorsList(newIndicatorId, indicatorIds, allindicator
             existingIndicatorIds.push({
                 id: newIndicatorId,
                 name: allindicators.find((indicator) => { return indicator.indicatorid == newIndicatorId }).indicatorname,
-                isFetched: false
+                fetchedStatus: -1
             })
         }
 
@@ -120,7 +156,7 @@ function addIndicatorToIndicatorsList(newIndicatorId, indicatorIds, allindicator
         existingIndicatorIds.push({
             id: newIndicatorId,
             name: allindicators.find((indicator) => { return indicator.indicatorid == newIndicatorId }).indicatorname,
-            isFetched: false
+            fetchedStatus: -1
         })
         return existingIndicatorIds
     }
@@ -149,6 +185,15 @@ function removeIndicatorFromIndicatorsList(newIndicatorId, indicatorIds) {
     }
 }
 
+function updateFetchStateOfSelectedFacilityIndicators(selectedIndicatorId, indicatorIds, fetchStatus){
+    let existingIndicatorIds = Immutable.asMutable(indicatorIds, { deep: true })
+    let foundIndicator = existingIndicatorIds.find((indicator) => { return indicator.id == selectedIndicatorId })
+    if (foundIndicator) {
+        foundIndicator.fetchedStatus = fetchStatus
+    }
+    
+    return existingIndicatorIds
+}
 
 function addIndicatorDataValuesToList(newIndicatorDataValues, newIndicatorId, indicatorDatavalues) {
     if (indicatorDatavalues) {
