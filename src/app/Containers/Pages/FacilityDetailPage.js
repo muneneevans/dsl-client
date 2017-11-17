@@ -27,6 +27,7 @@ import FacilityHrCheckList from "../../Components/Widgets/FacilityHrCheckList"
 import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommoditiesChekList"
 import FacilityIndicatorWidget from '../../Components/Widgets/FacilityIncidatorWidget'
 import FacilityStaffGraphWidget from '../../Components/Widgets/FacilityStaffGraphWidget'
+import FacilityCommoditiesGraphWidget from "../../Components/Widgets/FacilityCommoditiesGraphWidget"
 class FacilityDetailScreen extends Component {
     constructor(props) {
         super(props)
@@ -187,7 +188,6 @@ class FacilityDetailScreen extends Component {
                         <Grid.Column >
                             {
                                 this.props.facilityIndicatorDataValuesMapData ? (
-
                                     <FacilityIndicatorWidget
                                         barGraph={this.props.facilityIndicatorDataValuesMapData.barGraph}
                                         heatMap={this.props.facilityIndicatorDataValuesMapData.barGraph}
@@ -205,8 +205,7 @@ class FacilityDetailScreen extends Component {
 
                         <Grid.Column >
                             {
-                                this.props.facilityIndicatorDataValuesMapData ? (
-
+                                this.props.facilityStaffGraphData ? (
                                     <FacilityStaffGraphWidget
                                         barGraph={this.props.facilityStaffGraphData.barGraph}
                                         heatMap={this.props.facilityStaffGraphData.barGraph}
@@ -222,272 +221,12 @@ class FacilityDetailScreen extends Component {
                             }
                         </Grid.Column>
 
-                        <Grid.Column stretched computer={16}>
-                            {
-                                this.props.facilityIndicatorDataValuesMapData ? (
-                                    <Segment>
-                                        <Segment>
-                                            <Card.Content header='Indicators' />
-                                            <HeatMap
-                                                data={this.props.facilityIndicatorDataValuesMapData.barGraph.data}
-                                                keys={this.props.facilityIndicatorDataValuesMapData.barGraph.keys}
-                                                indexBy={this.props.facilityIndicatorDataValuesMapData.barGraph.indexBy}
-                                                height={500}
-                                                width={1500}
-                                                margin={{
-                                                    "top": 50,
-                                                    "right": 60,
-                                                    "bottom": 50,
-                                                    "left": 100
-                                                }}
-                                                padding={0.2}
-                                                innerPadding={0}
-                                                minValue="auto"
-                                                maxValue="auto"
-                                                groupMode="grouped"
-                                                layout="vertical"
-                                                reverse={false}
-                                                colors="nivo"
-                                                colorBy="id"
-                                                defs={[
-                                                    {
-                                                        "id": "dots",
-                                                        "type": "patternDots",
-                                                        "background": "inherit",
-                                                        "color": "#38bcb2",
-                                                        "size": 4,
-                                                        "padding": 1,
-                                                        "stagger": true
-                                                    },
-                                                    {
-                                                        "id": "lines",
-                                                        "type": "patternLines",
-                                                        "background": "inherit",
-                                                        "color": "#eed312",
-                                                        "rotation": -45,
-                                                        "lineWidth": 6,
-                                                        "spacing": 10
-                                                    }
-                                                ]}
-                                                fill={[
-                                                    {
-                                                        "match": {
-                                                            "id": "Medical Clinic"
-                                                        },
-                                                        "id": "dots"
-                                                    },
-                                                    {
-                                                        "match": {
-                                                            "id": "Dispensary"
-                                                        },
-                                                        "id": "lines"
-                                                    }
-                                                ]}
-                                                borderRadius={0}
-                                                borderWidth={0}
-                                                borderColor="inherit:darker(1.6)"
-                                                axisBottom={{
-                                                    "orient": "bottom",
-                                                    "tickSize": 5,
-                                                    "tickPadding": 5,
-                                                    "tickRotation": 0,
-                                                    "legend": "period",
-                                                    "legendPosition": "center",
-                                                    "legendOffset": 36
-                                                }}
-                                                axisLeft={{
-                                                    "orient": "left",
-                                                    "tickSize": 5,
-                                                    "tickPadding": 5,
-                                                    "tickRotation": 0,
-                                                    "legend": "values",
-                                                    "legendPosition": "center",
-                                                    "legendOffset": -40
-                                                }}
-                                                enableGridX={false}
-                                                enableGridY={true}
-                                                enableLabel={false}
-                                                labelSkipWidth={12}
-                                                labelSkipHeight={12}
-                                                labelTextColor="inherit:darker(1.6)"
-                                                animate={true}
-                                                motionStiffness={90}
-                                                motionDamping={15}
-                                                isInteractive={true}
-                                            />
-                                        </Segment >
-                                    </Segment>
-                                ) : (
-                                        <div>
-                                            {this.renderLoading()}
-                                        </div>
-                                    )
-                            }
-                        </Grid.Column>
-
-                        <Grid.Column>
-                            {
-                                this.props.facilityIndicatorDataValuesMapData ? (
-                                    <Segment>
-                                        <Segment>
-                                            <Card.Content header='Indicators' />
-                                            <Line
-                                                data={this.props.facilityIndicatorDataValuesMapData.lineGraph}
-                                                height={500}
-                                                width={1500}
-                                                margin={{
-                                                    "top": 50,
-                                                    "right": 60,
-                                                    "bottom": 50,
-                                                    "left": 60
-                                                }}
-                                                minY="auto"
-                                                maxY="auto"
-                                                stacked={true}
-                                                curve="linear"
-                                                axisBottom={{
-                                                    "orient": "bottom",
-                                                    "tickSize": 5,
-                                                    "tickPadding": 5,
-                                                    "tickRotation": 0,
-                                                    "legend": "country code",
-                                                    "legendOffset": 36,
-                                                    "legendPosition": "center"
-                                                }}
-                                                axisLeft={{
-                                                    "orient": "left",
-                                                    "tickSize": 5,
-                                                    "tickPadding": 5,
-                                                    "tickRotation": 0,
-                                                    "legend": "count",
-                                                    "legendOffset": -40,
-                                                    "legendPosition": "center"
-                                                }}
-                                                enableGridX={true}
-                                                enableGridY={true}
-                                                colors="nivo"
-                                                colorBy="id"
-                                                lineWidth={2}
-                                                enableDots={true}
-                                                dotSize={10}
-                                                dotColor="inherit:darker(0.3)"
-                                                dotBorderWidth={2}
-                                                dotBorderColor="#ffffff"
-                                                enableDotLabel={true}
-                                                dotLabel="y"
-                                                dotLabelYOffset={-12}
-                                                animate={true}
-                                                motionStiffness={90}
-                                                motionDamping={15}
-                                                isInteractive={true}
-                                                enableStackTooltip={true}
-                                            />
-                                        </Segment >
-                                    </Segment>
-                                ) : (
-                                        <div>
-                                            {this.renderLoading()}
-                                        </div>
-                                    )
-                            }
-                        </Grid.Column>
-
                         <Grid.Column>
                             {
                                 this.props.facilityYearProducts ? (
-                                    <Segment>
-                                        <Segment>
-                                            <Card.Content header='Indicators' />
-                                            <Bar
-                                                data={this.props.facilityYearProducts.data}
-                                                keys={this.props.facilityYearProducts.keys}
-                                                indexBy={this.props.facilityYearProducts.indexBy}
-                                                height={800}
-                                                width={800}
-                                                margin={{
-                                                    "top": 50,
-                                                    "right": 60,
-                                                    "bottom": 50,
-                                                    "left": 100
-                                                }}
-                                                padding={0.2}
-                                                innerPadding={0}
-                                                minValue="auto"
-                                                maxValue="auto"
-                                                groupMode="grouped"
-                                                layout="vertical"
-                                                reverse={false}
-                                                colors="nivo"
-                                                colorBy="id"
-                                                defs={[
-                                                    {
-                                                        "id": "dots",
-                                                        "type": "patternDots",
-                                                        "background": "inherit",
-                                                        "color": "#38bcb2",
-                                                        "size": 4,
-                                                        "padding": 1,
-                                                        "stagger": true
-                                                    },
-                                                    {
-                                                        "id": "lines",
-                                                        "type": "patternLines",
-                                                        "background": "inherit",
-                                                        "color": "#eed312",
-                                                        "rotation": -45,
-                                                        "lineWidth": 6,
-                                                        "spacing": 10
-                                                    }
-                                                ]}
-                                                fill={[
-                                                    {
-                                                        "match": {
-                                                            "id": "Medical Clinic"
-                                                        },
-                                                        "id": "dots"
-                                                    },
-                                                    {
-                                                        "match": {
-                                                            "id": "Dispensary"
-                                                        },
-                                                        "id": "lines"
-                                                    }
-                                                ]}
-                                                borderRadius={0}
-                                                borderWidth={0}
-                                                borderColor="inherit:darker(1.6)"
-                                                axisBottom={{
-                                                    "orient": "bottom",
-                                                    "tickSize": 5,
-                                                    "tickPadding": 5,
-                                                    "tickRotation": 0,
-                                                    "legend": "months",
-                                                    "legendPosition": "center",
-                                                    "legendOffset": 36
-                                                }}
-                                                axisLeft={{
-                                                    "orient": "left",
-                                                    "tickSize": 5,
-                                                    "tickPadding": 5,
-                                                    "tickRotation": 0,
-                                                    "legend": "values",
-                                                    "legendPosition": "center",
-                                                    "legendOffset": -40
-                                                }}
-                                                enableGridX={false}
-                                                enableGridY={true}
-                                                enableLabel={false}
-                                                labelSkipWidth={12}
-                                                labelSkipHeight={12}
-                                                labelTextColor="inherit:darker(1.6)"
-                                                animate={true}
-                                                motionStiffness={90}
-                                                motionDamping={15}
-                                                isInteractive={true}
-                                                legend
-                                            />
-                                        </Segment >
-                                    </Segment>
+                                    <FacilityCommoditiesGraphWidget
+                                        barGraph={this.props.facilityYearProducts}
+                                        height={500}/>
                                 ) : (
                                         <div>
                                             {this.renderLoading()}
