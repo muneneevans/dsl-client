@@ -2,10 +2,11 @@ import React from "react"
 import { HeatMap, Line, Bar, Radar } from "nivo"
 import Dimensions from "react-dimensions"
 import { Segment, Tab, Header } from "semantic-ui-react"
-import { XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineMarkSeries, FlexibleXYPlot } from "react-vis"
+import { XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineMarkSeries, FlexibleXYPlot, DiscreteColorLegend } from "react-vis"
 
 export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGraph, height, width, containerWidth }) => {
     if (barGraph) {
+        let { title } = lineGraph.legend
         const chartPanes = [
             {
                 menuItem: "Bar Graph",
@@ -195,7 +196,7 @@ export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGra
                 menuItem: "Line Graph",
                 render: () => (
                     <Line
-                        data={lineGraph}
+                        data={lineGraph.data}
                         height={height}
                         width={containerWidth}
                         margin={{
@@ -289,18 +290,22 @@ export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGra
             {
                 menuItem: "React Vis Line",
                 render: () => (
-                    <XYPlot width={containerWidth - 50} height={height}>
-                        <XAxis />
-                        <YAxis />
-                        <HorizontalGridLines />
-                        <VerticalGridLines />
-                        {
-                            lineGraph.map((d, i) => (
-                                <LineMarkSeries data={d.data} color={d.color}/>
-                            ))
-                        }
+                    <div>
+                        <XYPlot width={containerWidth - 50} height={height} animate>
 
-                    </XYPlot>
+                            <XAxis tickFormat={(v) => { return lineGraph.months[v] }} />
+                            <YAxis />
+                            <HorizontalGridLines />
+                            <VerticalGridLines />
+                            {
+                                lineGraph.data.map((d, i) => (
+                                    <LineMarkSeries data={d.data} color={d.color} key={i} animation={{ damping: 9, stiffness: 300 }}/>
+                                ))
+                            }
+
+                        </XYPlot>
+                        <DiscreteColorLegend items={lineGraph.legend} orientation='horizontal' />
+                    </div>
                 )
             }
         ]

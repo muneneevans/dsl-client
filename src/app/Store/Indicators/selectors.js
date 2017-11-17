@@ -149,7 +149,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 
             //create the lineGraph Data
             let lineGraphDataArray = []
-            // lineGraphKeys = Object.keys(data)
+            let lineGraphLegend = []
             console.log(lineGraphKeys)
             let lineGraphData = {}
             lineGraphKeys.map((indicator, i) => {
@@ -172,6 +172,11 @@ export function getFacilityIndicatorDataValuesMapData(state) {
                     color: colors(key),
                     data: lineGraphData[key]
                 })
+                lineGraphLegend.push({
+                    title: data[key][0].name,
+                    color: colors(key), 
+                    disabled: false 
+                })
 
             })
 
@@ -183,7 +188,11 @@ export function getFacilityIndicatorDataValuesMapData(state) {
                     keys: barGarphKeys,
                     indexBy: 'monthName'
                 },
-                lineGraph: lineGraphDataArray
+                lineGraph: {
+                    data: lineGraphDataArray,
+                    legend: lineGraphLegend,
+                    months: monthDict
+                }
             }
         }
     }
