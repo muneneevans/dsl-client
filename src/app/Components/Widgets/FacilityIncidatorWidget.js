@@ -2,7 +2,7 @@ import React from "react"
 import { HeatMap, Line, Bar, Radar } from "nivo"
 import Dimensions from "react-dimensions"
 import { Segment, Tab, Header } from "semantic-ui-react"
-import { XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineMarkSeries, FlexibleXYPlot} from "react-vis"
+import { XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineMarkSeries, FlexibleXYPlot } from "react-vis"
 
 export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGraph, height, width, containerWidth }) => {
     if (barGraph) {
@@ -29,7 +29,7 @@ export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGra
                         groupMode="grouped"
                         layout="vertical"
                         reverse={false}
-                        
+
                         colorBy="id"
                         defs={[
                             {
@@ -288,28 +288,22 @@ export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGra
             },
             {
                 menuItem: "React Vis Line",
-                render: ()=>(
-                    <FlexibleXYPlot 
-                        width={containerWidth * 2/3} 
-                        height={height}>
+                render: () => (
+                    <XYPlot width={containerWidth - 50} height={height}>
                         <XAxis />
                         <YAxis />
                         <HorizontalGridLines />
                         <VerticalGridLines />
-                        {console.log(lineGraph)}
                         {
-                            lineGraph.map((line,i)=>(
-                                <LineMarkSeries 
-                                    data={line.data} color={line.color} 
-                                    xRange={[0, containerWidth-10]}/>
+                            lineGraph.map((d, i) => (
+                                <LineMarkSeries data={d.data} color={d.color}/>
                             ))
                         }
 
-                    </FlexibleXYPlot>
+                    </XYPlot>
                 )
             }
         ]
-
 
         return (
 

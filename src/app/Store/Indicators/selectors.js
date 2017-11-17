@@ -155,16 +155,16 @@ export function getFacilityIndicatorDataValuesMapData(state) {
             lineGraphKeys.map((indicator, i) => {
                 lineGraphData[indicator] = []
                 data[indicator].map((d, i) => {
-                    lineGraphData[indicator].push({
-                        month: monthDict[d.month],
+                    lineGraphData[indicator].push({                        
                         x: parseInt(d.month),
                         y: Math.round( d.value * 100)/100
                     })
+
+                })
+                lineGraphData[indicator].sort((a, b) => {
+                    return a.x - b.x;
                 })
             })
-            // barGraphDataArray.sort((a, b) => {
-            //     return a.month - b.month;
-            // })
             //append new data to the lineGraphArray
             lineGraphKeys.map((key, i) => {
                 lineGraphDataArray.push({
