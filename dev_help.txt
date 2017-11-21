@@ -1,0 +1,3 @@
+jobTypes = [{key: 124, value: 124, text: "Radiologists"},{...},...]
+color_codes = {positive: "green", info: "blue", warning: "yellow", error: "red"}
+

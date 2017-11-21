@@ -32,10 +32,10 @@ var config = {
         loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }
         )
       }
-    ],
-    devServer: {
-      disableHostCheck: true
-    }
+    ]
+  },
+  devServer: {
+    disableHostCheck: true
   }
 };
 
