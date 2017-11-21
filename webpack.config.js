@@ -33,9 +33,7 @@ var config = {
         )
       }
     ],
-    devServer: {
-      disableHostCheck: true
-    }
+    
   }
 };
 
