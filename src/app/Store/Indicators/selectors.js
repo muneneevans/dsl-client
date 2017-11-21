@@ -149,28 +149,33 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 
             //create the lineGraph Data
             let lineGraphDataArray = []
-            // lineGraphKeys = Object.keys(data)
+            let lineGraphLegend = []
             console.log(lineGraphKeys)
             let lineGraphData = {}
             lineGraphKeys.map((indicator, i) => {
                 lineGraphData[indicator] = []
                 data[indicator].map((d, i) => {
-                    lineGraphData[indicator].push({
-                        month: monthDict[d.month],
+                    lineGraphData[indicator].push({                        
                         x: parseInt(d.month),
                         y: Math.round( d.value * 100)/100
                     })
+
+                })
+                lineGraphData[indicator].sort((a, b) => {
+                    return a.x - b.x;
                 })
             })
-            // barGraphDataArray.sort((a, b) => {
-            //     return a.month - b.month;
-            // })
             //append new data to the lineGraphArray
             lineGraphKeys.map((key, i) => {
                 lineGraphDataArray.push({
                     id: data[key][0].name,
                     color: colors(key),
                     data: lineGraphData[key]
+                })
+                lineGraphLegend.push({
+                    title: data[key][0].name,
+                    color: colors(key), 
+                    disabled: false 
                 })
 
             })
@@ -183,7 +188,11 @@ export function getFacilityIndicatorDataValuesMapData(state) {
                     keys: barGarphKeys,
                     indexBy: 'monthName'
                 },
-                lineGraph: lineGraphDataArray
+                lineGraph: {
+                    data: lineGraphDataArray,
+                    legend: lineGraphLegend,
+                    months: monthDict
+                }
             }
         }
     }
