@@ -34,7 +34,7 @@ export function fetchCadres() {
     }
 }
 
-export function fetchFacilityStaff(facilityId) {
+export function fetchAllFacilityStaff(facilityId) {
     return (dispatch, getState) => {
         return StaffService.getFacilityStaff(facilityId)
             .then(facilityStaff => {
@@ -69,5 +69,35 @@ export function removeSelectedFacilityJobType(jobTypeId) {
             type: types.REMOVE_SELECTED_FACILITY_JOB_TYPE_REQUESTED,
             jobTypeId
         })
+    }
+}
+
+
+export function fetchFacilitySelectedStaff(facilityId, jobTypes) {
+    return (dispatch, getState) => {
+        //loop through each job type and get the number of staff
+        dispatch({ type: types.GET_FACILITY_SELECTED_JOB_TYPES_START })
+        
+        jobTypes.map((jobType, i) => {
+            //mark the job type as requested
+            dispatch({
+                type: types.GET_FACILITY_INDIVIDUAL_SELECTED_JOB_TYPES_REQUESTED,
+                jobTypeId: jobType.id
+            })
+            StaffService.getFacilityJobType(facilityId, jobType.uid)
+                .then(facilityJobTypeDataValues => {
+                    //add the values to current list
+                    dispatch({
+                        type: types.GET_FACILITY_INDIVIDUAL_SELECTED_JOB_TYPES_VALUES_RECEIVED,
+                        jobTypeId: jobType.id,
+                        dataValues :facilityJobTypeDataValues
+                    })
+                })
+                .catch(error => {
+
+                })
+        })
+        //mark the collective process as complete
+        dispatch({ type: types.GET_FACILITY_SELECTED_JOB_TYPES_STOP })
     }
 }

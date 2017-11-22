@@ -36,4 +36,15 @@ export default class StaffService {
                 throw(error)
             })
     }
+
+    static getFacilityJobType(facilityId, jobTypeId){
+        const url = this.host.concat('facility/'+facilityId+'/jobtype/'+jobTypeId)
+        return fetch(url)
+            .then((response)=>{
+                return response.json()
+            })
+            .catch((error)=>{
+                throw(error)
+            })
+    }
 }
