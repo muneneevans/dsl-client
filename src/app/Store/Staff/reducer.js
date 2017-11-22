@@ -84,8 +84,7 @@ function addJobTypeToSelectedJobTypesList(newJobTypeId, selectedFacilityJobTypes
 
         return existingSelectedFacilityJobTypes
     }
-    else {
-        console.log("@non", allJobTypes)
+    else {        
         let existingSelectedFacilityJobTypes = []
         existingSelectedFacilityJobTypes.push({
             id: newJobTypeId,

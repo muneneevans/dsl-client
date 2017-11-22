@@ -90,14 +90,10 @@ export function fetchFacilityIndicatorValues(facilityId, indicators, periodTypeI
             dispatch({
                 type: types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_REQUESTED,
                 selectedIndicatorId: indicator.id
-            })
-            console.log("@fetchFacilityIndicatorValues", indicator)
+            })            
 
             IndicatorService.getIndicatorDataValues({...filters , indicatorId: indicator.id})
-                .then(indicatorDataValues =>{
-
-                    console.log("@response", indicatorDataValues)
-                    console.log("@next", indicator.id)
+                .then(indicatorDataValues =>{                    
 
                     if(indicatorDataValues.datavalues){
                         dispatch({
