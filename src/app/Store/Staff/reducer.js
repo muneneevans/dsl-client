@@ -84,7 +84,7 @@ function addJobTypeToSelectedJobTypesList(newJobTypeId, selectedFacilityJobTypes
 
         return existingSelectedFacilityJobTypes
     }
-    else {        
+    else {
         let existingSelectedFacilityJobTypes = []
         existingSelectedFacilityJobTypes.push({
             id: newJobTypeId,
@@ -134,12 +134,13 @@ function updateSelectedJobTypeFetchState(selectedJobTypeId, selectedFacilityJobT
 function addJobTypeDataValuesToList(newJobTypeDatavalues, newJobTypeId, currentJobTypeDataValues) {
     if (currentJobTypeDataValues) {
         let existingJobTypeDataValues = Immutable.asMutable(currentJobTypeDataValues, { deep: true })
-        existingJobTypeDataValues[jobTypeId] = newJobTypeDatavalues
+        existingJobTypeDataValues[newJobTypeId] = newJobTypeDatavalues[0] ? (newJobTypeDatavalues[0]) : ({value:0})
         return existingJobTypeDataValues
     }
     else {
-        var existingJobTypeDataValues = {}
-        existingJobTypeDataValues[newJobTypeId] = newJobTypeDatavalues[0]
+        let existingJobTypeDataValues = {}
+        // get the second value at the moment
+        existingJobTypeDataValues[newJobTypeId] = newJobTypeDatavalues[0] ? (newJobTypeDatavalues[0]) : ({ value: 0 })
         return existingJobTypeDataValues
     }
 }
