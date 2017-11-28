@@ -149,8 +149,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 
             //create the lineGraph Data
             let lineGraphDataArray = []
-            let lineGraphLegend = []
-            console.log(lineGraphKeys)
+            let lineGraphLegend = []            
             let lineGraphData = {}
             lineGraphKeys.map((indicator, i) => {
                 lineGraphData[indicator] = []

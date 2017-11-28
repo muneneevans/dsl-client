@@ -87,6 +87,10 @@ export function getFacilityStaffGraphData(state) {
     }
 }
 
-export function getSelectedFacilityJobTypes(state){
+export function getSelectedFacilityJobTypes(state) {
     return state.staffReducer.selectedFacilityJobTypes;
+}
+
+export function getFacilitySelectedJobTypeDataValues(state) {
+    return state.staffReducer.facilityJobTypeDataValues
 }

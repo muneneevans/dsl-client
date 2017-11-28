@@ -44,7 +44,7 @@ class FacilityDetailScreen extends Component {
         this.props.staffActions.fetchCadres()
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.indicatorActions.clearFacilityIndicatorData()
         this.props.staffActions.clearFacilityStaffData()
         this.props.commodityActions.clearFacilityProductsData()
@@ -75,14 +75,15 @@ class FacilityDetailScreen extends Component {
 
     }
 
-    handleJobTypeChange(jobTypeId){
+    handleJobTypeChange(jobTypeId) {
         this.props.staffActions.addSelectedFacilityJobType(jobTypeId)
     }
 
     updateGraphs() {
         this.props.indicatorActions.fetchFacilityIndicatorValues(this.props.facilityDetails.id, this.props.facilityIndicators, this.props.facilityPeriodType, this.props.facilityYear)
         this.props.commodityActions.fetchFacilityYearProducts(this.props.match.params.id, this.props.facilityYear)
-        this.props.staffActions.fetchFacilityStaff(this.props.match.params.id)
+        this.props.staffActions.fetchAllFacilityStaff(this.props.match.params.id)
+        this.props.staffActions.fetchFacilitySelectedStaff(this.props.match.params.id, this.props.selectedFacilityJobTypes)
     }
 
 
@@ -226,7 +227,7 @@ class FacilityDetailScreen extends Component {
                                 this.props.facilityYearProducts ? (
                                     <FacilityCommoditiesGraphWidget
                                         barGraph={this.props.facilityYearProducts}
-                                        height={500}/>
+                                        height={500} />
                                 ) : (
                                         <div>
                                             {this.renderLoading()}
@@ -270,6 +271,7 @@ const mapStateToProps = (state, ownProps) => {
         cadres: staffSelectors.getCadreOptions(state),
 
         selectedFacilityJobTypes: staffSelectors.getSelectedFacilityJobTypes(state),
+        selectedFacilityJobTypeDataValues: staffSelectors.getFacilitySelectedJobTypeDataValues(state)
     }
 }
 

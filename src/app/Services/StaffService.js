@@ -27,12 +27,23 @@ export default class StaffService {
     }
 
     static getFacilityStaff(facilityId) {
-        const url = this.host.concat('staff/facility/' + facilityId)
+        const url = this.host.concat('facility/' + facilityId)
         return fetch(url)
             .then(response => {
                 return response.json()
             })
             .catch(error => { 
+                throw(error)
+            })
+    }
+
+    static getFacilityJobType(facilityId, jobTypeId){
+        const url = this.host.concat('facility/'+facilityId+'/jobtype/'+jobTypeId)
+        return fetch(url)
+            .then((response)=>{
+                return response.json()
+            })
+            .catch((error)=>{
                 throw(error)
             })
     }

@@ -45,8 +45,7 @@ export default class IndicatorService {
                     year: filters.year
                 }
             })
-        };      
-        console.log(request)  
+        };              
         return fetch(url, request)
             .then(response => {
                 return response.json()

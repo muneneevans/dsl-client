@@ -7,11 +7,14 @@ const initialState = Immutable({
 
     selectedFacilityJobTypes: undefined,
 
-    facilityStaff: undefined
+    facilityStaff: undefined,
+
+    facilityJobTypeDataValues: undefined
+
 })
 
 
-export default function staffReducer(state=initialState, action={}){
+export default function staffReducer(state = initialState, action = {}) {
     switch (action.type) {
         case types.JOB_TYPES_REQUESTED:
             return state
@@ -35,18 +38,29 @@ export default function staffReducer(state=initialState, action={}){
         case types.ADD_SELECTED_FACILITY_JOB_TYPE_REQUESTED:
             return state.merge({
                 selectedFacilityJobTypes: addJobTypeToSelectedJobTypesList(
-                    action.jobTypeId, 
-                    state.selectedFacilityJobTypes, 
+                    action.jobTypeId,
+                    state.selectedFacilityJobTypes,
                     state.jobTypes
                 )
             })
         case types.REMOVE_SELECTED_FACILITY_JOB_TYPE_REQUESTED:
             return state.merge({
                 selectedFacilityJobTypes: removeJobTypeFromSelectedJobTypesList(
-                    action.jobTypeId, 
+                    action.jobTypeId,
                     state.selectedFacilityJobTypes
                 )
             })
+
+        case types.GET_FACILITY_INDIVIDUAL_SELECTED_JOB_TYPES_REQUESTED:
+            return state.merge({
+                selectedFacilityJobTypes: updateSelectedJobTypeFetchState(action.jobTypeId, state.selectedFacilityJobTypes, 2)
+            })
+        case types.GET_FACILITY_INDIVIDUAL_SELECTED_JOB_TYPES_VALUES_RECEIVED:
+            return state.merge({
+                selectedFacilityJobTypes: updateSelectedJobTypeFetchState(action.jobTypeId, state.selectedFacilityJobTypes, 1),
+                facilityJobTypeDataValues: addJobTypeDataValuesToList(action.dataValues, action.jobTypeId, state.facilityJobTypeDataValues)
+            })
+
         default:
             return state
     }
@@ -60,22 +74,23 @@ function addJobTypeToSelectedJobTypesList(newJobTypeId, selectedFacilityJobTypes
         let foundJobType = existingSelectedFacilityJobTypes.find((jobType) => { return jobType.id == newJobTypeId })
         if (!foundJobType) {
             existingSelectedFacilityJobTypes.push({
-                id: newJobTypeId, 
+                id: newJobTypeId,
                 //jobType.key = jobType Id & jobType.text = jobType name              
                 name: allJobTypes.find((jobType) => { return jobType.id == newJobTypeId }).name,
+                uid: allJobTypes.find((jobType) => { return jobType.id == newJobTypeId }).uid,
                 fetchedStatus: -1
             })
         }
-        
+
         return existingSelectedFacilityJobTypes
     }
-    else {
-        console.log("@non", allJobTypes)
+    else {        
         let existingSelectedFacilityJobTypes = []
         existingSelectedFacilityJobTypes.push({
             id: newJobTypeId,
             //jobType.key = jobType Id & jobType.text = jobType name
             name: allJobTypes.find((jobType) => { return jobType.id == newJobTypeId }).name,
+            uid: allJobTypes.find((jobType) => { return jobType.id == newJobTypeId }).uid,
             fetchedStatus: -1
         })
         return existingSelectedFacilityJobTypes
@@ -102,5 +117,29 @@ function removeJobTypeFromSelectedJobTypesList(newJobTypeId, selectedFacilityJob
     }
     else {
         return undefined
+    }
+}
+
+function updateSelectedJobTypeFetchState(selectedJobTypeId, selectedFacilityJobTypes, newFetchStatus) {
+    //find the specifin job type and update its fetch status
+    let existingjobTypes = Immutable.asMutable(selectedFacilityJobTypes, { deep: true })
+    let foundJobType = existingjobTypes.find((jobType) => { return jobType.id == selectedJobTypeId })
+    if (foundJobType) {
+        foundJobType.fetchedStatus = newFetchStatus
+    }
+    return existingjobTypes
+}
+
+
+function addJobTypeDataValuesToList(newJobTypeDatavalues, newJobTypeId, currentJobTypeDataValues) {
+    if (currentJobTypeDataValues) {
+        let existingJobTypeDataValues = Immutable.asMutable(currentJobTypeDataValues, { deep: true })
+        existingJobTypeDataValues[jobTypeId] = newJobTypeDatavalues
+        return existingJobTypeDataValues
+    }
+    else {
+        var existingJobTypeDataValues = {}
+        existingJobTypeDataValues[newJobTypeId] = newJobTypeDatavalues[0]
+        return existingJobTypeDataValues
     }
 }
