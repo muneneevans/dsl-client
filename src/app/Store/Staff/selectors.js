@@ -92,5 +92,54 @@ export function getSelectedFacilityJobTypes(state) {
 }
 
 export function getFacilitySelectedJobTypeDataValues(state) {
-    return state.staffReducer.facilityJobTypeDataValues
+    // return state.staffReducer.facilityJobTypeDataValues
+    if (state.staffReducer.facilityJobTypeDataValues) {
+        let monthDict = {
+            1: 'January',
+            2: 'February',
+            3: 'March',
+            4: 'April',
+            5: 'May',
+            6: 'June',
+            7: 'July',
+            8: 'August',
+            9: 'September',
+            10: 'October',
+            11: 'November',
+            12: 'December',
+        }
+
+        let staffBarGraph = []
+        Object.keys(monthDict).map((month, i) => {
+            let item = {
+                month: i,
+                monthName: monthDict[i]
+            }
+            state.staffReducer.facilityJobTypeDataValues.map((jobType, i) => {
+                item[jobType.name] = jobType.value
+            })
+            staffBarGraph.push(
+                item
+            )
+
+        })
+
+        console.log(JSON.stringify({
+            barGraph: {
+                data: staffBarGraph,
+                keys: state.staffReducer.jobTypes.map(jobType => jobType.name),
+                indexBy: 'monthName'
+            }
+        }))
+        return {
+            barGraph: {
+                data: staffBarGraph,
+                keys: state.staffReducer.jobTypes.map(jobType => jobType.name),
+                indexBy: 'monthName'
+            }
+        }
+    }
+    else {
+        return undefined
+    }
 }

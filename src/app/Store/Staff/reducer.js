@@ -58,7 +58,7 @@ export default function staffReducer(state = initialState, action = {}) {
         case types.GET_FACILITY_INDIVIDUAL_SELECTED_JOB_TYPES_VALUES_RECEIVED:
             return state.merge({
                 selectedFacilityJobTypes: updateSelectedJobTypeFetchState(action.jobTypeId, state.selectedFacilityJobTypes, 1),
-                facilityJobTypeDataValues: addJobTypeDataValuesToList(action.dataValues, action.jobTypeId, state.facilityJobTypeDataValues)
+                facilityJobTypeDataValues: addJobTypeDataValuesToList(action.dataValues, action.jobTypeId, state.facilityJobTypeDataValues, state.jobTypes)
             })
 
         default:
@@ -131,16 +131,27 @@ function updateSelectedJobTypeFetchState(selectedJobTypeId, selectedFacilityJobT
 }
 
 
-function addJobTypeDataValuesToList(newJobTypeDatavalues, newJobTypeId, currentJobTypeDataValues) {
+function addJobTypeDataValuesToList(newJobTypeDatavalues, newJobTypeId, currentJobTypeDataValues, allJobTypes) {
+    //check if value entered is 0 or not present. Substitute with 0 if so
+    let value = newJobTypeDatavalues.length == 0 ? (0) : (newJobTypeDatavalues[0].value)
+
+    //
+    let existingJobTypeDataValues = []
     if (currentJobTypeDataValues) {
-        let existingJobTypeDataValues = Immutable.asMutable(currentJobTypeDataValues, { deep: true })
-        existingJobTypeDataValues[newJobTypeId] = newJobTypeDatavalues[0] ? (newJobTypeDatavalues[0]) : ({value:0})
-        return existingJobTypeDataValues
+        existingJobTypeDataValues = Immutable.asMutable(currentJobTypeDataValues, { deep: true })
+        existingJobTypeDataValues.find((JobType,i) => {
+            if (JobType.id == newJobTypeId) {
+                existingJobTypeDataValues.splice(i, 1)
+                return true
+            } else {
+                return false
+            }
+        })
     }
-    else {
-        let existingJobTypeDataValues = {}
-        // get the second value at the moment
-        existingJobTypeDataValues[newJobTypeId] = newJobTypeDatavalues[0] ? (newJobTypeDatavalues[0]) : ({ value: 0 })
-        return existingJobTypeDataValues
-    }
+    existingJobTypeDataValues.push({
+        value,
+        id: newJobTypeId,
+        name: allJobTypes.find((jobType) => { return jobType.id == newJobTypeId }).name
+    })
+    return existingJobTypeDataValues
 }
