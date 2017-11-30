@@ -19,7 +19,7 @@ export const MyBarChart = ({ data, height, width, xLabel, yLabel, title }) => {
     var yTicks = [10]
 
     return (
-        <BarChart 
+        <BarChart
             title={title}
             data={data}
             width={width}
