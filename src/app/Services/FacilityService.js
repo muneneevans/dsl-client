@@ -1,7 +1,8 @@
+import { sharedHost } from "../Store/Shared/hosts"
 export default class FacilityService {
     static get host() {
         delete FacilityService.host
-        return FacilityService.host = 'http://41.89.94.68:8000/facilities/api/'
+        return FacilityService.host = sharedHost.concat('facilities/api/')
     }
 
     static getFacilityDetails(facilityId) {

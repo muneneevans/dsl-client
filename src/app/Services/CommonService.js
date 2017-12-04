@@ -1,9 +1,9 @@
-
+import { sharedHost } from '../Store/Shared/hosts'
 
 export default class CommonService{
     static get host() {
         delete CommonService.host;
-        return CommonService.host = 'http://41.89.94.68:8000/';
+        return CommonService.host = sharedHost.concat('');
     }
     
     static getCountyIds(){

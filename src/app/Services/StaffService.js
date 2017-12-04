@@ -1,7 +1,8 @@
+import { sharedHost } from "../Store/Shared/hosts"
 export default class StaffService {
     static get host() {
         delete StaffService.host
-        return StaffService.host = 'http://41.89.94.68:8000/hr/api/'
+        return StaffService.host = sharedHost.concat('hr/api/')
     }
 
     static getJobTypes() {

@@ -1,7 +1,8 @@
+import { sharedHost } from '../Store/Shared/hosts'
 export default class IndicatorService {
     static get host() {
         delete IndicatorService.host;
-        return IndicatorService.host = 'http://41.89.94.68:8000/indicators/api/'
+        return IndicatorService.host = sharedHost.concat('indicators/api/')
     }
 
     static getIndicatorGroups() {

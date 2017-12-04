@@ -1,7 +1,8 @@
+import { sharedHost } from '../Store/Shared/hosts'
 export default class CommodityService {
     static get host() {
         delete CommodityService.host
-        return CommodityService.host = 'http://41.89.94.68:8000/commodities/api/'
+        return CommodityService.host = sharedHost.concat('commodities/api/')
     }
 
     static getProducts() {
