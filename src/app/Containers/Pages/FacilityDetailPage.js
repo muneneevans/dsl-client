@@ -50,43 +50,6 @@ class FacilityDetailScreen extends Component {
         this.props.commodityActions.clearFacilityProductsData()
     }
 
-    handleIndicatorGroupChange(indicatorGroupId) {
-        this.props.indicatorActions.fetchIndicatorGroupIndicators(indicatorGroupId)
-    }
-    handleIndicatorChange(indicatorId) {
-        this.props.indicatorActions.addFacilityIndicator(indicatorId)
-    }
-
-    handlePeriodChange(year) {
-    }
-    handleYearChange(year) {
-        this.props.indicatorActions.setFacilityYear(year)
-    }
-
-    handlePeriodTypeChange(periodTypeId) {
-        this.props.indicatorActions.setFacilityPeriodType(periodTypeId)
-    }
-
-    handleDataElementChange(dataElementId) {
-        this.props.indicatorActions.fetchFacilityDataElementDataValues(this.props.match.params.id, dataElementId)
-    }
-
-    handleProductChange(productId) {
-
-    }
-
-    handleJobTypeChange(jobTypeId) {
-        this.props.staffActions.addSelectedFacilityJobType(jobTypeId)
-    }
-
-    updateGraphs() {
-        this.props.indicatorActions.fetchFacilityIndicatorValues(this.props.facilityDetails.id, this.props.facilityIndicators, this.props.facilityPeriodType, this.props.facilityYear)
-        this.props.commodityActions.fetchFacilityYearProducts(this.props.match.params.id, this.props.facilityYear)
-        this.props.staffActions.fetchAllFacilityStaff(this.props.match.params.id)
-        this.props.staffActions.fetchFacilitySelectedStaff(this.props.match.params.id, this.props.selectedFacilityJobTypes)
-    }
-
-
     renderLoading() {
         return (
             <Segment size='large' loading />
@@ -114,8 +77,8 @@ class FacilityDetailScreen extends Component {
                                 <IndicatorGroupsForm
                                     indicatorGroups={this.props.indicatorGroups}
                                     indicatorGroupIndicators={this.props.indicatorGroupIndicators}
-                                    submitAction={this.handleIndicatorChange.bind(this)}
-                                    handleIndicatorGroupChange={this.handleIndicatorGroupChange.bind(this)}
+                                    submitAction={(indicatorId) => { this.props.indicatorActions.addFacilityIndicator(indicatorId) }}
+                                    handleIndicatorGroupChange={(indicatorGroupId) => { this.props.indicatorActions.fetchIndicatorGroupIndicators(indicatorGroupId) }}
                                 />
                             </Segment>
                         </Grid.Column>
@@ -125,8 +88,8 @@ class FacilityDetailScreen extends Component {
                                 <Header as='h3' >Period</Header>
                                 <PeriodForm
                                     periodTypes={this.props.periodTypes}
-                                    handlePeriodTypeChange={this.handlePeriodTypeChange.bind(this)} />
-                                <YearForm submitAction={this.handleYearChange.bind(this)} />
+                                    handlePeriodTypeChange={(periodTypeId) => { this.props.indicatorActions.setFacilityPeriodType(periodTypeId) }} />
+                                <YearForm submitAction={(year) => { this.props.indicatorActions.setFacilityYear(year) }} />
                             </Segment>
                         </Grid.Column>
 
@@ -135,7 +98,8 @@ class FacilityDetailScreen extends Component {
                                 <Header as='h3'>Commodities</Header>
                                 <ProductsForm
                                     products={this.props.facilityProducts}
-                                    submitAction={this.handleProductChange.bind(this)} />
+                                // submitAction={this.handleProductChange.bind(this)} 
+                                />
                             </Segment>
                         </Grid.Column>
 
@@ -145,7 +109,7 @@ class FacilityDetailScreen extends Component {
                                 <StaffForm
                                     cadres={this.props.cadres}
                                     jobTypes={this.props.jobTypes}
-                                    submitAction={this.handleJobTypeChange.bind(this)}
+                                    submitAction={(jobTypeId) => { this.props.staffActions.addSelectedFacilityJobType(jobTypeId) }}
                                 />
                             </Segment>
                         </Grid.Column>
@@ -179,7 +143,12 @@ class FacilityDetailScreen extends Component {
                         <Grid.Column>
                             <Segment>
                                 <Button primary fluid
-                                    onClick={this.updateGraphs.bind(this)}>Update</Button>
+                                    onClick={() => {
+                                        this.props.indicatorActions.fetchFacilityIndicatorValues(this.props.facilityDetails.id, this.props.facilityIndicators, this.props.facilityPeriodType, this.props.facilityYear)
+                                        this.props.commodityActions.fetchFacilityYearProducts(this.props.match.params.id, this.props.facilityYear)
+                                        this.props.staffActions.fetchAllFacilityStaff(this.props.match.params.id)
+                                        this.props.staffActions.fetchFacilitySelectedStaff(this.props.match.params.id, this.props.selectedFacilityJobTypes)
+                                    }}>Update</Button>
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
