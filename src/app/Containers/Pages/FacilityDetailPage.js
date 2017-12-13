@@ -23,7 +23,7 @@ import PeriodForm from "../../Components/Forms/PeriodForm"
 import ProductsForm from "../../Components/Forms/ProductsForm"
 import StaffForm from "../../Components/Forms/StaffForm"
 import FacilityIndicatorCheckList from "../../Components/Widgets/FacilityIndicatorCheckList"
-import FacilityHrCheckList from "../../Components/Widgets/FacilityHrCheckList"
+import FacilityStaffCheckList from "../../Components/Widgets/FacilityStaffCheckList"
 import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommoditiesChekList"
 import FacilityIndicatorWidget from '../../Components/Widgets/FacilityIncidatorWidget'
 import FacilityStaffGraphWidget from '../../Components/Widgets/FacilityStaffGraphWidget'
@@ -132,7 +132,7 @@ class FacilityDetailScreen extends Component {
                         </Grid.Column>
                         <Grid.Column tablet={4} mobile={16} computer={4}>
                             <Segment vertical>
-                                <FacilityHrCheckList
+                                <FacilityStaffCheckList
                                     jobTypes={this.props.selectedFacilityJobTypes}
                                     removeAction={(id) => { this.props.staffActions.removeSelectedFacilityJobType(id) }} />
                             </Segment>
