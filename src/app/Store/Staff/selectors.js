@@ -60,6 +60,7 @@ export function getFacilityStaffGraphData(state) {
         }
 
         var staffBarGraph = []
+        let staffBarGraphKeys = []
         Object.keys(monthDict).map((month, i) => {
             let item = {
                 month: i,
@@ -67,16 +68,22 @@ export function getFacilityStaffGraphData(state) {
             }
             state.staffReducer.facilityStaff.map((jobType, i) => {
                 item[jobType.jobtype] = jobType.value
+                let foundKey = staffBarGraphKeys.find((item)=>{ return item == jobType.jobtype})
+                if(!foundKey){
+                    staffBarGraphKeys.push(jobType.jobtype)
+                }
             })
             staffBarGraph.push(
                 item
             )
-
+            
         })
+        
+        
         return {
             barGraph: {
                 data: staffBarGraph,
-                keys: state.staffReducer.jobTypes.map(jobType => jobType.name),
+                keys: staffBarGraphKeys,
                 indexBy: 'monthName'
             }
         }
@@ -110,19 +117,22 @@ export function getFacilitySelectedJobTypeDataValues(state) {
         }
 
         let staffBarGraph = []
-        Object.keys(monthDict).map((month, i) => {
-            let item = {
-                month: i,
-                monthName: monthDict[i]
-            }
-            state.staffReducer.facilityJobTypeDataValues.map((jobType, i) => {
-                item[jobType.name] = jobType.value
-            })
-            staffBarGraph.push(
-                item
-            )
+        let staffBarGraphKeys = []
 
+        state.staffReducer.facilityJobTypeDataValues.map((jobType, i) => {
+            let item = {}
+            item[jobType.name] = jobType.value
+            Object.keys(monthDict).map((month, i) => {
+                item['month'] = i
+                item['monthName'] = monthDict[i]
+
+                staffBarGraph.push(
+                    item
+                )
+            })
+            staffBarGraphKeys.push(jobType.name)
         })
+
 
         console.log(JSON.stringify({
             barGraph: {
@@ -134,7 +144,7 @@ export function getFacilitySelectedJobTypeDataValues(state) {
         return {
             barGraph: {
                 data: staffBarGraph,
-                keys: state.staffReducer.jobTypes.map(jobType => jobType.name),
+                keys: staffBarGraphKeys,
                 indexBy: 'monthName'
             }
         }
