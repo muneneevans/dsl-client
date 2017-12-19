@@ -2,8 +2,9 @@ import React from "react"
 import { Bar, HeatMap, Radar } from "nivo"
 import Dimensions from "react-dimensions"
 import { Segment, Tab, Header } from "semantic-ui-react"
+import { XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineMarkSeries, FlexibleXYPlot, DiscreteColorLegend } from "react-vis"
 
-const FacilityStaffGraphWidget = ({ barGraph, heatMap, height, width, containerWidth }) => {
+const FacilityStaffGraphWidget = ({ barGraph, heatMap, lineGraph, height, width, containerWidth }) => {
     if (barGraph) {
         const chartPanes = [
             {
@@ -188,6 +189,27 @@ const FacilityStaffGraphWidget = ({ barGraph, heatMap, height, width, containerW
                         motionDamping={15}
                         isInteractive={true}
                     />
+                )
+            },
+            {
+                menuItem: "lineGraph",
+                render: () => (
+                    <div>
+                        <XYPlot width={containerWidth - 50} height={height} animate>
+
+                            <XAxis tickFormat={(v) => { return lineGraph.months[v] }} />
+                            <YAxis />
+                            <HorizontalGridLines />
+                            <VerticalGridLines />
+                            {
+                                lineGraph.data.map((d, i) => (
+                                    <LineMarkSeries data={d.data} color={d.color} key={i} animation={{ damping: 9, stiffness: 300 }} />
+                                ))
+                            }
+
+                        </XYPlot>
+                        <DiscreteColorLegend items={lineGraph.legend} orientation='horizontal' />
+                    </div>
                 )
             },
         ]

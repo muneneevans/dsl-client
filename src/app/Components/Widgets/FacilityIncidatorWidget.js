@@ -122,7 +122,7 @@ export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGra
                         groupMode="grouped"
                         layout="vertical"
                         reverse={false}
-                        colors="nivo"
+                        colors="BrBG"
                         colorBy="id"
                         defs={[
                             {
@@ -229,7 +229,7 @@ export const FacilityIndicatorWidget = ({ barGraph, heatMap, lineGraph, radarGra
                         }}
                         enableGridX={true}
                         enableGridY={true}
-                        colors="nivo"
+                        colors="BrBG"
                         colorBy="id"
                         lineWidth={2}
                         enableDots={true}

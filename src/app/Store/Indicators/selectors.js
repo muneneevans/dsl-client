@@ -1,4 +1,4 @@
-import {schemeCategory10} from "d3-scale"
+import { schemeCategory10 } from "d3-scale"
 
 export function getDataElementsFetchStatus(state) {
     return state.indicatorReducer.dataElementsIsFetched
@@ -103,7 +103,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
         //define a set fo colors
         var colors = d3.scale.category10();
 
-        
+
         if (ids.length == 0) {
             return undefined
         }
@@ -114,7 +114,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
             let barGraphDataArray = []
             let barGarphKeys = []
             //get a list of the indicator names
-            
+
             ids.map((indicator, j) => {
                 try {
                     barGarphKeys.push(data[indicator.id][0].name)
@@ -128,12 +128,12 @@ export function getFacilityIndicatorDataValuesMapData(state) {
             for (var i = 0; i < data[ids[0].id].length; i++) {
                 barGraphData = {
                     month: data[ids[0].id][i].month,
-                    monthName: monthDict[data[ids[0].id][i].month],                    
+                    monthName: monthDict[data[ids[0].id][i].month],
                 }
                 //get month value for each indicator
                 ids.map((indicator, j) => {
                     try {
-                        barGraphData[data[indicator.id][i].name] = Math.round( data[indicator.id][i].value * 100) / 100                        
+                        barGraphData[data[indicator.id][i].name] = Math.round(data[indicator.id][i].value * 100) / 100
                     }
                     catch (error) {
                         barGraphData[indicator.id] = 0
@@ -149,14 +149,14 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 
             //create the lineGraph Data
             let lineGraphDataArray = []
-            let lineGraphLegend = []            
+            let lineGraphLegend = []
             let lineGraphData = {}
             lineGraphKeys.map((indicator, i) => {
                 lineGraphData[indicator] = []
                 data[indicator].map((d, i) => {
-                    lineGraphData[indicator].push({                        
+                    lineGraphData[indicator].push({
                         x: parseInt(d.month),
-                        y: Math.round( d.value * 100)/100
+                        y: Math.round(d.value * 100) / 100
                     })
 
                 })
@@ -164,6 +164,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
                     return a.x - b.x;
                 })
             })
+
             //append new data to the lineGraphArray
             lineGraphKeys.map((key, i) => {
                 lineGraphDataArray.push({
@@ -173,12 +174,13 @@ export function getFacilityIndicatorDataValuesMapData(state) {
                 })
                 lineGraphLegend.push({
                     title: data[key][0].name,
-                    color: colors(key), 
-                    disabled: false 
+                    color: colors(key),
+                    disabled: false
                 })
 
             })
 
+            
 
 
             return {

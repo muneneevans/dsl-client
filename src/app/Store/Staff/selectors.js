@@ -1,3 +1,5 @@
+import { schemeCategory10 } from "d3-scale"
+
 export function getJobTypes(state) {
     return state.staffReducer.jobTypes
 }
@@ -59,7 +61,10 @@ export function getFacilityStaffGraphData(state) {
             12: 'December',
         }
 
-        var staffBarGraph = []
+        //define a set of colors from d3
+        let colors = d3.scale.category10();
+
+        let staffBarGraph = []
         let staffBarGraphKeys = []
         Object.keys(monthDict).map((month, i) => {
             let item = {
@@ -68,23 +73,58 @@ export function getFacilityStaffGraphData(state) {
             }
             state.staffReducer.facilityStaff.map((jobType, i) => {
                 item[jobType.jobtype] = jobType.value
-                let foundKey = staffBarGraphKeys.find((item)=>{ return item == jobType.jobtype})
-                if(!foundKey){
+                let foundKey = staffBarGraphKeys.find((item) => { return item == jobType.jobtype })
+                if (!foundKey) {
                     staffBarGraphKeys.push(jobType.jobtype)
                 }
             })
             staffBarGraph.push(
                 item
             )
-            
+
+        })
+
+        //create the lineGraph data
+        let lineGraphDataArray = []
+        let lineGraphLegend = []
+        let lineGraphData = []
+        let lineGraphKeys = []
+        state.staffReducer.facilityStaff.map((jobType, i) => {
+            lineGraphKeys.push(jobType.jobtype)
         })
         
+        state.staffReducer.facilityStaff.map((jobType, i) => {
+            let item = {
+                id: jobType.jobtype,
+                color: colors(lineGraphKeys[i]),
+                data: []
+            }
+            Object.keys(monthDict).map((month, i) => {
+                item.data.push({
+                    x: i + 1,
+                    y: jobType.value
+                })
+            })
+
+            lineGraphDataArray.push(item)
+            lineGraphLegend.push({
+                title: jobType.jobtype,
+                color: colors(lineGraphKeys[i]),
+            })
+        })
+
         
+
         return {
             barGraph: {
                 data: staffBarGraph,
                 keys: staffBarGraphKeys,
                 indexBy: 'monthName'
+            },
+            lineGraph: {
+                data: lineGraphDataArray,
+                legend: lineGraphLegend,
+                months: monthDict,
             }
         }
 
@@ -134,13 +174,6 @@ export function getFacilitySelectedJobTypeDataValues(state) {
         })
 
 
-        console.log(JSON.stringify({
-            barGraph: {
-                data: staffBarGraph,
-                keys: state.staffReducer.jobTypes.map(jobType => jobType.name),
-                indexBy: 'monthName'
-            }
-        }))
         return {
             barGraph: {
                 data: staffBarGraph,
