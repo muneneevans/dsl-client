@@ -112,6 +112,13 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 				state.indicatorGroupIndicators
 			)
 		})
+	case types.REMOVE_WARD_INDICATOR_REQUESTED:
+		return state.merge({
+			wardIndicators: removeIndicatorFromIndicatorsList(
+				action.indicatorId,
+				state.wardIndicators
+			)
+		})
 	default:
 		return state
 	}

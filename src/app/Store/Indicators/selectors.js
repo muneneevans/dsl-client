@@ -1,5 +1,3 @@
-
-
 export function getDataElementsFetchStatus(state) {
 	return state.indicatorReducer.dataElementsIsFetched
 }
@@ -8,7 +6,7 @@ export function getIndicatorGroupsOptions(state) {
 	if (state.indicatorReducer.indicatorGroups) {
 		let indicatorGroups = []
 
-		state.indicatorReducer.indicatorGroups.map((indicatorGroup, i) => {
+		state.indicatorReducer.indicatorGroups.map(indicatorGroup => {
 			indicatorGroups.push({
 				key: indicatorGroup.indicatorgroupid,
 				value: indicatorGroup.indicatorgroupid,
@@ -110,7 +108,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 			let barGarphKeys = []
 			//get a list of the indicator names
 
-			ids.map((indicator, j) => {
+			ids.map(indicator => {
 				try {
 					barGarphKeys.push(data[indicator.id][0].name)
 					lineGraphKeys.push(indicator.id)
@@ -125,7 +123,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 					monthName: monthDict[data[ids[0].id][i].month]
 				}
 				//get month value for each indicator
-				ids.map((indicator, j) => {
+				ids.map(indicator => {
 					try {
 						barGraphData[data[indicator.id][i].name] =
 							Math.round(data[indicator.id][i].value * 100) / 100
@@ -144,9 +142,9 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 			let lineGraphDataArray = []
 			let lineGraphLegend = []
 			let lineGraphData = {}
-			lineGraphKeys.map((indicator, i) => {
+			lineGraphKeys.map(indicator => {
 				lineGraphData[indicator] = []
-				data[indicator].map((d, i) => {
+				data[indicator].map(d => {
 					lineGraphData[indicator].push({
 						x: parseInt(d.month),
 						y: Math.round(d.value * 100) / 100
@@ -158,7 +156,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 			})
 
 			//append new data to the lineGraphArray
-			lineGraphKeys.map((key, i) => {
+			lineGraphKeys.map(key => {
 				lineGraphDataArray.push({
 					id: data[key][0].name,
 					color: colors(key),

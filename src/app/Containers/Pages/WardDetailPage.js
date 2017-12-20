@@ -117,8 +117,8 @@ class WardDetailPage extends Component {
 						<Segment vertical>
 							<FacilityIndicatorCheckList
 								facilityIndicators={this.props.wardIndicators}
-								removeAction={id => {
-									this.props.indicatorActions.removeFacilityIndicator(id)
+								removeAction={indicatorId => {
+									this.props.indicatorActions.removeWardIndicator(indicatorId)
 								}}
 							/>
 						</Segment>

@@ -163,3 +163,12 @@ export function addWardIndicator(indicatorId) {
 		})
 	}
 }
+
+export function removeWardIndicator(indicatorId) {
+	return dispatch =>{
+		return dispatch({
+			type: types.REMOVE_WARD_INDICATOR_REQUESTED,
+			indicatorId
+		})
+	}
+}
