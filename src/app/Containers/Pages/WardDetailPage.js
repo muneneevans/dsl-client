@@ -4,7 +4,6 @@ import { bindActionCreators } from "redux"
 import { Grid, Segment, Tab, Header, Button, Card } from "semantic-ui-react"
 import { Bar, Line, HeatMap } from "nivo"
 
-
 import * as commonActions from "../../Store/Common/actions"
 import * as commonSelectors from "../../Store/Common/selectors"
 import * as indicatorSelectors from "../../Store/Indicators/selectors"
@@ -49,7 +48,7 @@ class WardDetailPage extends Component {
 						<Banner title={this.props.wardDetails.name} />
 					</Grid.Column>
 				</Grid.Row>
-
+	
 				<Grid.Row columns={4} className="ui large info message">
 					<Grid.Column tablet={8} mobile={16} computer={4}>
 						<Segment>
@@ -75,14 +74,12 @@ class WardDetailPage extends Component {
 							<PeriodForm
 								periodTypes={this.props.periodTypes}
 								handlePeriodTypeChange={periodTypeId => {
-									this.props.indicatorActions.setFacilityPeriodType(
-										periodTypeId
-									)
+									this.props.indicatorActions.setWardPeriodType(periodTypeId)
 								}}
 							/>
 							<YearForm
 								submitAction={year => {
-									this.props.indicatorActions.setFacilityYear(year)
+									this.props.indicatorActions.setWardYear(year)
 								}}
 							/>
 						</Segment>
@@ -164,6 +161,10 @@ const mapStateToProps = state => {
 		),
 
 		periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
+		wardPeriodType: indicatorSelectors.getWardPeriodType(
+			state.indicatorReducer
+		),
+		wardYear: indicatorSelectors.getWardYear(state.indicatorReducer),
 
 		jobTypes: staffSelectors.getJobTypeOptions(state),
 		cadres: staffSelectors.getCadreOptions(state)

@@ -56,6 +56,7 @@ export function getPeriodTypeOptions(state) {
 	}
 }
 
+//#region facility selectors
 //facility specific selectos
 export function getFacilityIndicators(state) {
 	return state.indicatorReducer.facilityIndicators
@@ -187,7 +188,17 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 	}
 }
 
+//#endregion
+
 //ward specific selectors
 export const getWardIndicators = indicatorReducer => {
 	return indicatorReducer.wardIndicators
+}
+
+export const getWardPeriodType = indicatorReducer => {
+	return indicatorReducer.wardPeriodType
+}
+
+export const getWardYear = indicatorReducer =>{
+	return indicatorReducer.wardYear
 }

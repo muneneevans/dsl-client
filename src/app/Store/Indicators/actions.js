@@ -109,7 +109,7 @@ export function fetchFacilityIndicatorValues(
 			year
 		}
 
-		indicators.map((indicator, i) => {
+		indicators.map((indicator) => {
 			dispatch({
 				type: types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_REQUESTED,
 				selectedIndicatorId: indicator.id
@@ -135,12 +135,8 @@ export function fetchFacilityIndicatorValues(
 						})
 					}
 				})
-				.catch(error => {
+				.catch(error =>{
 					throw error
-					dispatch({
-						type: types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_ERROR,
-						selectedIndicatorId: indicator.id
-					})
 				})
 		})
 	}
@@ -165,10 +161,28 @@ export function addWardIndicator(indicatorId) {
 }
 
 export function removeWardIndicator(indicatorId) {
-	return dispatch =>{
+	return dispatch => {
 		return dispatch({
 			type: types.REMOVE_WARD_INDICATOR_REQUESTED,
 			indicatorId
+		})
+	}
+}
+
+export function setWardPeriodType(periodTypeId) {
+	return dispatch => {
+		return dispatch({
+			type: types.SET_WARD_PERIOD_TYPE_REQUESTED,
+			periodTypeId
+		})
+	}
+}
+
+export function setWardYear(year) {
+	return dispatch => {
+		return dispatch({
+			type: types.SET_WARD_YEAR_REQUESTED,
+			year
 		})
 	}
 }

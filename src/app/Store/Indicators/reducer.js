@@ -4,22 +4,19 @@ import Immutable from "seamless-immutable"
 const InitialState = Immutable({
 	indicatorGroups: undefined,
 	indicatorGroupIndicators: undefined,
+	periodTypes: undefined,
 
+	//facility specific
 	facilityIndicators: undefined,
 	facilityPeriodType: undefined,
 	facilityYear: undefined,
 	facilityIndicatorDataValues: undefined,
 
-	periodTypes: undefined,
-
-	dataElementsIsFetched: false,
-	dataElements: undefined,
-
-	facilityDataElementDataValuesIsFetched: false,
-	facilityDataElementDataValues: undefined,
-
-	//ward related
-	wardIndicators: undefined
+	//ward specific
+	wardIndicators: undefined,
+	wardPeriodType: undefined,
+	wardYear: undefined,
+	wardIndicatorDataValues: undefined
 })
 
 export default function indicatorReducer(state = InitialState, action = {}) {
@@ -118,6 +115,15 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 				action.indicatorId,
 				state.wardIndicators
 			)
+		})
+
+	case types.SET_WARD_PERIOD_TYPE_REQUESTED:
+		return state.merge({
+			wardPeriodType: action.periodTypeId
+		})
+	case types.SET_WARD_YEAR_REQUESTED:
+		return state.merge({
+			wardYear: action.year
 		})
 	default:
 		return state
