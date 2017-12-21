@@ -70,9 +70,17 @@ export default function staffReducer(state = initialState, action = {}) {
 			)
 		})
 
-	case types.ADD_WARD_JOB_TYPE_REQUESTED:		
+	case types.ADD_WARD_JOB_TYPE_REQUESTED:
 		return state.merge({
 			wardJobTypes: addJobTypeToSelectedJobTypesList(
+				action.jobTypeId,
+				state.wardJobTypes,
+				state.jobTypes
+			)
+		})
+	case types.REMOVE_WARD_JOB_TYPE_REQUESTED:
+		return state.merge({
+			wardJobTypes: removeJobTypeFromSelectedJobTypesList(
 				action.jobTypeId,
 				state.wardJobTypes,
 				state.jobTypes
@@ -132,11 +140,11 @@ function addJobTypeToSelectedJobTypesList(
 
 function removeJobTypeFromSelectedJobTypesList(
 	newJobTypeId,
-	selectedFacilityJobTypes
+	selectedJobTypes
 ) {
-	if (selectedFacilityJobTypes) {
+	if (selectedJobTypes) {
 		let existingSelectedFacilityJobTypes = Immutable.asMutable(
-			selectedFacilityJobTypes,
+			selectedJobTypes,
 			{ deep: true }
 		)
 		//check if the jobType exists in the list of selected facility jobTypes,

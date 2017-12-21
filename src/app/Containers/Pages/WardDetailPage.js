@@ -138,7 +138,7 @@ class WardDetailPage extends Component {
 							<FacilityStaffCheckList
 								jobTypes={this.props.wardJobTypes}
 								removeAction={id => {
-									// this.props.staffActions.removeSelectedFacilityJobType(id)
+									this.props.staffActions.removeWardJobType(id)
 								}}
 							/>
 						</Segment>

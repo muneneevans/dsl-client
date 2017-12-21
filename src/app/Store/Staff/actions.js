@@ -112,4 +112,12 @@ export function addWardJobType(jobTypeId) {
 		})
 	}
 }
+export function removeWardJobType(jobTypeId) {
+	return dispatch => {
+		return dispatch({
+			type: types.REMOVE_WARD_JOB_TYPE_REQUESTED,
+			jobTypeId
+		})
+	}
+}
 //#endregion
