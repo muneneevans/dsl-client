@@ -43,6 +43,7 @@ class WardDetailPage extends Component {
 	render() {
 		return this.props.wardDetails ? (
 			<Grid>
+				
 				<Grid.Row columns={1} stretched>
 					<Grid.Column computer={16}>
 						<Banner title={this.props.wardDetails.name} />
@@ -102,7 +103,7 @@ class WardDetailPage extends Component {
 								cadres={this.props.cadres}
 								jobTypes={this.props.jobTypes}
 								submitAction={jobTypeId => {
-									this.props.staffActions.addSelectedFacilityJobType(jobTypeId)
+									this.props.staffActions.addWardJobType(jobTypeId)
 								}}
 							/>
 						</Segment>
@@ -120,6 +121,7 @@ class WardDetailPage extends Component {
 							/>
 						</Segment>
 					</Grid.Column>
+
 					<Grid.Column tablet={4} mobile={16} computer={4}>
 						<Segment vertical>
 							<FacilityCommoditiesChekList
@@ -130,12 +132,13 @@ class WardDetailPage extends Component {
 							/>
 						</Segment>
 					</Grid.Column>
+
 					<Grid.Column tablet={4} mobile={16} computer={4}>
 						<Segment vertical>
 							<FacilityStaffCheckList
-								jobTypes={this.props.selectedFacilityJobTypes}
+								jobTypes={this.props.wardJobTypes}
 								removeAction={id => {
-									this.props.staffActions.removeSelectedFacilityJobType(id)
+									// this.props.staffActions.removeSelectedFacilityJobType(id)
 								}}
 							/>
 						</Segment>
@@ -167,7 +170,8 @@ const mapStateToProps = state => {
 		wardYear: indicatorSelectors.getWardYear(state.indicatorReducer),
 
 		jobTypes: staffSelectors.getJobTypeOptions(state),
-		cadres: staffSelectors.getCadreOptions(state)
+		cadres: staffSelectors.getCadreOptions(state),
+		wardJobTypes: staffSelectors.getWardJobTypes(state.staffReducer)
 	}
 }
 
