@@ -6,7 +6,7 @@ export function getJobTypeOptions(state) {
 	if (state.staffReducer.jobTypes) {
 		let options = []
 
-		state.staffReducer.jobTypes.map((jobType, i) => {
+		state.staffReducer.jobTypes.map(jobType => {
 			options.push({
 				key: jobType.id,
 				value: jobType.id,
@@ -26,7 +26,7 @@ export function getCadres(state) {
 export function getCadreOptions(state) {
 	if (state.staffReducer.cadres) {
 		let options = []
-		state.staffReducer.cadres.map((cadre, i) => {
+		state.staffReducer.cadres.map(cadre => {
 			options.push({
 				key: cadre.id,
 				value: cadre.id,
@@ -66,7 +66,7 @@ export function getFacilityStaffGraphData(state) {
 				month: i,
 				monthName: monthDict[i]
 			}
-			state.staffReducer.facilityStaff.map((jobType, i) => {
+			state.staffReducer.facilityStaff.map(jobType => {
 				item[jobType.jobtype] = jobType.value
 				let foundKey = staffBarGraphKeys.find(item => {
 					return item == jobType.jobtype
@@ -81,9 +81,9 @@ export function getFacilityStaffGraphData(state) {
 		//create the lineGraph data
 		let lineGraphDataArray = []
 		let lineGraphLegend = []
-		let lineGraphData = []
+		// let lineGraphData = []
 		let lineGraphKeys = []
-		state.staffReducer.facilityStaff.map((jobType, i) => {
+		state.staffReducer.facilityStaff.map(jobType => {
 			lineGraphKeys.push(jobType.jobtype)
 		})
 
@@ -149,7 +149,7 @@ export function getFacilitySelectedJobTypeDataValues(state) {
 		let staffBarGraph = []
 		let staffBarGraphKeys = []
 
-		state.staffReducer.facilityJobTypeDataValues.map((jobType, i) => {
+		state.staffReducer.facilityJobTypeDataValues.map(jobType => {
 			let item = {}
 			item[jobType.name] = jobType.value
 			Object.keys(monthDict).map((month, i) => {
@@ -174,7 +174,7 @@ export function getFacilitySelectedJobTypeDataValues(state) {
 }
 
 //#region ward specific selectors
-export function getWardJobTypes(staffReducer) {	
+export function getWardJobTypes(staffReducer) {
 	return staffReducer.wardJobTypes
 }
 //#endregion

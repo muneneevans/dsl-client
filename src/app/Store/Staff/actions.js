@@ -77,7 +77,7 @@ export function fetchFacilitySelectedStaff(facilityId, jobTypes) {
 		//loop through each job type and get the number of staff
 		dispatch({ type: types.GET_FACILITY_SELECTED_JOB_TYPES_START })
 
-		jobTypes.map((jobType, i) => {
+		jobTypes.map((jobType) => {
 			//mark the job type as requested
 			dispatch({
 				type: types.GET_FACILITY_INDIVIDUAL_SELECTED_JOB_TYPES_REQUESTED,
