@@ -190,7 +190,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 
 //#endregion
 
-//ward specific selectors
+//#region ward specific selectors
 export const getWardIndicators = indicatorReducer => {
 	return indicatorReducer.wardIndicators
 }
@@ -199,6 +199,11 @@ export const getWardPeriodType = indicatorReducer => {
 	return indicatorReducer.wardPeriodType
 }
 
-export const getWardYear = indicatorReducer =>{
+export const getWardYear = indicatorReducer => {
 	return indicatorReducer.wardYear
 }
+
+export const getWardIndicatorDataValues = indicatorReducer => {	
+	return indicatorReducer.wardIndicatorDataValues
+}
+//#endregion

@@ -57,7 +57,7 @@ export function fetchPeriodTypes() {
 	}
 }
 
-//facility related actions
+//#region facility related actions
 export function addFacilityIndicator(indicatorId) {
 	return function(dispatch) {
 		return dispatch({
@@ -109,7 +109,7 @@ export function fetchFacilityIndicatorValues(
 			year
 		}
 
-		indicators.map((indicator) => {
+		indicators.map(indicator => {
 			dispatch({
 				type: types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_REQUESTED,
 				selectedIndicatorId: indicator.id
@@ -135,7 +135,7 @@ export function fetchFacilityIndicatorValues(
 						})
 					}
 				})
-				.catch(error =>{
+				.catch(error => {
 					throw error
 				})
 		})
@@ -150,7 +150,9 @@ export function clearFacilityIndicatorData() {
 	}
 }
 
-//ward related actions
+//#endregion
+
+//#region ward related actions
 export function addWardIndicator(indicatorId) {
 	return dispatch => {
 		return dispatch({
@@ -186,3 +188,50 @@ export function setWardYear(year) {
 		})
 	}
 }
+
+export function fetchWardIndicatorDataValues(
+	wardId,
+	indicators,
+	periodTypeId,
+	year
+) {
+	return dispatch => {
+		dispatch({ type: types.GET_WARD_INDICATORS_VALUES_START })
+		let filters = {
+			wardId,
+			periodTypeId,
+			year
+		}
+		//get values for each indicator
+		indicators.map(indicator => {
+			dispatch({
+				type: types.GET_WARD_INDIVIDUAL_INDICATOR_VALUES_REQUESTED,
+				indicatorId: indicator.id
+			})
+
+			IndicatorService.getWardIndicatorDataValues({
+				...filters,
+				indicatorId: indicator.id
+			})
+				.then(indicatorDataValues => {
+					if (indicatorDataValues.datavalues) {
+						dispatch({
+							type: types.GET_WARD_INDIVIDUAL_INDICATOR_VALUES_RECEIVED,
+							indicatorDataValues,
+							indicatorId: indicator.id,
+							selectedIndicatorId: indicator.id
+						})
+					} else {
+						dispatch({
+							type: types.GET_WARD_INDIVIDUAL_INDICATOR_VALUES_ERROR,
+							indicatorId: indicator.id
+						})
+					}
+				})
+				.catch(error => {
+					throw error
+				})
+		})
+	}
+}
+//#endregion

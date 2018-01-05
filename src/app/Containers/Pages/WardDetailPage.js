@@ -43,13 +43,12 @@ class WardDetailPage extends Component {
 	render() {
 		return this.props.wardDetails ? (
 			<Grid>
-				
 				<Grid.Row columns={1} stretched>
 					<Grid.Column computer={16}>
 						<Banner title={this.props.wardDetails.name} />
 					</Grid.Column>
 				</Grid.Row>
-	
+
 				<Grid.Row columns={4} className="ui large info message">
 					<Grid.Column tablet={8} mobile={16} computer={4}>
 						<Segment>
@@ -144,6 +143,28 @@ class WardDetailPage extends Component {
 						</Segment>
 					</Grid.Column>
 				</Grid.Row>
+
+				<Grid.Row>
+					<Grid.Column>
+						<Segment>
+							<Button
+								primary
+								fluid
+								onClick={() => {
+									// alert('asd')									
+									this.props.indicatorActions.fetchWardIndicatorDataValues(
+										this.props.match.params.id,
+										this.props.wardIndicators,
+										this.props.wardPeriodType,
+										this.props.wardYear
+									)
+								}}
+							>
+								Update
+							</Button>
+						</Segment>
+					</Grid.Column>
+				</Grid.Row>
 			</Grid>
 		) : (
 			<div> No ward</div>
@@ -160,6 +181,9 @@ const mapStateToProps = state => {
 			state
 		),
 		wardIndicators: indicatorSelectors.getWardIndicators(
+			state.indicatorReducer
+		),
+		wardIndicatorDataValues: indicatorSelectors.getWardIndicatorDataValues(
 			state.indicatorReducer
 		),
 

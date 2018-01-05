@@ -43,7 +43,7 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 
 	case types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_REQUESTED:
 		return state.merge({
-			facilityIndicators: updateFetchStateOfSelectedFacilityIndicators(
+			facilityIndicators: updateFetchStateOfIndicators(
 				action.selectedIndicatorId,
 				state.facilityIndicators,
 				2
@@ -57,7 +57,7 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 				action.indicatorId,
 				state.facilityIndicatorDataValues
 			),
-			facilityIndicators: updateFetchStateOfSelectedFacilityIndicators(
+			facilityIndicators: updateFetchStateOfIndicators(
 				action.selectedIndicatorId,
 				state.facilityIndicators,
 				1
@@ -66,7 +66,7 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 
 	case types.GET_FACILITY_INDIVIDUAL_SELECTED_INDICATOR_VALUES_ERROR:
 		return state.merge({
-			facilityIndicators: updateFetchStateOfSelectedFacilityIndicators(
+			facilityIndicators: updateFetchStateOfIndicators(
 				action.selectedIndicatorId,
 				state.facilityIndicators,
 				0
@@ -124,6 +124,37 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 	case types.SET_WARD_YEAR_REQUESTED:
 		return state.merge({
 			wardYear: action.year
+		})
+
+	case types.GET_WARD_INDIVIDUAL_INDICATOR_VALUES_REQUESTED:
+		return state.merge({
+			wardIndicators: updateFetchStateOfIndicators(
+				action.indicatorId,
+				state.wardIndicators,
+				2
+			)
+		})
+
+	case types.GET_WARD_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:		
+		return state.merge({
+			wardIndicatorDataValues: addIndicatorDataValuesToList(
+				action.indicatorDataValues,
+				action.indicatorId,
+				state.wardIndicatorDataValues
+			),
+			wardIndicators: updateFetchStateOfIndicators(
+				action.indicatorId,
+				state.wardIndicators,
+				1
+			)
+		})
+	case types.GET_WARD_INDIVIDUAL_INDICATOR_VALUES_ERROR:
+		return state.merge({
+			wardIndicators: updateFetchStateOfIndicators(
+				action.indicatorId,
+				state.wardIndicators,
+				0
+			)
 		})
 	default:
 		return state
@@ -188,7 +219,7 @@ function removeIndicatorFromIndicatorsList(newIndicatorId, indicatorIds) {
 	}
 }
 
-function updateFetchStateOfSelectedFacilityIndicators(
+function updateFetchStateOfIndicators(
 	selectedIndicatorId,
 	indicatorIds,
 	fetchStatus
