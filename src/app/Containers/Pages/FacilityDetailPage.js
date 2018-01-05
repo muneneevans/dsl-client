@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import { Grid, Segment, Tab, Header, Button, Card } from "semantic-ui-react"
 import { Bar, Line, HeatMap } from "nivo"
-import { match } from "react-router"
 
 import * as indicatorSelectors from "../../Store/Indicators/selectors"
 import * as indicatorActions from "../../Store/Indicators/actions"
@@ -33,7 +32,6 @@ class FacilityDetailScreen extends Component {
 	}
 
 	componentDidMount() {
-		this.props.indicatorActions.fetchDataElements()
 		this.props.facilityActions.fetchfacilityDetails(this.props.match.params.id)
 		this.props.indicatorActions.fetchIndicatorGroups()
 		this.props.indicatorActions.fetchPeriodTypes()
@@ -187,7 +185,7 @@ class FacilityDetailScreen extends Component {
 									)
 								}}
 							>
-                Update
+								Update
 							</Button>
 						</Segment>
 					</Grid.Column>
@@ -248,7 +246,7 @@ class FacilityDetailScreen extends Component {
 	}
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
 	return {
 		facilityDetailsIsFetched: facilitySelectors.getFacilityDetailFetchStatus(
 			state
@@ -267,10 +265,10 @@ const mapStateToProps = (state, ownProps) => {
 		),
 
 		periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
-
-		facilityIndicators: indicatorSelectors.getFacilityIndicators(state),
 		facilityPeriodType: indicatorSelectors.getFacilityPeriodType(state),
 		facilityYear: indicatorSelectors.getFacilityYear(state),
+
+		facilityIndicators: indicatorSelectors.getFacilityIndicators(state),
 		facilityIndicatorDataVailues: indicatorSelectors.getFacilityIndicatorDataValues(
 			state
 		),
@@ -289,7 +287,7 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		indicatorActions: bindActionCreators(indicatorActions, dispatch),
 		facilityActions: bindActionCreators(facilityActions, dispatch),
