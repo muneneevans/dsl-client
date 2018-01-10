@@ -12,6 +12,8 @@ import * as commodityActions from "../../Store/Commodities/actions"
 import * as commoditySelectors from "../../Store/Commodities/selectors"
 import * as staffSelectors from "../../Store/Staff/selectors"
 import * as staffActions from "../../Store/Staff/actions"
+import * as facilityActions from "../../Store/Facilities/actions"
+import * as facilitySelectors from "../../Store/Facilities/selectors"
 
 import Banner from "../../Components/Banner"
 import IndicatorGroupsForm from "../../Components/Forms/IndicatorGroupsForm"
@@ -19,9 +21,12 @@ import PeriodForm from "../../Components/Forms/PeriodForm"
 import YearForm from "../../Components/Forms/YearForm"
 import ProductsForm from "../../Components/Forms/ProductsForm"
 import StaffForm from "../../Components/Forms/StaffForm"
+
 import FacilityIndicatorCheckList from "../../Components/Widgets/FacilityIndicatorCheckList"
 import FacilityStaffCheckList from "../../Components/Widgets/FacilityStaffCheckList"
 import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommoditiesChekList"
+
+import WardFacilitySummaryWidget from "../../Components/Widgets/Ward/WardFacilitySummaryWidget"
 
 class WardDetailPage extends Component {
 	constructor(props) {
@@ -151,18 +156,36 @@ class WardDetailPage extends Component {
 								primary
 								fluid
 								onClick={() => {
-									// alert('asd')									
+									// alert('asd')
 									this.props.indicatorActions.fetchWardIndicatorDataValues(
 										this.props.match.params.id,
 										this.props.wardIndicators,
 										this.props.wardPeriodType,
 										this.props.wardYear
 									)
+									this.props.facilityActions.fetchWardSummary(
+										this.props.match.params.id
+									)
 								}}
 							>
 								Update
 							</Button>
 						</Segment>
+					</Grid.Column>
+				</Grid.Row>
+
+				<Grid.Row stretched centered columns={1}>
+					<Grid.Column>
+						{console.log(this.props.wardFacilitysummaryGraph)}
+						{this.props.wardFacilitysummaryGraph ? (
+							<WardFacilitySummaryWidget
+								barGraph={this.props.wardFacilitysummaryGraph.barGraph}
+								height={700}
+								width={1500}
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
@@ -195,7 +218,11 @@ const mapStateToProps = state => {
 
 		jobTypes: staffSelectors.getJobTypeOptions(state),
 		cadres: staffSelectors.getCadreOptions(state),
-		wardJobTypes: staffSelectors.getWardJobTypes(state.staffReducer)
+		wardJobTypes: staffSelectors.getWardJobTypes(state.staffReducer),
+
+		wardFacilitysummaryGraph: facilitySelectors.getWardSummaryGraphData(
+			state.facilityReducer
+		)
 	}
 }
 
@@ -204,7 +231,8 @@ const mapDispatchToProps = dispatch => {
 		commonActions: bindActionCreators(commonActions, dispatch),
 		indicatorActions: bindActionCreators(indicatorActions, dispatch),
 		commodityActions: bindActionCreators(commodityActions, dispatch),
-		staffActions: bindActionCreators(staffActions, dispatch)
+		staffActions: bindActionCreators(staffActions, dispatch),
+		facilityActions: bindActionCreators(facilityActions, dispatch)
 	}
 }
 
