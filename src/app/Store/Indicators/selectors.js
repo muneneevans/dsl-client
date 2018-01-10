@@ -203,7 +203,117 @@ export const getWardYear = indicatorReducer => {
 	return indicatorReducer.wardYear
 }
 
-export const getWardIndicatorDataValues = indicatorReducer => {	
-	return indicatorReducer.wardIndicatorDataValues
+export const getWardIndicatorDataValues = indicatorReducer => {
+	if (indicatorReducer.wardIndicatorDataValues) {
+		var months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+		let monthDict = {
+			1: "January",
+			2: "February",
+			3: "March",
+			4: "April",
+			5: "May",
+			6: "June",
+			7: "July",
+			8: "August",
+			9: "September",
+			10: "October",
+			11: "November",
+			12: "December"
+		}
+
+		const getBarGraphKeys = (
+			wardIndicators,
+			graphKeys,
+			indicatorDataValues
+		) => {
+			wardIndicators.map(indicator => {
+				graphKeys.push(indicatorDataValues[indicator.id][0].name)
+			})
+			return graphKeys
+		}
+		const aggregator = (accumulator, currentValue, currentIndex, arr) => {
+			accumulator = accumulator + currentValue.value
+			return currentIndex == arr.length - 1
+				? accumulator / arr.length
+				: accumulator
+		}
+
+		const getMonthValues = (month, values) => {
+			//find object with equal month value
+			return values.value.filter(item => {
+				return item.month == month
+			})[0]
+		}
+
+		const facilityfn = (month, values) => {
+			return values.map(hospital => {
+				return getMonthValues(month, hospital)
+			})
+		}
+
+		const monthsData = (months, data, monthData = {}) => {
+			months.map(month => {
+				//get the values for each month
+				monthData[month] = facilityfn(month, data)
+					.filter(item => item != null)
+					.reduce(aggregator, 0)
+			})
+			return monthData
+		}
+
+		const indicatorSummaries = Object.keys(
+			indicatorReducer.wardIndicatorDataValues
+		).map(indicator => {
+			var result = {}
+			result[indicator] = monthsData(
+				months,
+				indicatorReducer.wardIndicatorDataValues[indicator],
+				{}
+			)
+
+			return result
+		})
+
+		const graphs = (output, months) => {
+			months.map(month => {
+				var monthValues = {}
+				monthValues["month"] = month
+				monthValues["monthName"] = monthDict[month]
+				indicatorSummaries.map(indicator => {
+					Object.keys(indicator).map(indicatorId => {
+						var index = Object.keys(indicator[indicatorId]).filter(
+							item => item == month
+						)[0]
+						monthValues[indicatorId] = indicator[indicatorId][index]
+					})
+				})
+				output.push(monthValues)
+			})
+			return output
+		}
+
+		console.log({
+			barGraph: {
+				data: graphs([], months),
+				key: getBarGraphKeys(
+					indicatorReducer.wardIndicators,
+					[],
+					indicatorReducer.wardIndicatorDataValues
+				)
+			}
+		})
+		return {
+			barGraph: {
+				data: graphs([], months),
+				key: getBarGraphKeys(
+					indicatorReducer.WardIndicators,
+					[],
+					indicatorReducer.wardIndicatorDataValues
+				)
+			}
+		}
+	} else {
+		return undefined
+	}
 }
 //#endregion
