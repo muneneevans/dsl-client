@@ -27,7 +27,7 @@ import FacilityStaffCheckList from "../../Components/Widgets/FacilityStaffCheckL
 import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommoditiesChekList"
 
 import WardFacilitySummaryWidget from "../../Components/Widgets/Ward/WardFacilitySummaryWidget"
-
+import WardIndicatorWidget from "../../Components/Widgets/Ward/WardIndicatorWidget"
 class WardDetailPage extends Component {
 	constructor(props) {
 		super(props)
@@ -174,16 +174,47 @@ class WardDetailPage extends Component {
 					</Grid.Column>
 				</Grid.Row>
 
-				<Grid.Row stretched centered columns={1}>
+				<Grid.Row stretched centered columns={2}>
 					<Grid.Column>
-						{console.log(this.props.wardFacilitysummaryGraph)}
 						{this.props.wardFacilitysummaryGraph ? (
 							<WardFacilitySummaryWidget
-								barGraph={this.props.wardFacilitysummaryGraph.barGraph}
+								barGraph={
+									this.props.wardFacilitysummaryGraph.bedsSummary.barGraph
+								}
 								height={700}
 								width={1500}
+								title="Number of beds in facility"
 							/>
 						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+					<Grid.Column>
+						{this.props.wardFacilitysummaryGraph ? (
+							<WardFacilitySummaryWidget
+								barGraph={
+									this.props.wardFacilitysummaryGraph.cotsSummary.barGraph
+								}
+								height={700}
+								width={1500}
+								title="Number of cots per facility"
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+				</Grid.Row>
+
+				<Grid.Row stretched centered columns={1}>
+					<Grid.Column >
+						{this.props.wardIndicatorDataValues ? (
+							<WardIndicatorWidget
+								barGraph={this.props.wardIndicatorDataValues.barGraph}
+								heatMap = {this.props.wardIndicatorDataValues.barGraph}
+								radarGraph ={this.props.wardIndicatorDataValues.barGraph}
+								height={500}
+							/>
+						):(
 							<div>{this.renderLoading()}</div>
 						)}
 					</Grid.Column>

@@ -8,6 +8,7 @@ import { Segment, Tab, Header } from "semantic-ui-react"
 export const WardFacilitySummaryWidget = ({
 	barGraph,
 	height,
+	title,
 	containerWidth
 }) => {
 	if (barGraph) {
@@ -107,7 +108,7 @@ export const WardFacilitySummaryWidget = ({
 
 		return (
 			<Segment.Group size="huge">
-				<Segment>Ward Facility Summary</Segment>
+				<Segment>{title}</Segment>
 				<Segment>
 					<Tab
 						menu={{ secondary: true, attached: "bottom", color: "green" }}

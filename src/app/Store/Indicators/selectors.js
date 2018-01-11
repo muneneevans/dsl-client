@@ -221,14 +221,12 @@ export const getWardIndicatorDataValues = indicatorReducer => {
 			12: "December"
 		}
 
-		const getBarGraphKeys = (
-			wardIndicators,
-			graphKeys,
-			indicatorDataValues
-		) => {
-			wardIndicators.map(indicator => {
-				graphKeys.push(indicatorDataValues[indicator.id][0].name)
-			})
+		const getBarGraphKeys = (wardIndicators, graphKeys) => {
+			if (wardIndicators) {
+				wardIndicators.map(indicator => {
+					graphKeys.push(indicator.name)
+				})
+			}
 			return graphKeys
 		}
 		const aggregator = (accumulator, currentValue, currentIndex, arr) => {
@@ -274,7 +272,7 @@ export const getWardIndicatorDataValues = indicatorReducer => {
 			return result
 		})
 
-		const graphs = (output, months) => {
+		const graphs = (output, months, wardIndicators) => {
 			months.map(month => {
 				var monthValues = {}
 				monthValues["month"] = month
@@ -283,8 +281,11 @@ export const getWardIndicatorDataValues = indicatorReducer => {
 					Object.keys(indicator).map(indicatorId => {
 						var index = Object.keys(indicator[indicatorId]).filter(
 							item => item == month
+						)[0]						
+						var indicatorName = wardIndicators.filter(
+							indicator => indicator.id == indicatorId
 						)[0]
-						monthValues[indicatorId] = indicator[indicatorId][index]
+						monthValues[indicatorName.name] = indicator[indicatorId][index]
 					})
 				})
 				output.push(monthValues)
@@ -292,24 +293,11 @@ export const getWardIndicatorDataValues = indicatorReducer => {
 			return output
 		}
 
-		console.log({
-			barGraph: {
-				data: graphs([], months),
-				key: getBarGraphKeys(
-					indicatorReducer.wardIndicators,
-					[],
-					indicatorReducer.wardIndicatorDataValues
-				)
-			}
-		})
 		return {
 			barGraph: {
-				data: graphs([], months),
-				key: getBarGraphKeys(
-					indicatorReducer.WardIndicators,
-					[],
-					indicatorReducer.wardIndicatorDataValues
-				)
+				data: graphs([], months, indicatorReducer.wardIndicators),
+				keys: getBarGraphKeys(indicatorReducer.wardIndicators, []),
+				indexBy: "monthName"
 			}
 		}
 	} else {

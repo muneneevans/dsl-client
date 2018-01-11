@@ -357,7 +357,7 @@ export function getWardSummaryChartData(state) {
 
 export function getWardSummaryGraphData(facilityReducer) {
 	if (facilityReducer.wardSummary) {
-		const barGraph = wardSummary => {
+		const bedsBarGraph = wardSummary => {
 			var barGraphDataArray = []
 			var keys = []
 			wardSummary.map(facility => {
@@ -375,8 +375,31 @@ export function getWardSummaryGraphData(facilityReducer) {
 			}
 		}
 
+		const cotsBarGraph = wardSummary => {
+			var barGraphDataArray = []
+			var keys = []
+			wardSummary.map(facility => {
+				barGraphDataArray.push({
+					facility: facility.name,
+					beds: facility.number_of_cots
+				})
+			})
+			keys.push("cots")
+
+			return {
+				data: barGraphDataArray,
+				keys,
+				indexBy: "facility"
+			}
+		}
+
 		return {
-			barGraph: barGraph(facilityReducer.wardSummary)
+			bedsSummary: {
+				barGraph: bedsBarGraph(facilityReducer.wardSummary)
+			},
+			cotsSummary: {
+				barGraph: cotsBarGraph(facilityReducer.wardSummary)
+			}
 		}
 	} else {
 		return undefined
