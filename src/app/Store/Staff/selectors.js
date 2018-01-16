@@ -173,6 +173,13 @@ export function getFacilitySelectedJobTypeDataValues(state) {
 	}
 }
 
+//#region Country selectors
+
+export function getCountryJobTypeSummary(staffReducer) {	
+	return staffReducer.countryJobTypesSummary
+}
+//#endregion
+
 //#region ward specific selectors
 export function getWardJobTypes(staffReducer) {
 	return staffReducer.wardJobTypes

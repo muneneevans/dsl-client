@@ -4,6 +4,12 @@ export const JOB_TYPES_RECEIVED = "staff.JOB_TYPES_RECEIVED"
 export const CADRES_REQUESTED = "staff.CADRES_REQUESTED"
 export const CADRES_RECEIVED = "staff.CADRES_RECEIVED"
 
+
+//#region country related action types
+export const COUNTRY_JOBTYPES_REQUESTED = "COUNTRY_JOBTYPES_REQUESTED"
+export const COUNTRY_JOBTYPES_RECEIVED = "COUNTRY_JOBTYPES_RECEIVED"
+//#endregion
+
 //#region facility specific action types
 export const FACILITY_STAFF_REQUESTED = "staff.FACILITY_STAFF_REQUESTED"
 export const FACILITY_STAFF_RECEIVED = "staff.FACILITY_STAFF_RECEIVED"

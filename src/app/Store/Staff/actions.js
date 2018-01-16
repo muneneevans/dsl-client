@@ -102,6 +102,21 @@ export function fetchFacilitySelectedStaff(facilityId, jobTypes) {
 	}
 }
 
+//#region  country related actions
+export function fetchCountryJobTypes() {
+	return dispatch => {
+		dispatch({ type: types.COUNTRY_JOBTYPES_REQUESTED })
+		return StaffService.getCountryJobTypes()
+			.then(countryJobTypesSummary => {
+				return dispatch({
+					type: types.COUNTRY_JOBTYPES_RECEIVED,
+					countryJobTypesSummary: countryJobTypesSummary.value
+				})
+			})
+	}
+}
+//#endregion
+
 //#region  ward specific actions
 
 export function addWardJobType(jobTypeId) {
