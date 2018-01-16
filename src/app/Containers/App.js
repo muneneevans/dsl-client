@@ -10,7 +10,8 @@ import IndicatorPage from "./Pages/IndicatorsPage"
 import MapPage from "./Pages/MapPage"
 import FacilityDetailPage from "./Pages/FacilityDetailPage"
 import DashBoardPage from "./Pages/DashBoardPage"
-import WardDetailPage from './Pages/WardDetailPage'
+import WardDetailPage from "./Pages/WardDetailPage"
+import CommoditiesPage from "./Pages/CommoditiesPage"
 // import ChartPage from "./ChartPage"
 
 class App extends Component {
@@ -27,6 +28,7 @@ class App extends Component {
 							/>
 						</Route>
 						<Route path="/maps" component={MapPage} />
+						<Route path="/commodities" component={CommoditiesPage} />
 						<Route path="/dashboard" component={DashBoardPage} />
 						<Route path="/charts" component={ChartPage} />
 						<Route path="/facilities/:id" component={FacilityDetailPage} />
