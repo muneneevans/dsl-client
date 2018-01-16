@@ -207,11 +207,11 @@ class WardDetailPage extends Component {
 
 				<Grid.Row stretched centered columns={1}>
 					<Grid.Column >
-						{this.props.wardIndicatorDataValues ? (
+						{this.props.wardIndicatorGraph ? (
 							<WardIndicatorWidget
-								barGraph={this.props.wardIndicatorDataValues.barGraph}
-								heatMap = {this.props.wardIndicatorDataValues.barGraph}
-								radarGraph ={this.props.wardIndicatorDataValues.barGraph}
+								barGraph={this.props.wardIndicatorGraph.barGraph}
+								heatMap={this.props.wardIndicatorGraph.barGraph}
+								radarGraph={this.props.wardIndicatorGraph.barGraph}
 								height={500}
 							/>
 						):(
@@ -237,7 +237,7 @@ const mapStateToProps = state => {
 		wardIndicators: indicatorSelectors.getWardIndicators(
 			state.indicatorReducer
 		),
-		wardIndicatorDataValues: indicatorSelectors.getWardIndicatorDataValues(
+		wardIndicatorGraph: indicatorSelectors.getWardIndicatorGraph(
 			state.indicatorReducer
 		),
 

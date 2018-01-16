@@ -281,7 +281,7 @@ export const getWardIndicatorDataValues = indicatorReducer => {
 					Object.keys(indicator).map(indicatorId => {
 						var index = Object.keys(indicator[indicatorId]).filter(
 							item => item == month
-						)[0]						
+						)[0]
 						var indicatorName = wardIndicators.filter(
 							indicator => indicator.id == indicatorId
 						)[0]
@@ -292,6 +292,8 @@ export const getWardIndicatorDataValues = indicatorReducer => {
 			})
 			return output
 		}
+
+
 
 		return {
 			barGraph: {
@@ -304,4 +306,73 @@ export const getWardIndicatorDataValues = indicatorReducer => {
 		return undefined
 	}
 }
+
+export const getWardIndicatorGraph = indicatorReducer => {
+	if (indicatorReducer.wardIndicatorDataValues) {
+		const monthDict = {
+			1: "January",
+			2: "February",
+			3: "March",
+			4: "April",
+			5: "May",
+			6: "June",
+			7: "July",
+			8: "August",
+			9: "September",
+			10: "October",
+			11: "November",
+			12: "December"
+		}
+
+		const renameKeys = indicatorDataValues => {
+			var newArray = []
+			// console.log(dataArray)
+			indicatorDataValues.map(monthValue => {
+				newArray.push({
+					x: Number(monthValue.month),
+					y: monthValue.value,
+				})
+			})
+			return newArray
+		}
+
+		const getMonthValues = (wardIndicatorDataValues, wardIndicators) => {
+			var graphData = []
+			var graphLegend = []
+			//define a set fo colors
+			var colors = d3.scale.category10()
+			Object.keys(wardIndicatorDataValues).map(indicator => {
+				graphData.push(
+					{
+						data: renameKeys(wardIndicatorDataValues[indicator]),
+						color: colors(indicator)
+					})				
+				if (wardIndicators.filter(item => item.id == indicator)){	
+					graphLegend.push({
+						title: wardIndicators.filter(item => item.id == indicator)[0].name,
+						color: colors(indicator),
+						disabled: false
+					})
+				}
+			})
+			return {
+				data: graphData,
+				legend: graphLegend
+			}
+		}
+		
+		return {
+			barGraph: {
+				data: getMonthValues(indicatorReducer.wardIndicatorDataValues, indicatorReducer.wardIndicators).data,
+				legend: getMonthValues(indicatorReducer.wardIndicatorDataValues, indicatorReducer.wardIndicators).legend,
+				keys: monthDict
+			}
+		}
+	}
+	else {
+		return undefined
+	}
+}
+
+
 //#endregion

@@ -179,13 +179,6 @@ export function getCountryJobTypeSummaryGraphs(staffReducer) {
 	if(staffReducer.countryJobTypesSummary){
 		var keys = Object.keys(staffReducer.countryJobTypesSummary)
 
-		console.log(JSON.stringify(
-			{
-				data: staffReducer.countryJobTypesSummary,
-				keys,
-				indexBy: ""
-			}
-		))
 
 		return{
 			barGraph:{
