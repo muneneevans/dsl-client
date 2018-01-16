@@ -175,8 +175,26 @@ export function getFacilitySelectedJobTypeDataValues(state) {
 
 //#region Country selectors
 
-export function getCountryJobTypeSummary(staffReducer) {	
-	return staffReducer.countryJobTypesSummary
+export function getCountryJobTypeSummaryGraphs(staffReducer) {	
+	if(staffReducer.countryJobTypesSummary){
+		var keys = Object.keys(staffReducer.countryJobTypesSummary)
+
+		console.log(JSON.stringify(
+			{
+				data: staffReducer.countryJobTypesSummary,
+				keys,
+				indexBy: ""
+			}
+		))
+
+		return{
+			barGraph:{
+				data: staffReducer.countryJobTypesSummary,
+				keys,
+				indexBy: ""
+			}
+		}
+	}
 }
 //#endregion
 
