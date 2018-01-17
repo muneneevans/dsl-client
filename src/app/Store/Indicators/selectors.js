@@ -190,7 +190,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 
 //#endregion
 
-//#region ward specific selectors
+//#region ward selectors
 export const getWardIndicators = indicatorReducer => {
 	return indicatorReducer.wardIndicators
 }
@@ -324,7 +324,7 @@ export const getWardIndicatorGraph = indicatorReducer => {
 			12: "December"
 		}
 
-		const renameKeys = indicatorDataValues => {
+		const getBarGraphData = indicatorDataValues => {
 			var newArray = []
 			// console.log(dataArray)
 			indicatorDataValues.map(monthValue => {
@@ -333,10 +333,11 @@ export const getWardIndicatorGraph = indicatorReducer => {
 					y: monthValue.value,
 				})
 			})
+			newArray = newArray.sort((a,b)=>a.x - b.x)			
 			return newArray
 		}
 
-		const getMonthValues = (wardIndicatorDataValues, wardIndicators) => {
+		const getbarGraph = (wardIndicatorDataValues, wardIndicators) => {
 			var graphData = []
 			var graphLegend = []
 			//define a set fo colors
@@ -344,7 +345,7 @@ export const getWardIndicatorGraph = indicatorReducer => {
 			Object.keys(wardIndicatorDataValues).map(indicator => {
 				graphData.push(
 					{
-						data: renameKeys(wardIndicatorDataValues[indicator]),
+						data: getBarGraphData(wardIndicatorDataValues[indicator]),
 						color: colors(indicator)
 					})				
 				if (wardIndicators.filter(item => item.id == indicator)){	
@@ -355,6 +356,7 @@ export const getWardIndicatorGraph = indicatorReducer => {
 					})
 				}
 			})
+			
 			return {
 				data: graphData,
 				legend: graphLegend
@@ -363,8 +365,8 @@ export const getWardIndicatorGraph = indicatorReducer => {
 		
 		return {
 			barGraph: {
-				data: getMonthValues(indicatorReducer.wardIndicatorDataValues, indicatorReducer.wardIndicators).data,
-				legend: getMonthValues(indicatorReducer.wardIndicatorDataValues, indicatorReducer.wardIndicators).legend,
+				data: getbarGraph(indicatorReducer.wardIndicatorDataValues, indicatorReducer.wardIndicators).data,
+				legend: getbarGraph(indicatorReducer.wardIndicatorDataValues, indicatorReducer.wardIndicators).legend,
 				keys: monthDict
 			}
 		}

@@ -11,7 +11,9 @@ import {
 	LineMarkSeries,
 	FlexibleXYPlot,
 	DiscreteColorLegend,
-	VerticalBarSeries
+	VerticalBarSeries,
+	AreaSeries,
+	HeatmapSeries
 } from "react-vis"
 
 export const WardIndicatorWidget = ({
@@ -22,7 +24,7 @@ export const WardIndicatorWidget = ({
 	containerWidth
 }) => {
 	if (barGraph) {
-		
+
 		console.log(barGraph)
 		const chartPanes = [
 			{
@@ -38,8 +40,73 @@ export const WardIndicatorWidget = ({
 							<YAxis />
 							<HorizontalGridLines />
 							<VerticalGridLines />
-							{barGraph.data.map((d,i) =>
+							{barGraph.data.map((d, i) =>
 								<VerticalBarSeries key={i} data={d.data} color={d.color} animation={{ damping: 9, stiffness: 30 }} />
+							)}
+							
+
+						</XYPlot>
+						<DiscreteColorLegend items={barGraph.legend} orientation='horizontal' />
+					</div>
+				)
+			},
+			{
+				menuItem: "Line Graph",
+				render: () => (
+					<div>
+						<XYPlot width={containerWidth - 50} height={height} colorType="category" animate>
+							<XAxis
+								tickFormat={v => {
+									return barGraph.keys[v];
+								}}
+							/>
+							<YAxis />
+							<HorizontalGridLines />
+							<VerticalGridLines />
+							{barGraph.data.map((d, i) =>
+								<LineMarkSeries data={d.data} color={d.color} key={i} animation={{ damping: 9, stiffness: 30 }} />
+							)}
+						</XYPlot>
+						<DiscreteColorLegend items={barGraph.legend} orientation='horizontal' />
+					</div>
+				)
+			},
+			{
+				menuItem: "Area Graph",
+				render: () => (
+					<div>
+						<XYPlot width={containerWidth - 50} height={height} colorType="category" animate>
+							<XAxis
+								tickFormat={v => {
+									return barGraph.keys[v]
+								}}
+							/>
+							<YAxis />
+							<HorizontalGridLines />
+							<VerticalGridLines />
+							{barGraph.data.map((d, i) =>								
+								<AreaSeries className="area-series-example" curve="curveNatural" data={d.data} color={d.color} key={i} animation={{ damping: 9, stiffness: 30 }}/>
+							)}
+						</XYPlot>
+						<DiscreteColorLegend items={barGraph.legend} orientation='horizontal' />
+					</div>
+				)
+			},
+			{
+				menuItem: "Heat Map",
+				render: () => (
+					<div>
+						<XYPlot width={containerWidth - 50} height={height} colorType="category" animate>
+							<XAxis
+								tickFormat={v => {
+									return barGraph.keys[v]
+								}}
+							/>
+							<YAxis />
+							<HorizontalGridLines />
+							<VerticalGridLines />
+							{barGraph.data.map((d, i) =>																
+								<HeatmapSeries className="heatmap-series-example" data={d.data} color={d.color}/>
 							)}
 						</XYPlot>
 						<DiscreteColorLegend items={barGraph.legend} orientation='horizontal' />
