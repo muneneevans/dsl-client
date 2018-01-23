@@ -28,6 +28,7 @@ import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommod
 
 import WardFacilitySummaryWidget from "../../Components/Widgets/Ward/WardFacilitySummaryWidget"
 import WardIndicatorWidget from "../../Components/Widgets/Ward/WardIndicatorWidget"
+import WardFacilityTypeWidget from "../../Components/Widgets/Ward/WardFacilityTypeWidget"
 class WardDetailPage extends Component {
 	constructor(props) {
 		super(props)
@@ -166,6 +167,9 @@ class WardDetailPage extends Component {
 									this.props.facilityActions.fetchWardSummary(
 										this.props.match.params.id
 									)
+									this.props.facilityActions.fetchWardFacilityTypesSummary(
+										this.props.match.params.id
+									)
 								}}
 							>
 								Update
@@ -203,10 +207,22 @@ class WardDetailPage extends Component {
 							<div>{this.renderLoading()}</div>
 						)}
 					</Grid.Column>
+					<Grid.Column>
+						{this.props.wardFacilityTypeSummaryGraph ? (
+							<WardFacilityTypeWidget
+								barGraph={this.props.wardFacilityTypeSummaryGraph.barGraph}
+								height={700}
+								width={1500}
+								title="facility Types"
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
 				</Grid.Row>
 
 				<Grid.Row stretched centered columns={1}>
-					<Grid.Column >
+					<Grid.Column>
 						{this.props.wardIndicatorGraph ? (
 							<WardIndicatorWidget
 								barGraph={this.props.wardIndicatorGraph.barGraph}
@@ -214,7 +230,7 @@ class WardDetailPage extends Component {
 								radarGraph={this.props.wardIndicatorGraph.barGraph}
 								height={500}
 							/>
-						):(
+						) : (
 							<div>{this.renderLoading()}</div>
 						)}
 					</Grid.Column>
@@ -252,6 +268,9 @@ const mapStateToProps = state => {
 		wardJobTypes: staffSelectors.getWardJobTypes(state.staffReducer),
 
 		wardFacilitysummaryGraph: facilitySelectors.getWardSummaryGraphData(
+			state.facilityReducer
+		),
+		wardFacilityTypeSummaryGraph: facilitySelectors.getWardFacilityTypeGraphData(
 			state.facilityReducer
 		)
 	}

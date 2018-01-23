@@ -406,7 +406,34 @@ export function getWardSummaryGraphData(facilityReducer) {
 	}
 }
 
+export function getWardFacilityTypeGraphData(facilityReducer) {
+	if (facilityReducer.wardFacilityTypesSummary) {
+		const createBarGraphKeys = wardSummary => {
+			return Object.keys(wardSummary.value)
+		}
+
+		const createBarGraph = wardSummary => {
+			return Object.keys(wardSummary.value).map((facilityType, i) => {
+				return {
+					x: i,
+					y: wardSummary.value[facilityType],
+					color: "red"
+				}
+			})
+		}
+
+		return {
+			barGraph: {
+				data: createBarGraph(facilityReducer.wardFacilityTypesSummary),
+				keys: createBarGraphKeys(facilityReducer.wardFacilityTypesSummary)
+			}
+		}
+	} else {
+		return undefined
+	}
+}
 //#endregion
+
 export function getCurrentFacilityInformationType(state) {
 	return state.facilityReducer.currentFacilityInformationType
 }
