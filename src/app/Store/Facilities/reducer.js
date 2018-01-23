@@ -27,6 +27,7 @@ const InitialState = Immutable({
 	wardSummaryIsFetched: false,
 	wardSummary: undefined,
 	wardFacilityTypesSummary: undefined,
+	wardKephLevelsSummary: undefined,
 
 	currentFacilityInformationType: undefined,
 
@@ -134,6 +135,10 @@ export default function facilityReducer(state = InitialState, action = {}) {
 	case types.WARD_FACILITYTYPES_SUMMARY_RECEIVED:
 		return state.merge({
 			wardFacilityTypesSummary: action.wardFacilityTypesSummary
+		})
+	case types.WARD_KEPHLEVELS_SUMMARY_RECEIVED:
+		return state.merge({
+			wardKephLevelsSummary: action.wardKephLevelsSummary
 		})
 
 	case types.FACILITY_TYPES_RECEIVED:

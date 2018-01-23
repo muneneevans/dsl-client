@@ -170,6 +170,9 @@ class WardDetailPage extends Component {
 									this.props.facilityActions.fetchWardFacilityTypesSummary(
 										this.props.match.params.id
 									)
+									this.props.facilityActions.fetchWardKephLevelsSummary(
+										this.props.match.params.id
+									)
 								}}
 							>
 								Update
@@ -214,6 +217,18 @@ class WardDetailPage extends Component {
 								height={700}
 								width={1500}
 								title="facility Types"
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+					<Grid.Column>
+						{this.props.wardKephLevelsSummaryGraph ? (
+							<WardFacilityTypeWidget
+								barGraph={this.props.wardKephLevelsSummaryGraph.barGraph}
+								height={700}
+								width={1500}
+								title="Keph levels"
 							/>
 						) : (
 							<div>{this.renderLoading()}</div>
@@ -271,6 +286,9 @@ const mapStateToProps = state => {
 			state.facilityReducer
 		),
 		wardFacilityTypeSummaryGraph: facilitySelectors.getWardFacilityTypeGraphData(
+			state.facilityReducer
+		),
+		wardKephLevelsSummaryGraph: facilitySelectors.getWardKephLevelGraphData(
 			state.facilityReducer
 		)
 	}

@@ -126,6 +126,16 @@ export default class FacilityService {
 				throw error
 			})
 	}
+	static getWardKephLevelSummary(wardId) {
+		const url = this.host.concat("ward/", wardId, "/kephlevels/summary/")
+		return fetch(url)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
 	//#endregion
 
 	static getFacilities(level, id) {

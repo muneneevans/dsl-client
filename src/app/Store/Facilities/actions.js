@@ -185,6 +185,21 @@ export function fetchWardFacilityTypesSummary(wardId) {
 			})
 	}
 }
+export function fetchWardKephLevelsSummary(wardId) {
+	return dispatch => {
+		dispatch({ type: types.WARD_KEPHLEVELS_SUMMARY_REQUESTED })
+		FacilityService.getWardKephLevelSummary(wardId)
+			.then(wardKephLevelsSummary => {
+				return dispatch({
+					type: types.WARD_KEPHLEVELS_SUMMARY_RECEIVED,
+					wardKephLevelsSummary
+				})
+			})
+			.catch(error => {
+				throw error
+			})
+	}
+}
 
 //#endregion
 

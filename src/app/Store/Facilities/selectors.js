@@ -432,6 +432,32 @@ export function getWardFacilityTypeGraphData(facilityReducer) {
 		return undefined
 	}
 }
+export function getWardKephLevelGraphData(facilityReducer) {
+	if (facilityReducer.wardKephLevelsSummary) {
+		const createBarGraphKeys = wardSummary => {
+			return Object.keys(wardSummary.value)
+		}
+
+		const createBarGraph = wardSummary => {
+			return Object.keys(wardSummary.value).map((facilityType, i) => {
+				return {
+					x: i,
+					y: wardSummary.value[facilityType],
+					color: "red"
+				}
+			})
+		}
+
+		return {
+			barGraph: {
+				data: createBarGraph(facilityReducer.wardKephLevelsSummary),
+				keys: createBarGraphKeys(facilityReducer.wardKephLevelsSummary)
+			}
+		}
+	} else {
+		return undefined
+	}
+}
 //#endregion
 
 export function getCurrentFacilityInformationType(state) {
