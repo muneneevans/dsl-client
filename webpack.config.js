@@ -5,6 +5,9 @@ var path = require("path")
 var DIST_DIR = path.resolve(__dirname, "dist")
 var SRC_DIR = path.resolve(__dirname, "src")
 
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+	.BundleAnalyzerPlugin
+
 var config = {
 	entry: SRC_DIR + "/app/index.js",
 	devtool: "inline-cheap-module-source-map",
@@ -29,13 +32,14 @@ var config = {
 			},
 			{
 				test: /\.css$/,
-				loader: ExtractTextPlugin.extract({ fallback: "style-loader", use: "css-loader" }
-				)
+				loader: ExtractTextPlugin.extract({
+					fallback: "style-loader",
+					use: "css-loader"
+				})
 			}
-		],
-    
-	}
+		]
+	},
+	// plugins: [new BundleAnalyzerPlugin()]
 }
-
 
 module.exports = config
