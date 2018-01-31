@@ -1,3 +1,4 @@
+import * as d3 from "d3"
 export function getJobTypes(state) {
 	return state.staffReducer.jobTypes
 }
@@ -57,7 +58,7 @@ export function getFacilityStaffGraphData(state) {
 		}
 
 		//define a set of colors from d3
-		let colors = d3.scale.category10()
+		let colors = d3.scaleOrdinal(d3.schemeCategory10)
 
 		let staffBarGraph = []
 		let staffBarGraphKeys = []
@@ -175,13 +176,12 @@ export function getFacilitySelectedJobTypeDataValues(state) {
 
 //#region Country selectors
 
-export function getCountryJobTypeSummaryGraphs(staffReducer) {	
-	if(staffReducer.countryJobTypesSummary){
+export function getCountryJobTypeSummaryGraphs(staffReducer) {
+	if (staffReducer.countryJobTypesSummary) {
 		var keys = Object.keys(staffReducer.countryJobTypesSummary)
 
-
-		return{
-			barGraph:{
+		return {
+			barGraph: {
 				data: staffReducer.countryJobTypesSummary,
 				keys,
 				indexBy: ""

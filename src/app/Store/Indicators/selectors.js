@@ -1,3 +1,4 @@
+import * as d3 from "d3"
 export function getDataElementsFetchStatus(state) {
 	return state.indicatorReducer.dataElementsIsFetched
 }
@@ -97,8 +98,7 @@ export function getFacilityIndicatorDataValuesMapData(state) {
 			12: "December"
 		}
 
-		//define a set fo colors
-		var colors = d3.scale.category10()
+		var colors = d3.scaleOrdinal(d3.schemeCategory10)
 
 		if (ids.length == 0) {
 			return undefined
@@ -293,8 +293,6 @@ export const getWardIndicatorDataValues = indicatorReducer => {
 			return output
 		}
 
-
-
 		return {
 			barGraph: {
 				data: graphs([], months, indicatorReducer.wardIndicators),
@@ -330,10 +328,10 @@ export const getWardIndicatorGraph = indicatorReducer => {
 			indicatorDataValues.map(monthValue => {
 				newArray.push({
 					x: Number(monthValue.month),
-					y: monthValue.value,
+					y: monthValue.value
 				})
 			})
-			newArray = newArray.sort((a,b)=>a.x - b.x)			
+			newArray = newArray.sort((a, b) => a.x - b.x)
 			return newArray
 		}
 
@@ -341,14 +339,13 @@ export const getWardIndicatorGraph = indicatorReducer => {
 			var graphData = []
 			var graphLegend = []
 			//define a set fo colors
-			var colors = d3.scale.category10()
+			var colors = d3.scaleOrdinal(d3.schemeCategory10)
 			Object.keys(wardIndicatorDataValues).map(indicator => {
-				graphData.push(
-					{
-						data: getBarGraphData(wardIndicatorDataValues[indicator]),
-						color: colors(indicator)
-					})				
-				if (wardIndicators.filter(item => item.id == indicator)){	
+				graphData.push({
+					data: getBarGraphData(wardIndicatorDataValues[indicator]),
+					color: colors(indicator)
+				})
+				if (wardIndicators.filter(item => item.id == indicator)) {
 					graphLegend.push({
 						title: wardIndicators.filter(item => item.id == indicator)[0].name,
 						color: colors(indicator),
@@ -356,25 +353,29 @@ export const getWardIndicatorGraph = indicatorReducer => {
 					})
 				}
 			})
-			
+
 			return {
 				data: graphData,
 				legend: graphLegend
 			}
 		}
-		
+
 		return {
 			barGraph: {
-				data: getbarGraph(indicatorReducer.wardIndicatorDataValues, indicatorReducer.wardIndicators).data,
-				legend: getbarGraph(indicatorReducer.wardIndicatorDataValues, indicatorReducer.wardIndicators).legend,
+				data: getbarGraph(
+					indicatorReducer.wardIndicatorDataValues,
+					indicatorReducer.wardIndicators
+				).data,
+				legend: getbarGraph(
+					indicatorReducer.wardIndicatorDataValues,
+					indicatorReducer.wardIndicators
+				).legend,
 				keys: monthDict
 			}
 		}
-	}
-	else {
+	} else {
 		return undefined
 	}
 }
-
 
 //#endregion
