@@ -396,6 +396,7 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 			12: "December"
 		}
 
+		const colors = d3.scaleOrdinal(d3.schemeCategory10)
 		const getFacilityIndicatorXYPlot = facilityData => {
 			let newArray = []
 			facilityData.map(monthValue => {
@@ -409,21 +410,23 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 			})
 			// return newData
 		}
-
+		
 		const getGraphLegend = facilityArray => {
+			const colors = d3.scaleOrdinal(d3.schemeCategory10)
 			return facilityArray.map(facility => {
 				return {
 					title: facility.name,
-					color: "#f1592a"
+					color: colors(facility.id)
 				}
 			})
 		}
-
+		
 		const getIndicatorValues = (indicator, wardFacilityDataValues) => {
+			const colors = d3.scaleOrdinal(d3.schemeCategory10)
 			return wardFacilityDataValues[indicator.id].map(facility => {
 				return {
 					data: getFacilityIndicatorXYPlot(facility.value),
-					color: "#f1592a"
+					color: colors(facility.name)
 				}
 			})
 		}
@@ -445,15 +448,6 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 			})
 		}
 
-		console.log(
-			JSON.stringify(
-				getWardFacilityIndicatorGraph(
-					indicatorReducer.wardIndicators,
-					indicatorReducer.wardFacilityIndicatorDatavalues,
-					monthDict
-				)
-			)
-		)
 		return getWardFacilityIndicatorGraph(
 			indicatorReducer.wardIndicators,
 			indicatorReducer.wardFacilityIndicatorDatavalues,

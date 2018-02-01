@@ -23,7 +23,7 @@ export const WardFacilityIndicatorWidget = ({
 	height,
 	containerWidth
 }) => {
-	console.log(graph)
+	
 	if (graph) {
 		return (
 			<div>
