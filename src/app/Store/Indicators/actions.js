@@ -234,4 +234,51 @@ export function fetchWardIndicatorDataValues(
 		})
 	}
 }
+export function fetchWardFacilityIndicatorDataValues(
+	wardId,
+	indicators,
+	periodTypeId,
+	year
+) {
+	return dispatch => {
+		dispatch({ type: types.GET_WARD_FACILITY_INDICATOR_DATAVALUES_START })
+		let filters = {
+			wardId,
+			periodTypeId,
+			year
+		}
+		//get values for each indicator
+		indicators.map(indicator => {
+			dispatch({
+				type: types.GET_WARD_FACILITY_INDIVIDUAL_INDICATOR_VALUES_REQUESTED,
+				indicatorId: indicator.id
+			})
+
+			IndicatorService.getWardFacilityIndicatorDataValues({
+				...filters,
+				indicatorId: indicator.id
+			})
+				.then(indicatorDataValues => {
+					if (indicatorDataValues.datavalues) {
+						dispatch({
+							type:
+								types.GET_WARD_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED,
+							indicatorDataValues,
+							indicatorId: indicator.id,
+							selectedIndicatorId: indicator.id
+						})
+					} else {
+						dispatch({
+							type: types.GET_WARD_FACILITY_INDIVIDUAL_INDICATOR_VALUES_ERROR,
+							indicatorId: indicator.id
+						})
+					}
+				})
+				.catch(error => {
+					throw error
+				})
+		})
+	}
+}
+
 //#endregion

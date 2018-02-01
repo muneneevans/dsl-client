@@ -17,6 +17,7 @@ import {
 } from "react-vis"
 
 export const WardIndicatorWidget = ({
+	title,
 	barGraph,
 	heatMap,
 	radarGraph,
@@ -166,7 +167,7 @@ export const WardIndicatorWidget = ({
 
 		return (
 			<Segment.Group size="huge">
-				<Segment>Indicator Performance</Segment>
+				<Segment>{title}</Segment>
 				<Segment>
 					<Tab
 						menu={{ secondary: true, attached: "bottom", color: "green" }}

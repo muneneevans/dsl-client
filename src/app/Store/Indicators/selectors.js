@@ -1,4 +1,5 @@
 import * as d3 from "d3"
+import indicatorReducer from "./reducer"
 export function getDataElementsFetchStatus(state) {
 	return state.indicatorReducer.dataElementsIsFetched
 }
@@ -373,6 +374,93 @@ export const getWardIndicatorGraph = indicatorReducer => {
 				keys: monthDict
 			}
 		}
+	} else {
+		return undefined
+	}
+}
+
+export const getWardFacilityIndicatorGraph = indicatorReducer => {
+	if (indicatorReducer.wardFacilityIndicatorDatavalues) {
+		const monthDict = {
+			1: "January",
+			2: "February",
+			3: "March",
+			4: "April",
+			5: "May",
+			6: "June",
+			7: "July",
+			8: "August",
+			9: "September",
+			10: "October",
+			11: "November",
+			12: "December"
+		}
+
+		const getFacilityIndicatorXYPlot = facilityData => {
+			let newArray = []
+			facilityData.map(monthValue => {
+				newArray.push({
+					x: Number(monthValue.month),
+					y: Number(monthValue.value)
+				})
+			})
+			return newArray.sort((a, b) => {
+				return a.x - b.x
+			})
+			// return newData
+		}
+
+		const getGraphLegend = facilityArray => {
+			return facilityArray.map(facility => {
+				return {
+					title: facility.name,
+					color: "#f1592a"
+				}
+			})
+		}
+
+		const getIndicatorValues = (indicator, wardFacilityDataValues) => {
+			return wardFacilityDataValues[indicator.id].map(facility => {
+				return {
+					data: getFacilityIndicatorXYPlot(facility.value),
+					color: "#f1592a"
+				}
+			})
+		}
+
+		const getWardFacilityIndicatorGraph = (
+			wardIndicators,
+			wardFacilityDataValues,
+			monthDict
+		) => {
+			return wardIndicators.map(indicator => {
+				return {
+					barGraph: {
+						data: getIndicatorValues(indicator, wardFacilityDataValues),
+						legend: getGraphLegend(wardFacilityDataValues[indicator.id]),
+						keys: monthDict
+					},
+					name: indicator.name
+				}
+			})
+		}
+
+		console.log(
+			JSON.stringify(
+				getWardFacilityIndicatorGraph(
+					indicatorReducer.wardIndicators,
+					indicatorReducer.wardFacilityIndicatorDatavalues,
+					monthDict
+				)
+			)
+		)
+		return getWardFacilityIndicatorGraph(
+			indicatorReducer.wardIndicators,
+			indicatorReducer.wardFacilityIndicatorDatavalues,
+			monthDict
+		)
+
+		// console.log(JSON.stringify(wardFacilityDataValues));
 	} else {
 		return undefined
 	}

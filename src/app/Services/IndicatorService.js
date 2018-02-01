@@ -111,5 +111,31 @@ export default class IndicatorService {
 				throw error
 			})
 	}
+	static getWardFacilityIndicatorDataValues(filters) {
+		const url = this.host.concat("datavalues/ward/facility/indicator/")
+
+		const request = {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				filters: {
+					wardId: filters.wardId,
+					indicatorId: filters.indicatorId,
+					periodTypeId: filters.periodTypeId,
+					year: filters.year
+				}
+			})
+		}
+		return fetch(url, request)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
 	//#endregion
 }

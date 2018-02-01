@@ -28,6 +28,7 @@ import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommod
 
 import WardFacilitySummaryWidget from "../../Components/Widgets/Ward/WardFacilitySummaryWidget"
 import WardIndicatorWidget from "../../Components/Widgets/Ward/WardIndicatorWidget"
+import WardFacilityIndicatorWidget from "../../Components/Widgets/Ward/WardFacilityIndicatorWidget"
 import WardFacilityTypeWidget from "../../Components/Widgets/Ward/WardFacilityTypeWidget"
 class WardDetailPage extends Component {
 	constructor(props) {
@@ -173,6 +174,12 @@ class WardDetailPage extends Component {
 									this.props.facilityActions.fetchWardKephLevelsSummary(
 										this.props.match.params.id
 									)
+									this.props.indicatorActions.fetchWardFacilityIndicatorDataValues(
+										this.props.match.params.id,
+										this.props.wardIndicators,
+										this.props.wardPeriodType,
+										this.props.wardYear
+									)
 								}}
 							>
 								Update
@@ -240,9 +247,23 @@ class WardDetailPage extends Component {
 					<Grid.Column>
 						{this.props.wardIndicatorGraph ? (
 							<WardIndicatorWidget
+								title="Indicator Performance"
 								barGraph={this.props.wardIndicatorGraph.barGraph}
 								heatMap={this.props.wardIndicatorGraph.barGraph}
 								radarGraph={this.props.wardIndicatorGraph.barGraph}
+								height={500}
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+				</Grid.Row>
+
+				<Grid.Row stretched centered columns={1}>
+					<Grid.Column>
+						{this.props.wardFacilityIndicatorGraph ? (
+							<WardFacilityIndicatorWidget
+								graph={this.props.wardFacilityIndicatorGraph}
 								height={500}
 							/>
 						) : (
@@ -269,6 +290,9 @@ const mapStateToProps = state => {
 			state.indicatorReducer
 		),
 		wardIndicatorGraph: indicatorSelectors.getWardIndicatorGraph(
+			state.indicatorReducer
+		),
+		wardFacilityIndicatorGraph: indicatorSelectors.getWardFacilityIndicatorGraph(
 			state.indicatorReducer
 		),
 

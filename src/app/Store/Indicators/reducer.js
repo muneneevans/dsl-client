@@ -16,7 +16,9 @@ const InitialState = Immutable({
 	wardIndicators: undefined,
 	wardPeriodType: undefined,
 	wardYear: undefined,
-	wardIndicatorDataValues: undefined
+	wardIndicatorDataValues: undefined,
+
+	wardFacilityIndicatorDatavalues: undefined
 })
 
 export default function indicatorReducer(state = InitialState, action = {}) {
@@ -135,7 +137,7 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 			)
 		})
 
-	case types.GET_WARD_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:		
+	case types.GET_WARD_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:
 		return state.merge({
 			wardIndicatorDataValues: addIndicatorDataValuesToList(
 				action.indicatorDataValues,
@@ -154,6 +156,14 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 				action.indicatorId,
 				state.wardIndicators,
 				0
+			)
+		})
+	case types.GET_WARD_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:
+		return state.merge({
+			wardFacilityIndicatorDatavalues: addIndicatorDataValuesToList(
+				action.indicatorDataValues,
+				action.indicatorId,
+				state.wardFacilityIndicatorDatavalues
 			)
 		})
 	default:
