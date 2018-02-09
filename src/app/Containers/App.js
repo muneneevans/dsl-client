@@ -13,6 +13,7 @@ import DashBoardPage from "./Pages/DashBoardPage"
 import WardDetailPage from "./Pages/WardDetailPage"
 import CommoditiesPage from "./Pages/CommoditiesPage"
 import StaffPage from "./Pages/StaffPage"
+import ConstituencyDetailPage from "./Pages/ConstituencyDetailPage"
 // import ChartPage from "./ChartPage"
 
 class App extends Component {
@@ -36,6 +37,7 @@ class App extends Component {
 						<Route path="/facilities/:id" component={FacilityDetailPage} />
 						<Route path="/facilities" component={FacilityPage} />
 						<Route path="/wards/:id" component={WardDetailPage} />
+						<Route path="/constituencies/:id" component={ConstituencyDetailPage} />
 					</Switch>
 				</HashRouter>
 			</div>

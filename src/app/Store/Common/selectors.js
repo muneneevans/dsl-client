@@ -9,7 +9,7 @@ export function getCountyOptions(state) {
 	}
 	let countyCodes = []
 
-	state.commonReducer.countyCodes.map((county) => {
+	state.commonReducer.countyCodes.map(county => {
 		countyCodes.push({
 			key: county.id,
 			value: county.id,
@@ -26,7 +26,7 @@ export function getCountyNames(state) {
 	}
 	let countyNames = []
 
-	state.commonReducer.countyCodes.map((county) => {
+	state.commonReducer.countyCodes.map(county => {
 		countyNames.push(county.name)
 	})
 
@@ -38,6 +38,10 @@ export function getCountyConstituencyCodesFetchStatus(state) {
 }
 export function getCountyConstituencyCodes(state) {
 	return state.commonReducer.constituencyCodes
+}
+
+export function getConstituencyDetails(commonReducer) {	
+	return commonReducer.constituencyDetails
 }
 
 export function getWardCodesFetcchedstatus(state) {
@@ -56,6 +60,5 @@ export function getCurrentId(state) {
 }
 
 export function getCurrentWardDetails(commonReducer) {
-	
 	return commonReducer.currentWardDetails
 }

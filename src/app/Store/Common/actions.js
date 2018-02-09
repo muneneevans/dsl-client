@@ -93,3 +93,18 @@ export function fetchWardDetails(wardId) {
 			})
 	}
 }
+
+export function fetchConstituencyDetails(constituencyId) {
+	return dispatch => {
+		return CommonService.getConstituencyDetails(constituencyId)
+			.then(constituencyDetails => {				
+				return dispatch({
+					type: types.GET_CONSTITUENCY_DETAILS_RECEIVED,
+					constituencyDetails: constituencyDetails[0]
+				})
+			})
+			.catch(error => {
+				throw error
+			})
+	}
+}

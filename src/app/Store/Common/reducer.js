@@ -6,6 +6,7 @@ const InitialState = Immutable({
 
 	constituencyCodesIsFetched: false,
 	constituencyCodes: undefined,
+	constitutencyDetails: undefined,
 
 	wardCodesIsFetched: false,
 	wardCodes: undefined,
@@ -51,9 +52,13 @@ export default function facilityReducer(state = InitialState, action = {}) {
 			currentId: action.currentId
 		})
 
-	case types.GET_WARD_DETAILS_RECEIVED:		
+	case types.GET_WARD_DETAILS_RECEIVED:
 		return state.merge({
 			currentWardDetails: action.wardDetails
+		})
+	case types.GET_CONSTITUENCY_DETAILS_RECEIVED:
+		return state.merge({
+			constituencyDetails: action.constituencyDetails
 		})
 	default:
 		return state
