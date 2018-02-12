@@ -42,7 +42,7 @@ export default class CommonService {
 	}
 
 	static getWardDetails(wardId) {
-		const url = this.host.concat("constituencies/", wardId)
+		const url = this.host.concat("wards/", wardId)
 
 		return fetch(url)
 			.then(response => {
