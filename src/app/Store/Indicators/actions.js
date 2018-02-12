@@ -282,3 +282,42 @@ export function fetchWardFacilityIndicatorDataValues(
 }
 
 //#endregion
+
+//region constituency actions
+
+export function addConstituencyIndicator(indicatorId) {
+	return dispatch => {
+		return dispatch({
+			type: types.ADD_CONSTITUENCY_INDICATOR_REQUESTED,
+			indicatorId
+		})
+	}
+}
+
+export function removeConstituencyIndicator(indicatorId) {
+	return dispatch => {
+		return dispatch({
+			type: types.REMOVE_CONSTITUENCY_INDICATOR_REQUESTED,
+			indicatorId
+		})
+	}
+}
+
+export function setConstituencyPeriodType(periodTypeId) {
+	return dispatch => {		
+		return dispatch({
+			type: types.SET_CONSTITUENCY_PERIOD_TYPE_REQUESTED,
+			periodTypeId
+		})
+	}
+}
+
+export function setConstituencyYear(year) {
+	return dispatch => {		
+		return dispatch({
+			type: types.SET_CONSTITUENCY_YEAR_REQUESTED,
+			year
+		})
+	}
+}
+//#regions

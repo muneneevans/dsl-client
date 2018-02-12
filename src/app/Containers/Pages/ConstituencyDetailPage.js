@@ -60,7 +60,9 @@ class WardDetailPage extends Component {
 									)
 								}}
 								submitAction={indicatorId => {
-									// this.props.indicatorActions.addWardIndicator(indicatorId)
+									this.props.indicatorActions.addConstituencyIndicator(
+										indicatorId
+									)
 								}}
 							/>
 						</Segment>
@@ -72,14 +74,14 @@ class WardDetailPage extends Component {
 							<PeriodForm
 								periodTypes={this.props.periodTypes}
 								handlePeriodTypeChange={periodTypeId => {
-									this.props.indicatorActions.setFacilityPeriodType(
+									this.props.indicatorActions.setConstituencyPeriodType(
 										periodTypeId
 									)
 								}}
 							/>
 							<YearForm
 								submitAction={year => {
-									this.props.indicatorActions.setFacilityYear(year)
+									this.props.indicatorActions.setConstituencyYear(year)
 								}}
 							/>
 						</Segment>
@@ -108,8 +110,6 @@ class WardDetailPage extends Component {
 						</Segment>
 					</Grid.Column>
 				</Grid.Row>
-
-				
 			</Grid>
 		) : (
 			<Grid>
@@ -133,8 +133,15 @@ const mapStateToProps = state => {
 		indicatorGroupIndicators: indicatorSelectors.getIndicatorGroupIndicatorsOptions(
 			state
 		),
+		constituencyIndicators: indicatorSelectors.getConstituencyIndicators(
+			state.indicatorReducer
+		),
 
 		periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
+		constituencyPeriodType: indicatorSelectors.getConstituencyPeriodType(state.indicatorReducer),
+		constituencyYear: indicatorSelectors.getConstituencyYear(
+			state.indicatorReducer
+		),
 
 		jobTypes: staffSelectors.getJobTypeOptions(state),
 		cadres: staffSelectors.getCadreOptions(state)

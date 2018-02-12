@@ -18,6 +18,12 @@ const InitialState = Immutable({
 	wardYear: undefined,
 	wardIndicatorDataValues: undefined,
 
+	//ward specific
+	constituencyIndicators: undefined,
+	constituencyPeriodType: undefined,
+	constituencyYear: undefined,
+	constituyeIndicatorDataValues: undefined,
+
 	wardFacilityIndicatorDatavalues: undefined
 })
 
@@ -165,6 +171,30 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 				action.indicatorId,
 				state.wardFacilityIndicatorDatavalues
 			)
+		})
+
+	case types.ADD_CONSTITUENCY_INDICATOR_REQUESTED:
+		return state.merge({
+			constituencyIndicators: addIndicatorToIndicatorsList(
+				action.indicatorId,
+				state.constituencyIndicators,
+				state.indicatorGroupIndicators
+			)
+		})
+	case types.REMOVE_CONSTITUENCY_INDICATOR_REQUESTED:
+		return state.merge({
+			constituencyIndicators: removeIndicatorFromIndicatorsList(
+				action.indicatorId,
+				state.constituencyIndicators
+			)
+		})
+	case types.SET_CONSTITUENCY_PERIOD_TYPE_REQUESTED:		
+		return state.merge({
+			constituencyPeriodType: action.periodTypeId
+		})
+	case types.SET_CONSTITUENCY_YEAR_REQUESTED:
+		return state.merge({
+			constituencyYear: action.year
 		})
 	default:
 		return state

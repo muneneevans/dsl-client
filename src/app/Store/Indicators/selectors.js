@@ -1,5 +1,5 @@
 import * as d3 from "d3"
-import indicatorReducer from "./reducer"
+
 export function getDataElementsFetchStatus(state) {
 	return state.indicatorReducer.dataElementsIsFetched
 }
@@ -460,4 +460,19 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 	}
 }
 
+//#endregion
+
+
+//#region constituencyt selectors
+export const getConstituencyIndicators = indicatorReducer => {
+	return indicatorReducer.constituencyIndicators
+}
+
+export const getConstituencyPeriodType = indicatorReducer => {	
+	return indicatorReducer.constituencyPeriodType
+}
+
+export const getConstituencyYear = indicatorReducer => {	
+	return indicatorReducer.constituencyYear
+}
 //#endregion
