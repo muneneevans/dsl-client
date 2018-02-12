@@ -30,16 +30,86 @@ class WardDetailPage extends Component {
 		this.props.commonActions.fetchConstituencyDetails(
 			this.props.match.params.id
 		)
+		this.props.indicatorActions.fetchIndicatorGroups()
+		this.props.indicatorActions.fetchPeriodTypes()
+		this.props.commodityActions.fetchProducts()
+		this.props.staffActions.fetchJobTypes()
+		this.props.staffActions.fetchCadres()
 	}
 	render() {
-		console.log(this.props.constituencyDetials)
 		return this.props.constituencyDetails ? (
 			<Grid>
 				<Grid.Row columns={1} stretched>
 					<Grid.Column computer={16}>
-						<Banner title={this.props.constituencyDetails.name} />
+						<Banner
+							title={this.props.constituencyDetails.name + " CONSTITUENCY"}
+						/>
 					</Grid.Column>
 				</Grid.Row>
+
+				<Grid.Row columns={4} className="ui large info message">
+					<Grid.Column padded>
+						<Segment padded>
+							<Header as="h3"> Indicators</Header>
+							<IndicatorGroupsForm
+								indicatorGroups={this.props.indicatorGroups}
+								indicatorGroupIndicators={this.props.indicatorGroupIndicators}
+								handleIndicatorGroupChange={indicatorGroupId => {
+									this.props.indicatorActions.fetchIndicatorGroupIndicators(
+										indicatorGroupId
+									)
+								}}
+								submitAction={indicatorId => {
+									// this.props.indicatorActions.addWardIndicator(indicatorId)
+								}}
+							/>
+						</Segment>
+					</Grid.Column>
+
+					<Grid.Column tablet={8} mobile={16} computer={4}>
+						<Segment>
+							<Header as="h3">Period</Header>
+							<PeriodForm
+								periodTypes={this.props.periodTypes}
+								handlePeriodTypeChange={periodTypeId => {
+									this.props.indicatorActions.setFacilityPeriodType(
+										periodTypeId
+									)
+								}}
+							/>
+							<YearForm
+								submitAction={year => {
+									this.props.indicatorActions.setFacilityYear(year)
+								}}
+							/>
+						</Segment>
+					</Grid.Column>
+
+					<Grid.Column tablet={8} mobile={16} computer={4}>
+						<Segment>
+							<Header as="h3">Commodities</Header>
+							<ProductsForm
+								products={this.props.facilityProducts}
+								// submitAction={this.handleProductChange.bind(this)}
+							/>
+						</Segment>
+					</Grid.Column>
+
+					<Grid.Column tablet={8} mobile={16} computer={4}>
+						<Segment>
+							<Header as="h3">Staff</Header>
+							<StaffForm
+								cadres={this.props.cadres}
+								jobTypes={this.props.jobTypes}
+								submitAction={jobTypeId => {
+									this.props.staffActions.addSelectedFacilityJobType(jobTypeId)
+								}}
+							/>
+						</Segment>
+					</Grid.Column>
+				</Grid.Row>
+
+				
 			</Grid>
 		) : (
 			<Grid>
@@ -57,13 +127,26 @@ const mapStateToProps = state => {
 	return {
 		constituencyDetails: commonSelectors.getConstituencyDetails(
 			state.commonReducer
-		)
+		),
+
+		indicatorGroups: indicatorSelectors.getIndicatorGroupsOptions(state),
+		indicatorGroupIndicators: indicatorSelectors.getIndicatorGroupIndicatorsOptions(
+			state
+		),
+
+		periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
+
+		jobTypes: staffSelectors.getJobTypeOptions(state),
+		cadres: staffSelectors.getCadreOptions(state)
 	}
 }
 
 const mapDispatchToProps = dispatch => {
 	return {
-		commonActions: bindActionCreators(commonActions, dispatch)
+		commonActions: bindActionCreators(commonActions, dispatch),
+		indicatorActions: bindActionCreators(indicatorActions, dispatch),
+		commodityActions: bindActionCreators(commodityActions, dispatch),
+		staffActions: bindActionCreators(staffActions, dispatch)
 	}
 }
 
