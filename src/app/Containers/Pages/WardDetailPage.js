@@ -47,12 +47,12 @@ class WardDetailPage extends Component {
 		return <Segment size="massive" loading />
 	}
 
-	render() {
+	render() {		
 		return this.props.wardDetails ? (
 			<Grid>
 				<Grid.Row columns={1} stretched>
 					<Grid.Column computer={16}>
-						<Banner title={this.props.wardDetails.name} />
+						<Banner title={this.props.wardDetails.name + " WARD"} color="red"/>
 					</Grid.Column>
 				</Grid.Row>
 
