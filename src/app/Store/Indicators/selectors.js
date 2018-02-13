@@ -342,11 +342,11 @@ export const getWardIndicatorGraph = indicatorReducer => {
 			//define a set fo colors
 			var colors = d3.scaleOrdinal(d3.schemeCategory10)
 			Object.keys(wardIndicatorDataValues).map(indicator => {
-				graphData.push({
-					data: getBarGraphData(wardIndicatorDataValues[indicator]),
-					color: colors(indicator)
-				})
-				if (wardIndicators.filter(item => item.id == indicator)) {
+				if (wardIndicators.filter(item => item.id == indicator).length != 0) {
+					graphData.push({
+						data: getBarGraphData(wardIndicatorDataValues[indicator]),
+						color: colors(indicator)
+					})
 					graphLegend.push({
 						title: wardIndicators.filter(item => item.id == indicator)[0].name,
 						color: colors(indicator),
@@ -395,8 +395,7 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 			11: "November",
 			12: "December"
 		}
-
-		const colors = d3.scaleOrdinal(d3.schemeCategory10)
+		
 		const getFacilityIndicatorXYPlot = facilityData => {
 			let newArray = []
 			facilityData.map(monthValue => {
