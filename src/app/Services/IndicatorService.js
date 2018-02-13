@@ -138,4 +138,32 @@ export default class IndicatorService {
 			})
 	}
 	//#endregion
+	//#region constituency specific services
+	static getConstituencyIndicatorDataValues(filters) {
+		const url = this.host.concat("datavalues/constituency/indicator/")
+
+		const request = {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				filters: {
+					constituencyId: filters.constituencyId,
+					indicatorId: filters.indicatorId,
+					periodTypeId: filters.periodTypeId,
+					year: filters.year
+				}
+			})
+		}
+		return fetch(url, request)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
+	//#endregion
 }

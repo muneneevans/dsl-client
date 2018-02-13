@@ -23,6 +23,7 @@ import StaffForm from "../../Components/Forms/StaffForm"
 import FacilityIndicatorCheckList from "../../Components/Widgets/FacilityIndicatorCheckList"
 import FacilityStaffCheckList from "../../Components/Widgets/FacilityStaffCheckList"
 import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommoditiesChekList"
+import WardIndicatorWidget from "../../Components/Widgets/Ward/WardIndicatorWidget"
 import { bindActionCreators } from "redux"
 
 class WardDetailPage extends Component {
@@ -36,6 +37,11 @@ class WardDetailPage extends Component {
 		this.props.staffActions.fetchJobTypes()
 		this.props.staffActions.fetchCadres()
 	}
+
+	renderLoading() {
+		return <Segment size="massive" loading />
+	}
+
 	render() {
 		return this.props.constituencyDetails ? (
 			<Grid>
@@ -110,6 +116,74 @@ class WardDetailPage extends Component {
 						</Segment>
 					</Grid.Column>
 				</Grid.Row>
+
+				<Grid.Row columns={3}>
+					<Grid.Column tablet={8} mobile={16} computer={8}>
+						<Segment vertical>
+							<FacilityIndicatorCheckList
+								facilityIndicators={this.props.constituencyIndicators}
+								removeAction={indicatorId => {
+									this.props.indicatorActions.removeConstituencyIndicator(
+										indicatorId
+									)
+								}}
+							/>
+						</Segment>
+					</Grid.Column>
+				</Grid.Row>
+
+				<Grid.Row>
+					<Grid.Column>
+						<Segment>
+							<Button
+								primary
+								fluid
+								onClick={() => {
+									// alert('asd')
+									this.props.indicatorActions.fetchConstituencyIndicatorDataValues(
+										this.props.match.params.id,
+										this.props.constituencyIndicators,
+										this.props.constituencyPeriodType,
+										this.props.constituencyYear
+									)
+									// this.props.facilityActions.fetchWardSummary(
+									// 	this.props.match.params.id
+									// )
+									// this.props.facilityActions.fetchWardFacilityTypesSummary(
+									// 	this.props.match.params.id
+									// )
+									// this.props.facilityActions.fetchWardKephLevelsSummary(
+									// 	this.props.match.params.id
+									// )
+									// this.props.indicatorActions.fetchWardFacilityIndicatorDataValues(
+									// 	this.props.match.params.id,
+									// 	this.props.wardIndicators,
+									// 	this.props.wardPeriodType,
+									// 	this.props.wardYear
+									// )
+								}}
+							>
+								Update
+							</Button>
+						</Segment>
+					</Grid.Column>
+				</Grid.Row>
+
+				<Grid.Row stretched centered columns={1}>
+					<Grid.Column>
+						{this.props.constituencyIndicatorGraph ? (
+							<WardIndicatorWidget
+								title="Indicator Performance"
+								barGraph={this.props.constituencyIndicatorGraph.barGraph}
+								heatMap={this.props.constituencyIndicatorGraph.barGraph}
+								radarGraph={this.props.constituencyIndicatorGraph.barGraph}
+								height={500}
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+				</Grid.Row>
 			</Grid>
 		) : (
 			<Grid>
@@ -136,9 +210,14 @@ const mapStateToProps = state => {
 		constituencyIndicators: indicatorSelectors.getConstituencyIndicators(
 			state.indicatorReducer
 		),
+		constituencyIndicatorGraph: indicatorSelectors.getConstituencyIndicatorGraph(
+			state.indicatorReducer
+		),
 
 		periodTypes: indicatorSelectors.getPeriodTypeOptions(state),
-		constituencyPeriodType: indicatorSelectors.getConstituencyPeriodType(state.indicatorReducer),
+		constituencyPeriodType: indicatorSelectors.getConstituencyPeriodType(
+			state.indicatorReducer
+		),
 		constituencyYear: indicatorSelectors.getConstituencyYear(
 			state.indicatorReducer
 		),

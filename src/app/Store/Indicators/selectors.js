@@ -410,7 +410,7 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 			})
 			// return newData
 		}
-		
+
 		const getGraphLegend = facilityArray => {
 			const colors = d3.scaleOrdinal(d3.schemeCategory10)
 			return facilityArray.map(facility => {
@@ -420,7 +420,7 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 				}
 			})
 		}
-		
+
 		const getIndicatorValues = (indicator, wardFacilityDataValues) => {
 			const colors = d3.scaleOrdinal(d3.schemeCategory10)
 			return wardFacilityDataValues[indicator.id].map(facility => {
@@ -462,17 +462,97 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 
 //#endregion
 
-
-//#region constituencyt selectors
+//#region constituency selectors
 export const getConstituencyIndicators = indicatorReducer => {
 	return indicatorReducer.constituencyIndicators
 }
 
-export const getConstituencyPeriodType = indicatorReducer => {	
+export const getConstituencyPeriodType = indicatorReducer => {
 	return indicatorReducer.constituencyPeriodType
 }
 
-export const getConstituencyYear = indicatorReducer => {	
+export const getConstituencyYear = indicatorReducer => {
 	return indicatorReducer.constituencyYear
+}
+
+export const getConstituencyIndicatorGraph = indicatorReducer => {
+	if (indicatorReducer.constituencyIndicatorDataValues) {
+		const monthDict = {
+			1: "January",
+			2: "February",
+			3: "March",
+			4: "April",
+			5: "May",
+			6: "June",
+			7: "July",
+			8: "August",
+			9: "September",
+			10: "October",
+			11: "November",
+			12: "December"
+		}
+
+		const getBarGraphData = indicatorDataValues => {
+			var newArray = []
+			// console.log(dataArray)
+			indicatorDataValues.map(monthValue => {
+				newArray.push({
+					x: Number(monthValue.month),
+					y: monthValue.value
+				})
+			})
+			newArray = newArray.sort((a, b) => a.x - b.x)
+			return newArray
+		}
+
+		const getbarGraph = (
+			constituencyIndicatorDataValues,
+			constituencyIndicators
+		) => {
+			var graphData = []
+			var graphLegend = []
+			//define a set fo colors
+			var colors = d3.scaleOrdinal(d3.schemeCategory10)
+			Object.keys(constituencyIndicatorDataValues).map(indicator => {
+				if (
+					constituencyIndicators.filter(item => item.id == indicator).length !=
+					0
+				) {
+					graphData.push({
+						data: getBarGraphData(constituencyIndicatorDataValues[indicator]),
+						color: colors(indicator)
+					})
+					graphLegend.push({
+						title: constituencyIndicators.filter(
+							item => item.id == indicator
+						)[0].name,
+						color: colors(indicator),
+						disabled: false
+					})
+				}
+			})
+
+			return {
+				data: graphData,
+				legend: graphLegend
+			}
+		}
+
+		return {
+			barGraph: {
+				data: getbarGraph(
+					indicatorReducer.constituencyIndicatorDataValues,
+					indicatorReducer.constituencyIndicators
+				).data,
+				legend: getbarGraph(
+					indicatorReducer.constituencyIndicatorDataValues,
+					indicatorReducer.constituencyIndicators
+				).legend,
+				keys: monthDict
+			}
+		}
+	} else {
+		return undefined
+	}
 }
 //#endregion

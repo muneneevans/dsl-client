@@ -304,7 +304,7 @@ export function removeConstituencyIndicator(indicatorId) {
 }
 
 export function setConstituencyPeriodType(periodTypeId) {
-	return dispatch => {		
+	return dispatch => {
 		return dispatch({
 			type: types.SET_CONSTITUENCY_PERIOD_TYPE_REQUESTED,
 			periodTypeId
@@ -313,11 +313,58 @@ export function setConstituencyPeriodType(periodTypeId) {
 }
 
 export function setConstituencyYear(year) {
-	return dispatch => {		
+	return dispatch => {
 		return dispatch({
 			type: types.SET_CONSTITUENCY_YEAR_REQUESTED,
 			year
 		})
 	}
 }
-//#regions
+
+export function fetchConstituencyIndicatorDataValues(
+	constituencyId,
+	indicators,
+	periodTypeId,
+	year
+) {
+	
+	return dispatch => {
+		dispatch({ type: types.GET_CONSTITUENCY_INDICATORS_VALUES_START })
+		let filters = {
+			constituencyId,
+			periodTypeId,
+			year
+		}
+		//get values for each indicator
+		indicators.map(indicator => {
+			dispatch({
+				type: types.GET_CONSTITUENCY_INDIVIDUAL_INDICATOR_VALUES_REQUESTED,
+				indicatorId: indicator.id
+			})
+
+			IndicatorService.getConstituencyIndicatorDataValues({
+				...filters,
+				indicatorId: indicator.id
+			})
+				.then(indicatorDataValues => {
+					if (indicatorDataValues.datavalues) {
+						dispatch({
+							type: types.GET_CONSTITUENCY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED,
+							indicatorDataValues,
+							indicatorId: indicator.id,
+							selectedIndicatorId: indicator.id
+						})
+					} else {
+						dispatch({
+							type: types.GET_CONSTITUENCY_INDIVIDUAL_INDICATOR_VALUES_ERROR,
+							indicatorId: indicator.id
+						})
+					}
+				})
+				.catch(error => {
+					throw error
+				})
+		})
+	}
+}
+//#endregion

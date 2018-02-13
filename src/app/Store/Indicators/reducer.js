@@ -188,13 +188,51 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 				state.constituencyIndicators
 			)
 		})
-	case types.SET_CONSTITUENCY_PERIOD_TYPE_REQUESTED:		
+	case types.SET_CONSTITUENCY_PERIOD_TYPE_REQUESTED:
 		return state.merge({
 			constituencyPeriodType: action.periodTypeId
 		})
 	case types.SET_CONSTITUENCY_YEAR_REQUESTED:
 		return state.merge({
 			constituencyYear: action.year
+		})
+	case types.GET_CONSTITUENCY_INDIVIDUAL_INDICATOR_VALUES_REQUESTED:
+		return state.merge({
+			constituencyIndicators: updateFetchStateOfIndicators(
+				action.indicatorId,
+				state.constituencyIndicators,
+				2
+			)
+		})
+
+	case types.GET_CONSTITUENCY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:
+		return state.merge({
+			constituencyIndicatorDataValues: addIndicatorDataValuesToList(
+				action.indicatorDataValues,
+				action.indicatorId,
+				state.constituencyIndicatorDataValues
+			),
+			constituencyIndicators: updateFetchStateOfIndicators(
+				action.indicatorId,
+				state.constituencyIndicators,
+				1
+			)
+		})
+	case types.GET_CONSTITUENCY_INDIVIDUAL_INDICATOR_VALUES_ERROR:
+		return state.merge({
+			constituencyIndicators: updateFetchStateOfIndicators(
+				action.indicatorId,
+				state.constituencyIndicators,
+				0
+			)
+		})
+	case types.GET_CONSTITUENCY_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:
+		return state.merge({
+			constituencyFacilityIndicatorDatavalues: addIndicatorDataValuesToList(
+				action.indicatorDataValues,
+				action.indicatorId,
+				state.constituencyFacilityIndicatorDatavalues
+			)
 		})
 	default:
 		return state
