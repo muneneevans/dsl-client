@@ -49,6 +49,18 @@
 			"sourceMapPathOverrides": {
 				"webpack:///*": "${workspaceRoot}/*"
 			}
+		},
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "KIBRA debugging",
+			"url":
+				"http://localhost:8080/#/constituencies/504d12d7-038d-4b58-826e-4b5adb03c738/",
+			"webRoot": "${workspaceRoot}",
+			"sourceMaps": true,
+			"sourceMapPathOverrides": {
+				"webpack:///*": "${workspaceRoot}/*"
+			}
 		}
 	]
 }
