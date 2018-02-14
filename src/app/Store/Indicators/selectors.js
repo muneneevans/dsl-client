@@ -324,8 +324,7 @@ export const getWardIndicatorGraph = indicatorReducer => {
 		}
 
 		const getBarGraphData = indicatorDataValues => {
-			var newArray = []
-			// console.log(dataArray)
+			var newArray = []			
 			indicatorDataValues.map(monthValue => {
 				newArray.push({
 					x: Number(monthValue.month),
@@ -395,7 +394,7 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 			11: "November",
 			12: "December"
 		}
-		
+
 		const getFacilityIndicatorXYPlot = facilityData => {
 			let newArray = []
 			facilityData.map(monthValue => {
@@ -452,8 +451,7 @@ export const getWardFacilityIndicatorGraph = indicatorReducer => {
 			indicatorReducer.wardFacilityIndicatorDatavalues,
 			monthDict
 		)
-
-		// console.log(JSON.stringify(wardFacilityDataValues));
+		
 	} else {
 		return undefined
 	}
@@ -492,8 +490,7 @@ export const getConstituencyIndicatorGraph = indicatorReducer => {
 		}
 
 		const getBarGraphData = indicatorDataValues => {
-			var newArray = []
-			// console.log(dataArray)
+			var newArray = []			
 			indicatorDataValues.map(monthValue => {
 				newArray.push({
 					x: Number(monthValue.month),
@@ -550,6 +547,85 @@ export const getConstituencyIndicatorGraph = indicatorReducer => {
 				keys: monthDict
 			}
 		}
+	} else {
+		return undefined
+	}
+}
+
+export const getConstituencyWardIndicatorGraph = indicatorReducer => {
+	if (indicatorReducer.constituencyWardIndicatorDataValues) {
+		const monthDict = {
+			1: "January",
+			2: "February",
+			3: "March",
+			4: "April",
+			5: "May",
+			6: "June",
+			7: "July",
+			8: "August",
+			9: "September",
+			10: "October",
+			11: "November",
+			12: "December"
+		}
+
+		const getWardIndicatorXYPlot = wardData => {
+			let newArray = []
+			wardData.map(monthValue => {
+				newArray.push({
+					x: Number(monthValue.month),
+					y: Number(monthValue.value)
+				})
+			})
+			return newArray.sort((a, b) => {
+				return a.x - b.x
+			})
+			// return newData
+		}
+
+		const getGraphLegend = wardArray => {
+			const colors = d3.scaleOrdinal(d3.schemeCategory10)
+			return wardArray.map(ward => {
+				return {
+					title: ward.name,
+					color: colors(ward.id)
+				}
+			})
+		}
+
+		const getIndicatorValues = (indicator, constituencyWardDataValues) => {
+			const colors = d3.scaleOrdinal(d3.schemeCategory10)
+			return constituencyWardDataValues[indicator.id].map(ward => {
+				return {
+					data: getWardIndicatorXYPlot(ward.value),
+					color: colors(ward.name)
+				}
+			})
+		}
+
+		const getConstituencyWardIndicatorGraph = (
+			constituencyIndicators,
+			constituencyWardDataValues,
+			monthDict
+		) => {
+			return constituencyIndicators.map(indicator => {
+				return {
+					barGraph: {
+						data: getIndicatorValues(indicator, constituencyWardDataValues),
+						legend: getGraphLegend(constituencyWardDataValues[indicator.id]),
+						keys: monthDict
+					},
+					name: indicator.name
+				}
+			})
+		}
+	
+		return getConstituencyWardIndicatorGraph(
+			indicatorReducer.constituencyIndicators,
+			indicatorReducer.constituencyWardIndicatorDataValues,
+			monthDict
+		)
+		
 	} else {
 		return undefined
 	}

@@ -24,6 +24,7 @@ import FacilityIndicatorCheckList from "../../Components/Widgets/FacilityIndicat
 import FacilityStaffCheckList from "../../Components/Widgets/FacilityStaffCheckList"
 import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommoditiesChekList"
 import WardIndicatorWidget from "../../Components/Widgets/Ward/WardIndicatorWidget"
+import WardFacilityIndicatorWidget from "../../Components/Widgets/Ward/WardFacilityIndicatorWidget"
 import { bindActionCreators } from "redux"
 
 class WardDetailPage extends Component {
@@ -54,7 +55,7 @@ class WardDetailPage extends Component {
 				</Grid.Row>
 
 				<Grid.Row columns={4} className="ui large info message">
-					<Grid.Column padded>
+					<Grid.Column tablet={8} mobile={16} computer={4}>
 						<Segment padded>
 							<Header as="h3"> Indicators</Header>
 							<IndicatorGroupsForm
@@ -146,6 +147,12 @@ class WardDetailPage extends Component {
 										this.props.constituencyPeriodType,
 										this.props.constituencyYear
 									)
+									this.props.indicatorActions.fetchConstitutencyWardIndicatorDataValues(
+										this.props.match.params.id,
+										this.props.constituencyIndicators,
+										this.props.constituencyPeriodType,
+										this.props.constituencyYear
+									)
 									// this.props.facilityActions.fetchWardSummary(
 									// 	this.props.match.params.id
 									// )
@@ -184,6 +191,19 @@ class WardDetailPage extends Component {
 						)}
 					</Grid.Column>
 				</Grid.Row>
+
+				<Grid.Row stretched centered columns={1}>
+					<Grid.Column>
+						{this.props.constituencyWardIndicatorGraph ? (
+							<WardFacilityIndicatorWidget
+								graph={this.props.constituencyWardIndicatorGraph}
+								height={500}
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+				</Grid.Row>
 			</Grid>
 		) : (
 			<Grid>
@@ -211,6 +231,9 @@ const mapStateToProps = state => {
 			state.indicatorReducer
 		),
 		constituencyIndicatorGraph: indicatorSelectors.getConstituencyIndicatorGraph(
+			state.indicatorReducer
+		),
+		constituencyWardIndicatorGraph: indicatorSelectors.getConstituencyWardIndicatorGraph(
 			state.indicatorReducer
 		),
 

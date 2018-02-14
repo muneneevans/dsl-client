@@ -17,14 +17,14 @@ const InitialState = Immutable({
 	wardPeriodType: undefined,
 	wardYear: undefined,
 	wardIndicatorDataValues: undefined,
+	wardFacilityIndicatorDatavalues: undefined,
 
-	//ward specific
+	//constituency specific
 	constituencyIndicators: undefined,
 	constituencyPeriodType: undefined,
 	constituencyYear: undefined,
 	constituyeIndicatorDataValues: undefined,
-
-	wardFacilityIndicatorDatavalues: undefined
+	constituencyWardIndicatorDataValues: undefined
 })
 
 export default function indicatorReducer(state = InitialState, action = {}) {
@@ -226,12 +226,12 @@ export default function indicatorReducer(state = InitialState, action = {}) {
 				0
 			)
 		})
-	case types.GET_CONSTITUENCY_FACILITY_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:
+	case types.GET_CONSTITUENCY_WARD_INDIVIDUAL_INDICATOR_VALUES_RECEIVED:
 		return state.merge({
-			constituencyFacilityIndicatorDatavalues: addIndicatorDataValuesToList(
+			constituencyWardIndicatorDataValues: addIndicatorDataValuesToList(
 				action.indicatorDataValues,
 				action.indicatorId,
-				state.constituencyFacilityIndicatorDatavalues
+				state.constituencyWardIndicatorDataValues
 			)
 		})
 	default:

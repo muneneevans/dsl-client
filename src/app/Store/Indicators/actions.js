@@ -327,7 +327,6 @@ export function fetchConstituencyIndicatorDataValues(
 	periodTypeId,
 	year
 ) {
-	
 	return dispatch => {
 		dispatch({ type: types.GET_CONSTITUENCY_INDICATORS_VALUES_START })
 		let filters = {
@@ -357,6 +356,54 @@ export function fetchConstituencyIndicatorDataValues(
 					} else {
 						dispatch({
 							type: types.GET_CONSTITUENCY_INDIVIDUAL_INDICATOR_VALUES_ERROR,
+							indicatorId: indicator.id
+						})
+					}
+				})
+				.catch(error => {
+					throw error
+				})
+		})
+	}
+}
+
+export function fetchConstitutencyWardIndicatorDataValues(
+	constituencyId,
+	indicators,
+	periodTypeId,
+	year
+) {
+	return dispatch => {
+		dispatch({ type: types.GET_CONSTITUENCY_WARD_INDICATOR_DATAVALUES_START })
+		let filters = {
+			constituencyId,
+			periodTypeId,
+			year
+		}
+		//get values for each indicator
+		indicators.map(indicator => {
+			dispatch({
+				type: types.GET_CONSTITUENCY_WARD_INDIVIDUAL_INDICATOR_VALUES_REQUESTED,
+				indicatorId: indicator.id
+			})
+
+			IndicatorService.getConstituencyWardIndicatorDataValues({
+				...filters,
+				indicatorId: indicator.id
+			})
+				.then(indicatorDataValues => {
+					if (indicatorDataValues.datavalues) {
+						dispatch({
+							type:
+								types.GET_CONSTITUENCY_WARD_INDIVIDUAL_INDICATOR_VALUES_RECEIVED,
+							indicatorDataValues,
+							indicatorId: indicator.id,
+							selectedIndicatorId: indicator.id
+						})
+					} else {
+						dispatch({
+							type:
+								types.GET_CONSTITUENCY_WARD_INDIVIDUAL_INDICATOR_VALUES_ERROR,
 							indicatorId: indicator.id
 						})
 					}
