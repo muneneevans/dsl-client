@@ -30,6 +30,7 @@ import WardFacilitySummaryWidget from "../../Components/Widgets/Ward/WardFacilit
 import WardIndicatorWidget from "../../Components/Widgets/Ward/WardIndicatorWidget"
 import WardFacilityIndicatorWidget from "../../Components/Widgets/Ward/WardFacilityIndicatorWidget"
 import WardFacilityTypeWidget from "../../Components/Widgets/Ward/WardFacilityTypeWidget"
+import ChildrenTable from "../../Components/Widgets/Ward/ChildrenTable"
 class WardDetailPage extends Component {
 	constructor(props) {
 		super(props)
@@ -41,18 +42,22 @@ class WardDetailPage extends Component {
 		this.props.indicatorActions.fetchPeriodTypes()
 		this.props.staffActions.fetchJobTypes()
 		this.props.staffActions.fetchCadres()
+		this.props.facilityActions.fetchFacilities(
+			"ward",
+			this.props.match.params.id
+		)
 	}
 
 	renderLoading() {
 		return <Segment size="massive" loading />
 	}
 
-	render() {		
+	render() {
 		return this.props.wardDetails ? (
 			<Grid>
 				<Grid.Row columns={1} stretched>
 					<Grid.Column computer={16}>
-						<Banner title={this.props.wardDetails.name + " WARD"} color="red"/>
+						<Banner title={this.props.wardDetails.name + " WARD"} color="red" />
 					</Grid.Column>
 				</Grid.Row>
 
@@ -188,6 +193,18 @@ class WardDetailPage extends Component {
 					</Grid.Column>
 				</Grid.Row>
 
+				<Grid.Row stretched centered columns={1} />
+				{this.props.wardFacilities ? (
+					<ChildrenTable
+						title={this.props.wardDetails.name}
+						childrenLevel="facilities"
+						children={this.props.wardFacilities}
+					/>
+				) : (
+					<div>
+						<h1>no data</h1>
+					</div>
+				)}
 				<Grid.Row stretched centered columns={2}>
 					<Grid.Column>
 						{this.props.wardFacilitysummaryGraph ? (
@@ -281,6 +298,8 @@ class WardDetailPage extends Component {
 const mapStateToProps = state => {
 	return {
 		wardDetails: commonSelectors.getCurrentWardDetails(state.commonReducer),
+
+		wardFacilities: facilitySelectors.getFacilties(state),
 
 		indicatorGroups: indicatorSelectors.getIndicatorGroupsOptions(state),
 		indicatorGroupIndicators: indicatorSelectors.getIndicatorGroupIndicatorsOptions(
