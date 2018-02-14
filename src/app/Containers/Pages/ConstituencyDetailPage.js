@@ -25,6 +25,7 @@ import FacilityStaffCheckList from "../../Components/Widgets/FacilityStaffCheckL
 import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommoditiesChekList"
 import WardIndicatorWidget from "../../Components/Widgets/Ward/WardIndicatorWidget"
 import WardFacilityIndicatorWidget from "../../Components/Widgets/Ward/WardFacilityIndicatorWidget"
+import ChildrenTable from "../../Components/Widgets/Ward/ChildrenTable"
 import { bindActionCreators } from "redux"
 
 class WardDetailPage extends Component {
@@ -37,6 +38,9 @@ class WardDetailPage extends Component {
 		this.props.commodityActions.fetchProducts()
 		this.props.staffActions.fetchJobTypes()
 		this.props.staffActions.fetchCadres()
+		this.props.commonActions.fetchConstituencyWardCodes(
+			this.props.match.params.id
+		)
 	}
 
 	renderLoading() {
@@ -176,6 +180,18 @@ class WardDetailPage extends Component {
 					</Grid.Column>
 				</Grid.Row>
 
+				<Grid.Row>
+					{this.props.constituencyWards ? (
+						<ChildrenTable
+							title={this.props.constituencyDetails.name}
+							children={this.props.constituencyWards}
+							childrenLevel="wards"
+						/>
+					) : (
+						<div />
+					)}
+				</Grid.Row>
+
 				<Grid.Row stretched centered columns={1}>
 					<Grid.Column>
 						{this.props.constituencyIndicatorGraph ? (
@@ -222,6 +238,7 @@ const mapStateToProps = state => {
 		constituencyDetails: commonSelectors.getConstituencyDetails(
 			state.commonReducer
 		),
+		constituencyWards: commonSelectors.getWardCodes(state),
 
 		indicatorGroups: indicatorSelectors.getIndicatorGroupsOptions(state),
 		indicatorGroupIndicators: indicatorSelectors.getIndicatorGroupIndicatorsOptions(

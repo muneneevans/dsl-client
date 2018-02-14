@@ -22,7 +22,7 @@ const ChildrenTable = ({ children, title, childrenLevel }) => (
 						<Table.Cell>{child.name}</Table.Cell>
 						<Table.Cell collapsing textAlign="right">
 							<Button>
-								<Link to={`/facilities/${child.id}`}>View Performance</Link>
+								<Link to={`/${childrenLevel}/${child.id}`}>View Performance</Link>
 							</Button>
 						</Table.Cell>
 					</Table.Row>
