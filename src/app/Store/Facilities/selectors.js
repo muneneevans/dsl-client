@@ -300,6 +300,63 @@ export function getConstituencySummaryChartData(state) {
 	}
 }
 
+export const getConstituencyNumberOfFacilities = facilityReducer => {
+	if (facilityReducer.constituencySummary) {
+		const getNumberOfFacilities = constituencySummary => {
+			return constituencySummary.map(constituency => {
+				let value = {}
+				value["facility"] = constituency["ward_name"]
+				value["number_of_facilities"] = constituency["number_of_facilities"]
+				return value
+			})
+		}
+		const getNumberOfBeds = constituencySummary => {
+			return constituencySummary.map(constituency => {
+				let value = {}
+				value["id"] = constituency["ward_name"]
+				value["label"] = constituency["ward_name"]
+				value["value"] = constituency["number_of_beds"]
+				return value
+			})
+		}
+		const getNumberOfCots = constituencySummary => {
+			return constituencySummary.map(constituency => {
+				let value = {}
+				value["id"] = constituency["ward_name"]
+				value["label"] = constituency["ward_name"]				
+				value["value"] = constituency["number_of_cots"]
+				return value
+			})
+		}
+
+		return {
+			facilitiesSummary: {
+				barGraph: {
+					data: getNumberOfFacilities(facilityReducer.constituencySummary),
+					indexBy: "facility",
+					keys: ["number_of_facilities"],
+					legend: "number of facilities"
+				}
+			},
+			bedsSummary: {
+				pieChart: {
+					data: getNumberOfBeds(facilityReducer.constituencySummary),
+					indexBy: "facility",
+					keys: ["number_of_beds"],
+					legend: "number of beds"
+				}
+			},
+			cotsSummary: {
+				pieChart: {
+					data: getNumberOfCots(facilityReducer.constituencySummary),
+					indexBy: "facility",
+					keys: ["number_of_cots"],
+					legend: "number of cots"
+				}
+			}
+		}
+	}
+}
 //#endregion
 
 //#region WARD selectors

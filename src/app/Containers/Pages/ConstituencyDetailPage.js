@@ -26,6 +26,8 @@ import FacilityCommoditiesChekList from "../../Components/Widgets/FacilityCommod
 import WardIndicatorWidget from "../../Components/Widgets/Ward/WardIndicatorWidget"
 import WardFacilityIndicatorWidget from "../../Components/Widgets/Ward/WardFacilityIndicatorWidget"
 import ChildrenTable from "../../Components/Widgets/Ward/ChildrenTable"
+import WardFacilitySummaryWidget from "../../Components/Widgets/Ward/WardFacilitySummaryWidget"
+import PieChart from "../../Components/Widgets/PieChart"
 import { bindActionCreators } from "redux"
 
 class WardDetailPage extends Component {
@@ -157,6 +159,9 @@ class WardDetailPage extends Component {
 										this.props.constituencyPeriodType,
 										this.props.constituencyYear
 									)
+									this.props.facilityActions.fetchConstituencySummary(
+										this.props.match.params.id
+									)
 									// this.props.facilityActions.fetchWardSummary(
 									// 	this.props.match.params.id
 									// )
@@ -180,16 +185,61 @@ class WardDetailPage extends Component {
 					</Grid.Column>
 				</Grid.Row>
 
-				<Grid.Row>
-					{this.props.constituencyWards ? (
-						<ChildrenTable
-							title={this.props.constituencyDetails.name}
-							children={this.props.constituencyWards}
-							childrenLevel="wards"
-						/>
-					) : (
-						<div />
-					)}
+				<Grid.Row columns={2}>
+					<Grid.Column>
+						{this.props.constituencyWards ? (
+							<ChildrenTable
+								title={this.props.constituencyDetails.name}
+								children={this.props.constituencyWards}
+								childrenLevel="wards"
+							/>
+						) : (
+							<div />
+						)}
+					</Grid.Column>
+					<Grid.Column>
+						{this.props.constituencyFacilities ? (
+							<WardFacilitySummaryWidget
+								barGraph={
+									this.props.constituencyFacilities.facilitiesSummary.barGraph
+								}
+								height={450}
+								width={1500}
+								title="Number of facilitiess per ward"
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+				</Grid.Row>
+
+				<Grid.Row columns={2}>
+					<Grid.Column>
+						{this.props.constituencyFacilities ? (
+							<PieChart
+								pieChart={
+									this.props.constituencyFacilities.bedsSummary.pieChart
+								}
+								height={450}								
+								title="Number of beds per ward"
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+					<Grid.Column>
+						{this.props.constituencyFacilities ? (
+							<PieChart
+								pieChart={
+									this.props.constituencyFacilities.cotsSummary.pieChart
+								}
+								height={450}								
+								title="Number of cots per ward"
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
 				</Grid.Row>
 
 				<Grid.Row stretched centered columns={1}>
@@ -239,6 +289,9 @@ const mapStateToProps = state => {
 			state.commonReducer
 		),
 		constituencyWards: commonSelectors.getWardCodes(state),
+		constituencyFacilities: facilitySelectors.getConstituencyNumberOfFacilities(
+			state.facilityReducer
+		),
 
 		indicatorGroups: indicatorSelectors.getIndicatorGroupsOptions(state),
 		indicatorGroupIndicators: indicatorSelectors.getIndicatorGroupIndicatorsOptions(
@@ -272,7 +325,8 @@ const mapDispatchToProps = dispatch => {
 		commonActions: bindActionCreators(commonActions, dispatch),
 		indicatorActions: bindActionCreators(indicatorActions, dispatch),
 		commodityActions: bindActionCreators(commodityActions, dispatch),
-		staffActions: bindActionCreators(staffActions, dispatch)
+		staffActions: bindActionCreators(staffActions, dispatch),
+		facilityActions: bindActionCreators(facilityActions, dispatch)
 	}
 }
 

@@ -24,42 +24,8 @@ export const WardIndicatorWidget = ({
 	height,
 	containerWidth
 }) => {
-	if (barGraph) {		
+	if (barGraph) {
 		const chartPanes = [
-			{
-				menuItem: "Bar Graph",
-				render: () => (
-					<div>
-						<FlexibleXYPlot
-							width={containerWidth - 50}
-							height={height}
-							colorType="category"
-							animate
-						>
-							<XAxis
-								tickFormat={v => {
-									return barGraph.keys[v]
-								}}
-							/>
-							<YAxis />
-							<HorizontalGridLines />
-							<VerticalGridLines />
-							{barGraph.data.map((d, i) => (
-								<VerticalBarSeries
-									key={i}
-									data={d.data}
-									color={d.color}
-									animation={{ damping: 9, stiffness: 30 }}
-								/>
-							))}
-						</FlexibleXYPlot>
-						<DiscreteColorLegend
-							items={barGraph.legend}
-							orientation="horizontal"
-						/>
-					</div>
-				)
-			},
 			{
 				menuItem: "Line Graph",
 				render: () => (
@@ -83,6 +49,40 @@ export const WardIndicatorWidget = ({
 									data={d.data}
 									color={d.color}
 									key={i}
+									animation={{ damping: 9, stiffness: 30 }}
+								/>
+							))}
+						</FlexibleXYPlot>
+						<DiscreteColorLegend
+							items={barGraph.legend}
+							orientation="horizontal"
+						/>
+					</div>
+				)
+			},
+			{
+				menuItem: "Bar Graph",
+				render: () => (
+					<div>
+						<FlexibleXYPlot
+							width={containerWidth - 50}
+							height={height}
+							colorType="category"
+							animate
+						>
+							<XAxis
+								tickFormat={v => {
+									return barGraph.keys[v]
+								}}
+							/>
+							<YAxis />
+							<HorizontalGridLines />
+							<VerticalGridLines />
+							{barGraph.data.map((d, i) => (
+								<VerticalBarSeries
+									key={i}
+									data={d.data}
+									color={d.color}
 									animation={{ damping: 9, stiffness: 30 }}
 								/>
 							))}
