@@ -195,4 +195,27 @@ export function getCountryJobTypeSummaryGraphs(staffReducer) {
 export function getWardJobTypes(staffReducer) {
 	return staffReducer.wardJobTypes
 }
+
+export const getWardFacilityNumberOfStaff = staffReducer => {
+	if (staffReducer.wardFacilityNumberOfStaff) {
+		const getGraph = facilityNumberOfStaff => {
+			return Object.keys(facilityNumberOfStaff).map(facility => {
+				return {
+					numberOfStaff: facilityNumberOfStaff[facility],
+					facility
+				}
+			})
+		}
+
+		return {
+			barGraph: {
+				data: getGraph(staffReducer.wardFacilityNumberOfStaff),
+				indexBy: "facility",
+				keys: ["numberOfStaff"]
+			}
+		}
+	} else {
+		return undefined
+	}
+}
 //#endregion

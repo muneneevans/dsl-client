@@ -185,6 +185,9 @@ class WardDetailPage extends Component {
 										this.props.wardPeriodType,
 										this.props.wardYear
 									)
+									this.props.staffActions.getWardFacilityNumberOfStaff(
+										this.props.match.params.id
+									)
 								}}
 							>
 								Update
@@ -260,6 +263,22 @@ class WardDetailPage extends Component {
 					</Grid.Column>
 				</Grid.Row>
 
+				<Grid.Row stretched centered columns={2}>
+					<Grid.Column>
+						{this.props.wardFacilityNumberOfStaff ? (
+							<WardFacilitySummaryWidget
+								barGraph={
+									this.props.wardFacilityNumberOfStaff.barGraph
+								}
+								height={700}								
+								title="Number of staff in the ward"
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+				</Grid.Row>
+
 				<Grid.Row stretched centered columns={1}>
 					<Grid.Column>
 						{this.props.wardIndicatorGraph ? (
@@ -324,6 +343,9 @@ const mapStateToProps = state => {
 		jobTypes: staffSelectors.getJobTypeOptions(state),
 		cadres: staffSelectors.getCadreOptions(state),
 		wardJobTypes: staffSelectors.getWardJobTypes(state.staffReducer),
+		wardFacilityNumberOfStaff: staffSelectors.getWardFacilityNumberOfStaff(
+			state.staffReducer
+		),
 
 		wardFacilitysummaryGraph: facilitySelectors.getWardSummaryGraphData(
 			state.facilityReducer

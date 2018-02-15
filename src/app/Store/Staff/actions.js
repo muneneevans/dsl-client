@@ -77,7 +77,7 @@ export function fetchFacilitySelectedStaff(facilityId, jobTypes) {
 		//loop through each job type and get the number of staff
 		dispatch({ type: types.GET_FACILITY_SELECTED_JOB_TYPES_START })
 
-		jobTypes.map((jobType) => {
+		jobTypes.map(jobType => {
 			//mark the job type as requested
 			dispatch({
 				type: types.GET_FACILITY_INDIVIDUAL_SELECTED_JOB_TYPES_REQUESTED,
@@ -106,13 +106,12 @@ export function fetchFacilitySelectedStaff(facilityId, jobTypes) {
 export function fetchCountryJobTypes() {
 	return dispatch => {
 		dispatch({ type: types.COUNTRY_JOBTYPES_REQUESTED })
-		return StaffService.getCountryJobTypes()
-			.then(countryJobTypesSummary => {
-				return dispatch({
-					type: types.COUNTRY_JOBTYPES_RECEIVED,
-					countryJobTypesSummary: countryJobTypesSummary.value
-				})
+		return StaffService.getCountryJobTypes().then(countryJobTypesSummary => {
+			return dispatch({
+				type: types.COUNTRY_JOBTYPES_RECEIVED,
+				countryJobTypesSummary: countryJobTypesSummary.value
 			})
+		})
 	}
 }
 //#endregion
@@ -132,6 +131,18 @@ export function removeWardJobType(jobTypeId) {
 		return dispatch({
 			type: types.REMOVE_WARD_JOB_TYPE_REQUESTED,
 			jobTypeId
+		})
+	}
+}
+
+export function getWardFacilityNumberOfStaff(wardId) {
+	return dispatch => {
+		dispatch({ type: types.WARD_FACILITY_NUMBEROFSTAFF_REQUESTED })
+		StaffService.getWardFacilityNumberOfStaff(wardId).then(wardFacilityNumberOfStaff =>{
+			return dispatch({
+				type: types.WARD_FACILITY_NUMBEROFSTAFF_RECEIVED,
+				wardFacilityNumberOfStaff: wardFacilityNumberOfStaff.value
+			})
 		})
 	}
 }

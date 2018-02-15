@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 const ChildrenTable = ({ children, title, childrenLevel }) => (
 	<div>
-		<Table cell stripped>
+		<Table celled striped>
 			<Table.Header>
 				<Table.Row>
 					<Table.HeaderCell colSpan="3">
@@ -15,7 +15,7 @@ const ChildrenTable = ({ children, title, childrenLevel }) => (
 
 			<Table.Body>
 				{children.map(child => (
-					<Table.Row>
+					<Table.Row key={child.id}>
 						<Table.Cell collapsing>
 							<Icon name="folder" />
 						</Table.Cell>

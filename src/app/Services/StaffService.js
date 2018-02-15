@@ -2,7 +2,7 @@ import { sharedHost } from "../Store/Shared/hosts"
 export default class StaffService {
 	static get host() {
 		delete StaffService.host
-		return StaffService.host = sharedHost.concat("hr/api/")
+		return (StaffService.host = sharedHost.concat("hr/api/"))
 	}
 
 	static getJobTypes() {
@@ -12,7 +12,7 @@ export default class StaffService {
 				return response.json()
 			})
 			.catch(error => {
-				throw (error)
+				throw error
 			})
 	}
 
@@ -23,7 +23,7 @@ export default class StaffService {
 				return response.json()
 			})
 			.catch(error => {
-				throw (error)
+				throw error
 			})
 	}
 
@@ -34,18 +34,20 @@ export default class StaffService {
 				return response.json()
 			})
 			.catch(error => {
-				throw (error)
+				throw error
 			})
 	}
 
 	static getFacilityJobType(facilityId, jobTypeId) {
-		const url = this.host.concat("facility/" + facilityId + "/jobtype/" + jobTypeId)
+		const url = this.host.concat(
+			"facility/" + facilityId + "/jobtype/" + jobTypeId
+		)
 		return fetch(url)
-			.then((response) => {
+			.then(response => {
 				return response.json()
 			})
-			.catch((error) => {
-				throw (error)
+			.catch(error => {
+				throw error
 			})
 	}
 
@@ -59,6 +61,18 @@ export default class StaffService {
 			.catch(error => {
 				throw error
 			})
+	}
 
+	static getWardFacilityNumberOfStaff(wardId) {
+		const url = this.host.concat(
+			"wards/" + wardId + "/facility/numberofstaff/"			
+		)
+		return fetch(url)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
 	}
 }

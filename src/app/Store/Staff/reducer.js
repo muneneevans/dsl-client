@@ -12,7 +12,8 @@ const initialState = Immutable({
 	wardJobTypes: undefined,
 	wardStaff: undefined,
 	wardJobTypeDataValues: undefined,
-
+	wardFacilityNumberOfStaff: undefined,
+	
 	countryJobTypesSummary: undefined
 })
 
@@ -92,6 +93,10 @@ export default function staffReducer(state = initialState, action = {}) {
 	case types.COUNTRY_JOBTYPES_RECEIVED:		
 		return state.merge({
 			countryJobTypesSummary: action.countryJobTypesSummary
+		})
+	case types.WARD_FACILITY_NUMBEROFSTAFF_RECEIVED:
+		return state.merge({
+			wardFacilityNumberOfStaff: action.wardFacilityNumberOfStaff
 		})
 	default:
 		return state
