@@ -165,6 +165,9 @@ class WardDetailPage extends Component {
 									this.props.staffActions.getConstituencyWardNumberOfStaff(
 										this.props.match.params.id
 									)
+									this.props.staffActions.getConstituencyStaff(
+										this.props.match.params.id
+									)
 									// this.props.facilityActions.fetchWardSummary(
 									// 	this.props.match.params.id
 									// )
@@ -257,6 +260,17 @@ class WardDetailPage extends Component {
 							<div>{this.renderLoading()}</div>
 						)}
 					</Grid.Column>
+					<Grid.Column>
+						{this.props.constituencyStaff ? (
+							<WardFacilitySummaryWidget
+								barGraph={this.props.constituencyStaff.barGraph}
+								height={700}
+								title="Distribution of job types in the constituency"
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
 				</Grid.Row>
 
 				<Grid.Row stretched centered columns={1}>
@@ -336,7 +350,8 @@ const mapStateToProps = state => {
 		cadres: staffSelectors.getCadreOptions(state),
 		constituencyWardNumberOfStaff: staffSelectors.getConstituencyWardNumberOfStaff(
 			state.staffReducer
-		)
+		),
+		constituencyStaff : staffSelectors.getConstituencyStaff(state.staffReducer)
 	}
 }
 

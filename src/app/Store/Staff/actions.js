@@ -151,17 +151,28 @@ export function getWardFacilityNumberOfStaff(wardId) {
 export function getWardStaff(wardId) {
 	return dispatch => {
 		dispatch({ type: types.WARD_STAFF_REQUESTED })
-		StaffService.getWardStaff(wardId).then(
-			wardStaff => {
+		StaffService.getWardStaff(wardId).then(wardStaff => {
+			return dispatch({
+				type: types.WARD_STAFF_RECEIVED,
+				wardStaff: wardStaff.value
+			})
+		})
+	}
+}
+//#endregion
+export function getConstituencyStaff(constituencyId) {
+	return dispatch => {
+		dispatch({ type: types.CONSTITUENCY_STAFF_REQUESTED })
+		StaffService.getConstituencyStaff(constituencyId).then(
+			constituencyStaff => {
 				return dispatch({
-					type: types.WARD_STAFF_RECEIVED,
-					wardStaff: wardStaff.value
+					type: types.CONSTITUENCY_STAFF_RECEIVED,
+					constituencyStaff: constituencyStaff.value
 				})
 			}
 		)
 	}
 }
-//#endregion
 export function getConstituencyWardNumberOfStaff(constituencyId) {
 	return dispatch => {
 		dispatch({ type: types.CONSTITUENCY_WARD_NUMBEROFSTAFF_REQUESTED })
