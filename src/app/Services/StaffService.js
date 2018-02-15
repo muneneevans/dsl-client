@@ -63,6 +63,19 @@ export default class StaffService {
 			})
 	}
 
+
+	static getWardStaff(wardId) {
+		const url = this.host.concat(
+			"wards/" + wardId + "/"			
+		)
+		return fetch(url)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
 	static getWardFacilityNumberOfStaff(wardId) {
 		const url = this.host.concat(
 			"wards/" + wardId + "/facility/numberofstaff/"			

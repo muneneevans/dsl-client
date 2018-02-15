@@ -148,6 +148,19 @@ export function getWardFacilityNumberOfStaff(wardId) {
 		)
 	}
 }
+export function getWardStaff(wardId) {
+	return dispatch => {
+		dispatch({ type: types.WARD_STAFF_REQUESTED })
+		StaffService.getWardStaff(wardId).then(
+			wardStaff => {
+				return dispatch({
+					type: types.WARD_STAFF_RECEIVED,
+					wardStaff: wardStaff.value
+				})
+			}
+		)
+	}
+}
 //#endregion
 export function getConstituencyWardNumberOfStaff(constituencyId) {
 	return dispatch => {

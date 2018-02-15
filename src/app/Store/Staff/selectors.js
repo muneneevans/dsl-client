@@ -218,6 +218,28 @@ export const getWardFacilityNumberOfStaff = staffReducer => {
 		return undefined
 	}
 }
+export const getWardStaff = staffReducer => {
+	if (staffReducer.wardStaff) {
+		const getGraph = staff => {
+			return Object.keys(staff).map(jobType => {
+				return {
+					numberOfStaff: staff[jobType],
+					jobType
+				}
+			})
+		}
+
+		return {
+			barGraph: {
+				data: getGraph(staffReducer.wardStaff),
+				indexBy: "jobType",
+				keys: ["numberOfStaff"]
+			}
+		}
+	} else {
+		return undefined
+	}
+}
 //#endregion
 export const getConstituencyWardNumberOfStaff = staffReducer => {
 	if (staffReducer.constituencyWardNumberOfStaff) {

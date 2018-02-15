@@ -104,6 +104,10 @@ export default function staffReducer(state = initialState, action = {}) {
 		return state.merge({
 			constituencyWardNumberOfStaff: action.constituencyWardNumberOfStaff
 		})
+	case types.WARD_STAFF_RECEIVED:
+		return state.merge({
+			wardStaff: action.wardStaff
+		})
 	default:
 		return state
 	}
