@@ -31,7 +31,7 @@ export const WardIndicatorWidget = ({
 				render: () => (
 					<div>
 						<FlexibleXYPlot
-							width={containerWidth - 50}
+							width={containerWidth - 70}
 							height={height}
 							colorType="category"
 							animate

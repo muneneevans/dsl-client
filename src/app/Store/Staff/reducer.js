@@ -13,7 +13,8 @@ const initialState = Immutable({
 	wardStaff: undefined,
 	wardJobTypeDataValues: undefined,
 	wardFacilityNumberOfStaff: undefined,
-	
+
+	constituencyWardNumberOfStaff: undefined,
 	countryJobTypesSummary: undefined
 })
 
@@ -90,13 +91,18 @@ export default function staffReducer(state = initialState, action = {}) {
 			)
 		})
 
-	case types.COUNTRY_JOBTYPES_RECEIVED:		
+	case types.COUNTRY_JOBTYPES_RECEIVED:
 		return state.merge({
 			countryJobTypesSummary: action.countryJobTypesSummary
 		})
 	case types.WARD_FACILITY_NUMBEROFSTAFF_RECEIVED:
 		return state.merge({
 			wardFacilityNumberOfStaff: action.wardFacilityNumberOfStaff
+		})
+
+	case types.CONSTITUENCY_WARD_NUMBEROFSTAFF_RECEIVED:
+		return state.merge({
+			constituencyWardNumberOfStaff: action.constituencyWardNumberOfStaff
 		})
 	default:
 		return state
@@ -150,10 +156,7 @@ function addJobTypeToSelectedJobTypesList(
 	}
 }
 
-function removeJobTypeFromSelectedJobTypesList(
-	newJobTypeId,
-	selectedJobTypes
-) {
+function removeJobTypeFromSelectedJobTypesList(newJobTypeId, selectedJobTypes) {
 	if (selectedJobTypes) {
 		let existingSelectedFacilityJobTypes = Immutable.asMutable(
 			selectedJobTypes,

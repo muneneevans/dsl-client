@@ -162,6 +162,9 @@ class WardDetailPage extends Component {
 									this.props.facilityActions.fetchConstituencySummary(
 										this.props.match.params.id
 									)
+									this.props.staffActions.getConstituencyWardNumberOfStaff(
+										this.props.match.params.id
+									)
 									// this.props.facilityActions.fetchWardSummary(
 									// 	this.props.match.params.id
 									// )
@@ -220,7 +223,7 @@ class WardDetailPage extends Component {
 								pieChart={
 									this.props.constituencyFacilities.bedsSummary.pieChart
 								}
-								height={450}								
+								height={450}
 								title="Number of beds per ward"
 							/>
 						) : (
@@ -233,8 +236,22 @@ class WardDetailPage extends Component {
 								pieChart={
 									this.props.constituencyFacilities.cotsSummary.pieChart
 								}
-								height={450}								
+								height={450}
 								title="Number of cots per ward"
+							/>
+						) : (
+							<div>{this.renderLoading()}</div>
+						)}
+					</Grid.Column>
+				</Grid.Row>
+
+				<Grid.Row stretched centered columns={2}>
+					<Grid.Column>
+						{this.props.constituencyWardNumberOfStaff ? (
+							<WardFacilitySummaryWidget
+								barGraph={this.props.constituencyWardNumberOfStaff.barGraph}
+								height={700}
+								title="Number of staff in the constituency"
 							/>
 						) : (
 							<div>{this.renderLoading()}</div>
@@ -316,7 +333,10 @@ const mapStateToProps = state => {
 		),
 
 		jobTypes: staffSelectors.getJobTypeOptions(state),
-		cadres: staffSelectors.getCadreOptions(state)
+		cadres: staffSelectors.getCadreOptions(state),
+		constituencyWardNumberOfStaff: staffSelectors.getConstituencyWardNumberOfStaff(
+			state.staffReducer
+		)
 	}
 }
 

@@ -75,4 +75,16 @@ export default class StaffService {
 				throw error
 			})
 	}
+	static getConstituencyWardNumberOfStaff(constituencyId) {
+		const url = this.host.concat(
+			"constituencies/" + constituencyId + "/ward/numberofstaff/"			
+		)
+		return fetch(url)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
 }

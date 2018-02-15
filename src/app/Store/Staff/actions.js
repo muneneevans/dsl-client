@@ -138,12 +138,27 @@ export function removeWardJobType(jobTypeId) {
 export function getWardFacilityNumberOfStaff(wardId) {
 	return dispatch => {
 		dispatch({ type: types.WARD_FACILITY_NUMBEROFSTAFF_REQUESTED })
-		StaffService.getWardFacilityNumberOfStaff(wardId).then(wardFacilityNumberOfStaff =>{
-			return dispatch({
-				type: types.WARD_FACILITY_NUMBEROFSTAFF_RECEIVED,
-				wardFacilityNumberOfStaff: wardFacilityNumberOfStaff.value
-			})
-		})
+		StaffService.getWardFacilityNumberOfStaff(wardId).then(
+			wardFacilityNumberOfStaff => {
+				return dispatch({
+					type: types.WARD_FACILITY_NUMBEROFSTAFF_RECEIVED,
+					wardFacilityNumberOfStaff: wardFacilityNumberOfStaff.value
+				})
+			}
+		)
 	}
 }
 //#endregion
+export function getConstituencyWardNumberOfStaff(constituencyId) {
+	return dispatch => {
+		dispatch({ type: types.CONSTITUENCY_WARD_NUMBEROFSTAFF_REQUESTED })
+		StaffService.getConstituencyWardNumberOfStaff(constituencyId).then(
+			constituencyWardNumberOfStaff => {
+				return dispatch({
+					type: types.CONSTITUENCY_WARD_NUMBEROFSTAFF_RECEIVED,
+					constituencyWardNumberOfStaff: constituencyWardNumberOfStaff.value
+				})
+			}
+		)
+	}
+}
