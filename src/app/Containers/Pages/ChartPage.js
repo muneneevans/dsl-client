@@ -6,68 +6,44 @@ import BarChart from "../../Components/Charts/BarChart"
 import LineChart from "../../Components/Charts/LineChart"
 import HorizontalBarChart from "../../Components/Charts/HorizontalBarChart"
 import NivoBarChart from "../../Components/Charts/Nivo/BarChart"
+import {
+    HorizontalGridLines,
+    VerticalGridLines,
+    XAxis,
+    XYPlot,
+    YAxis,
+    LineMarkSeries,
+    LineSeries,
+    VerticalBarSeries,
+    HorizontalBarSeries,
+    AreaSeries,
+    Crosshair,
+    FlexibleXYPlot,
+} from 'react-vis';
 
 // const kenya = require('../Components/Charts/kenya.json')
 
 export const ChartScreen = (props) => {
 
-    var data = [
-        { label: '02-11-2016', value: 180 },
-        { label: '02-12-2016', value: 250 },
-        { label: '02-13-2016', value: 150 },
-        { label: '02-14-2016', value: 496 },
-        { label: '02-15-2016', value: 140 },
-        { label: '02-16-2016', value: 380 },
-        { label: '02-17-2016', value: 100 },
-        { label: '02-18-2016', value: 150 }
-    ]
-
-
-    var data2 = [
-        { label: 'Feb', value: 50 },
-        { label: 'Jan', value: 40 },
-        { label: 'Mar', value: 65 },
-        { label: 'Apr', value: 60 },
-        { label: 'May', value: 70 },
-        { label: 'Jun', value: 55 },
-        { label: 'Jul', value: 80 },
-        { label: 'Aug', value: 55 },
-        { label: 'Sep', value: 75 },
-        { label: 'Oct', value: 50 },
-        { label: 'Nov', value: 60 },
-        { label: 'Dec', value: 75 }
-    ]
-    let Nivodata =  [{"month":7,"\"LOPINAVIR /RITONAVIR TABLETS - 200/50MG\"":800,"\"ZIDOVUDINE /LAMIVUDINE /NEVIRAPINE - 300/150/200MG\"":1200,"\"ZIDOVUDINE/LAMIVUDINE/ TABLETS - 300/150MG\"":5200,"\"LOPINAVIR /RITONAVIR ORAL SOLUTION - 80/20MG/ML\"":16,"\"ATAZANAVIR/RITONAVIR 300/100 MG TABLET\"":120,"\"TENOFOVIR300MG /LAMIVUDINE300MG TABLETS\"":1329,"\"ZIDOVUDINE (AZT) TABLETS  - 300MG\"":10,"\"NEVIRAPINE TABLETS - 200MG\"":1662,"\"NEVIRAPINE ORAL SUSPENSION - 10MG/ML\"":270,"\"LAMIVUDINE TABLETS - 150MG\"":255,"\"COTRIMOXAZOLE 960MG TABLETS 100S\"":3000,"\"DAPSONE 100MG TABLETS 100'S\"":150,"\"TENOFOVIR 300MG/LAMIVUDINE 300MG /EFAVIRENZ  600MG\"":5700,"\"ABACAVIR/LAMIVUDINE/ TABLETS 60/30MG\"":579},{"month":10,"\"PYRAZINAMIDE TABLETS - 500MG\"":24,"\"TB PATIENT PACK CATEGORY I&III 6M\"":108}]
-    let keys = ["LOPINAVIR /RITONAVIR TABLETS - 200/50MG","ZIDOVUDINE /LAMIVUDINE /NEVIRAPINE - 300/150/200MG","ZIDOVUDINE/LAMIVUDINE/ TABLETS - 300/150MG","LOPINAVIR /RITONAVIR ORAL SOLUTION - 80/20MG/ML","ATAZANAVIR/RITONAVIR 300/100 MG TABLET","TENOFOVIR300MG /LAMIVUDINE300MG TABLETS","ZIDOVUDINE (AZT) TABLETS  - 300MG","NEVIRAPINE TABLETS - 200MG","NEVIRAPINE ORAL SUSPENSION - 10MG/ML","LAMIVUDINE TABLETS - 150MG","COTRIMOXAZOLE 960MG TABLETS 100S","DAPSONE 100MG TABLETS 100'S","TENOFOVIR 300MG/LAMIVUDINE 300MG /EFAVIRENZ  600MG","ABACAVIR/LAMIVUDINE/ TABLETS 60/30MG","PYRAZINAMIDE TABLETS - 500MG","TB PATIENT PACK CATEGORY I&III 6M"]
-
-
+    const data = [{ "id": "BCG Wastage Rate", "color": "#1f77b4", "data": [{ "x": 1, "y": 0.47 }, { "x": 2, "y": 1.01 }, { "x": 3, "y": 0.53 }, { "x": 4, "y": 0.47 }, { "x": 5, "y": 1.08 }, { "x": 6, "y": 1.14 }, { "x": 7, "y": 0.65 }, { "x": 8, "y": 1.11 }, { "x": 9, "y": 0.49 }, { "x": 10, "y": 0 }, { "x": 11, "y": 1.03 }, { "x": 12, "y": 0.9 }] }, { "id": "OPV Wastage Rate", "color": "#ff7f0e", "data": [{ "x": 1, "y": 0.57 }, { "x": 2, "y": 1.18 }, { "x": 3, "y": 0.79 }, { "x": 4, "y": 0.42 }, { "x": 5, "y": 0.85 }, { "x": 6, "y": 1.07 }, { "x": 7, "y": 0.76 }, { "x": 8, "y": 1.53 }, { "x": 9, "y": 0.67 }, { "x": 10, "y": 0 }, { "x": 11, "y": 1.24 }, { "x": 12, "y": 1.3 }] }, { "id": "Tetanus Toxoid Wastage Rate", "color": "#2ca02c", "data": [{ "x": 1, "y": 0 }, { "x": 2, "y": 0 }, { "x": 3, "y": 0 }, { "x": 4, "y": 0 }, { "x": 5, "y": 0 }, { "x": 6, "y": 0 }, { "x": 7, "y": 0 }, { "x": 8, "y": 0 }, { "x": 9, "y": 0 }, { "x": 10, "y": 0 }, { "x": 11, "y": 0 }, { "x": 12, "y": 0 }] }, { "id": "Pneumococal Wastage Rate", "color": "#d62728", "data": [{ "x": 1, "y": 0.49 }, { "x": 2, "y": 0.96 }, { "x": 3, "y": 0.56 }, { "x": 4, "y": 0.47 }, { "x": 5, "y": 1.08 }, { "x": 6, "y": 1.14 }, { "x": 7, "y": 0.6 }, { "x": 8, "y": 1.53 }, { "x": 9, "y": 0.37 }, { "x": 10, "y": 0 }, { "x": 11, "y": 1.06 }, { "x": 12, "y": 0.39 }] }, { "id": "Vitamin A Wastage Rate", "color": "#9467bd", "data": [{ "x": 1, "y": 54 }, { "x": 2, "y": 42 }, { "x": 3, "y": 49 }, { "x": 4, "y": 0 }, { "x": 5, "y": 101 }, { "x": 6, "y": 0 }, { "x": 7, "y": 0 }, { "x": 8, "y": 0 }, { "x": 9, "y": 0 }, { "x": 10, "y": 0 }, { "x": 11, "y": 0 }, { "x": 12, "y": 0 }] }]
+    
     return (
         <div>
-            {/* <LineChart 
-                data={data}
-                width={700}
-                height={400}
-                /> */}
-            {/* <BarChart 
-                data={data2}
-                height              
-                width={700}
-                height={500}
-                /> */}
-
-            {/* <HorizontalBarChart
-                data={data2}
-                width={500}
-                height={500}
-            /> */}
-            {/* <MapChart
-                data={kenya}
-                height={800}
-                width={800} /> */}
-            <NivoBarChart data={Nivodata} keys={keys} height={500} width={900}
-                indexBy="month"/>
+            <FlexibleXYPlot width={400} height={300}>
+                <XAxis />
+                <YAxis />
+                <HorizontalGridLines />
+                <VerticalGridLines />
+                {
+                    data.map((d,i) =>(
+                        <LineMarkSeries data={d.data} />
+                    ))
+                }
+                
+            </FlexibleXYPlot>
         </div>
     )
+
 }
 
 export default ChartScreen

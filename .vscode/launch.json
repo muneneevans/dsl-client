@@ -1,30 +1,66 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceRoot}",
-            "sourceMaps": true,
-            "sourceMapPathOverrides": {
-                "webpack:///*": "${workspaceRoot}/*"
-            }
-        },
-        {
-            "type": "chrome",
-            "request": "attach",
-            "name": "Attach to Chrome",
-            "port": 9222,
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceRoot}",
-            "sourceMapPathOverrides": {
-                "webpack:///*": "${workspaceRoot}/*"
-            }
-        }
-    ]
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "Launch Chrome against localhost",
+			"url": "http://localhost:8080",
+			"webRoot": "${workspaceRoot}",
+			"sourceMaps": true,
+			"sourceMapPathOverrides": {
+				"webpack:///*": "${workspaceRoot}/*"
+			}
+		},
+		{
+			"type": "chrome",
+			"request": "attach",
+			"name": "Attach to Chrome",
+			"port": 9222,
+			"url": "http://localhost:8080",
+			"webRoot": "${workspaceRoot}",
+			"sourceMapPathOverrides": {
+				"webpack:///*": "${workspaceRoot}/*"
+			}
+		},
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "KNH debugging",
+			"url":
+				"http://localhost:8080/#/facilities/2e21b2de-7c5b-4db7-bb1d-26930af9274d",
+			"webRoot": "${workspaceRoot}",
+			"sourceMaps": true,
+			"sourceMapPathOverrides": {
+				"webpack:///*": "${workspaceRoot}/*"
+			}
+		},
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "woodley debugging",
+			"url":
+				"http://localhost:8080/#/wards/e86bec61-9d3f-4825-b23a-87219e8ecce4",
+			"webRoot": "${workspaceRoot}",
+			"sourceMaps": true,
+			"sourceMapPathOverrides": {
+				"webpack:///*": "${workspaceRoot}/*"
+			}
+		},
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "KIBRA debugging",
+			"url":
+				"http://localhost:8080/#/constituencies/504d12d7-038d-4b58-826e-4b5adb03c738/",
+			"webRoot": "${workspaceRoot}",
+			"sourceMaps": true,
+			"sourceMapPathOverrides": {
+				"webpack:///*": "${workspaceRoot}/*"
+			}
+		}
+	]
 }

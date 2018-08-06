@@ -12,7 +12,12 @@ export const YearForm = (props) => {
         <Form>
             <Form.Field>
                 <Header as='h5'>Year</Header>
-                <DropDownInput options={years} placeholder="select a year" onChange={handleChange}/>
+                
+                <Dropdown
+                    placeholder="select a year"
+                    options={years}
+                    onChange={handleChange}
+                    multiple={false} search fluid selection />
             </Form.Field>
         </Form>
     )

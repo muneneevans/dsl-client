@@ -1,8 +1,7 @@
-// require('babel-polyfill')
-
+import { sharedHost } from "../Store/Shared/hosts"
 class MapService{
     static getKenyaCountyMap(){
-        const url = 'http://41.89.94.68:8000/maps/api/counties/map'
+        const url = sharedHost.concat('maps/api/counties/map')
 
         return fetch(url).then(response => {
             return response.json();

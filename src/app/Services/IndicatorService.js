@@ -1,121 +1,195 @@
+import { sharedHost } from "../Store/Shared/hosts"
 export default class IndicatorService {
-    static get host() {
-        delete IndicatorService.host;
-        return IndicatorService.host = 'http://41.89.94.68:8000/indicators/api/'
-    }
+	static get host() {
+		delete IndicatorService.host
+		return (IndicatorService.host = sharedHost.concat("indicators/api/"))
+	}
 
-    static getIndicatorGroups() {
-        const url = this.host.concat('indicators/indicatorgroups')
+	static getPeriodTypes() {
+		const url = this.host.concat("periods/periodtypes")
 
-        return fetch(url)
-            .then(response => {
-                return response.json()
-            })
-            .catch(error => {
-                throw (error)
-            })
-    }
+		return fetch(url)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
 
-    static getIndicatorGroupIndicators(indicatorGroupdId) {
-        const url = this.host.concat('indicators/indicatorgroups/' + indicatorGroupdId)
+	static getIndicatorGroups() {
+		const url = this.host.concat("indicators/indicatorgroups")
 
-        return fetch(url)
-            .then(indicators => {
-                return indicators.json()
-            })
-            .catch(error => {
-                throw (error)
-            })
-    }
+		return fetch(url)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
 
-    static getIndicatorDataValues(filters) {
-        const url = this.host.concat('datavalues/facility/indicator/')
-        
-        const request = {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                filters: {
-                    facilityId: filters.facilityId,
-                    indicatorId: filters.indicatorId,
-                    periodTypeId: filters.periodTypeId,
-                    year: filters.year
-                }
-            })
-        };        
-        return fetch(url, request)
-            .then(response => {
-                return response.json()
-            })
-            .catch(error => {
-                throw (error)
-            })
-    }
+	static getIndicatorGroupIndicators(indicatorGroupdId) {
+		const url = this.host.concat(
+			"indicators/indicatorgroups/" + indicatorGroupdId
+		)
 
+		return fetch(url)
+			.then(indicators => {
+				return indicators.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
 
-    static getDataElementGroups() {
-        const url = this.host.concat('dataelementgroups/')
+	static getIndicators() {
+		const url = this.host.concat("indicators/")
 
-        return fetch(url)
-            .then(response => {
-                return response.json()
-            })
-            .catch(error => {
-                throw (error)
-            })
-    }
+		return fetch(url)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
 
-    static getDatalements(dataElementGroupId = undefined) {
-        var url = this.host.concat('dataelements/')
-        if (dataElementGroupId) {
-            url = this.host.concat('dataelementgroups/' + dataElementGroupId + '/dataelements/')
-        }
+	//#region  facility specific services
+	static getIndicatorDataValues(filters) {
+		const url = this.host.concat("datavalues/facility/indicator/")
 
-        return fetch(url)
-            .then(response => {
-                return response.json()
-            })
-            .catch(error => {
-                return error
-            })
-    }
+		const request = {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				filters: {
+					facilityId: filters.facilityId,
+					indicatorId: filters.indicatorId,
+					periodTypeId: filters.periodTypeId,
+					year: filters.year
+				}
+			})
+		}
+		return fetch(url, request)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
+	//#endregion
 
-    static getIndicators() {
-        const url = this.host.concat('indicators/')
+	//#region ward specific services
+	static getWardIndicatorDataValues(filters) {
+		const url = this.host.concat("datavalues/ward/indicator/")
 
-        return fetch(url)
-            .then(response => {
-                return response.json()
-            })
-            .catch(error => {
-                throw (error)
-            })
-    }
+		const request = {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				filters: {
+					wardId: filters.wardId,
+					indicatorId: filters.indicatorId,
+					periodTypeId: filters.periodTypeId,
+					year: filters.year
+				}
+			})
+		}
+		return fetch(url, request)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
+	static getWardFacilityIndicatorDataValues(filters) {
+		const url = this.host.concat("datavalues/ward/facility/indicator/")
 
-    static getFacilityDataElementDatavalues(facilityId, dataElementId) {
-        const url = this.host.concat('datavalues/facility/', facilityId, '/dataelement/', dataElementId)
-        return fetch(url)
-            .then(response => {
-                return response.json()
-            })
-            .catch(error => {
-                throw (error)
-            })
-    }
+		const request = {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				filters: {
+					wardId: filters.wardId,
+					indicatorId: filters.indicatorId,
+					periodTypeId: filters.periodTypeId,
+					year: filters.year
+				}
+			})
+		}
+		return fetch(url, request)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
+	//#endregion
+	//#region constituency specific services
+	static getConstituencyIndicatorDataValues(filters) {
+		const url = this.host.concat("datavalues/constituency/indicator/")
 
-    static getPeriodTypes() {
-        const url = this.host.concat('periods/periodtypes')
+		const request = {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				filters: {
+					constituencyId: filters.constituencyId,
+					indicatorId: filters.indicatorId,
+					periodTypeId: filters.periodTypeId,
+					year: filters.year
+				}
+			})
+		}
+		return fetch(url, request)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
+	static getConstituencyWardIndicatorDataValues(filters) {
+		const url = this.host.concat("datavalues/constituency/ward/indicator/")
 
-        return fetch(url)
-            .then(response => {
-                return response.json()
-            })
-            .catch(error => {
-                throw (error)
-            })
-    }
-
+		const request = {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				filters: {
+					constituencyId: filters.constituencyId,
+					indicatorId: filters.indicatorId,
+					periodTypeId: filters.periodTypeId,
+					year: filters.year
+				}
+			})
+		}
+		return fetch(url, request)
+			.then(response => {
+				return response.json()
+			})
+			.catch(error => {
+				throw error
+			})
+	}
+	//#endregion
 }
